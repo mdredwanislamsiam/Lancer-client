@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { BsFilterSquareFill } from "react-icons/bs";
-import { CiFilter } from "react-icons/ci";
-import { useOutletContext } from "react-router";
+
 
 const FilteringSection = ({
 	priceRange,
@@ -27,7 +26,7 @@ const FilteringSection = ({
 						className="btn bg-[#86c2e3] border-0 text-black/60 hover:text-black"
 						onClick={() => setOpen((prev) => !prev)}>
 						<span className="text-md ">Filter </span>
-						<BsFilterSquareFill size={20} color="black" cla />
+						<BsFilterSquareFill size={20} color="black"/>
 					</button>
 				</div>
 				<div className="w-full flex items-center gap-2 my-auto">

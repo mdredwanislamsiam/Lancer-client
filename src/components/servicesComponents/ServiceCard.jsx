@@ -6,7 +6,7 @@ const ServiceCard = ({ service }) => {
 	if (!service) return null;
     return (
 		<div>
-			<Link to={`/service/${service.id}`} className=''>
+			<Link to={`/services/${service.id}`} className=''>
 				<div className="card bg-gradient-to-br from-[#e5eef3] to-[#155e85a7] max-w-66 md:w-96 shadow-sm mx-auto h-full">
 					<figure className="">
 						<img

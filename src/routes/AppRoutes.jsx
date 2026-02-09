@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router';
+import { Route, Routes } from "react-router";
 import MainLayout from '../layouts/MainLayout';
 import Home from '../pages/Home';
 import About from '../pages/About';
@@ -13,6 +13,8 @@ import DashboardLayout from '../layouts/DashboardLayout';
 import Dashboard from '../pages/Dashboard';
 import Services from '../pages/Services';
 import Profile from '../pages/Profile';
+import ServiceDetail from '../pages/ServiceDetail';
+import Orders from '../pages/Orders';
 
 const AppRoutes = () => {
     return (
@@ -26,11 +28,13 @@ const AppRoutes = () => {
 				<Route path="resend_activation" element={<ResendActivation />} />
 				<Route path="reset_password" element={<ForgotPassword />} />
 				<Route path="password/reset/confirm/:uid/:token" element={<ForgotPasswordConfirm />} />
-				<Route path='service' element={<Services/> }/> 
+				<Route path='services' element={<Services />} /> 
+				<Route path='services/:id' element={<ServiceDetail/> } /> 
 			</Route>
 			<Route path='dashboard' element={<DashboardLayout />} >
 				<Route index element={<Dashboard />} /> 
 				<Route path='profile' element={<Profile/>} /> 
+				<Route path='orders' element={<Orders/>} /> 
 				
 			</Route>
 		</Routes>
