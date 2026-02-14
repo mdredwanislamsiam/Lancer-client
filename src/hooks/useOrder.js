@@ -46,7 +46,23 @@ const useOrder = () => {
         }
     }
 
-    return { canOrder, createOrder, canOrderService, loading, orders}; 
+
+    const cancelOrder = async (orderId) => {
+        try {
+            const res = await authAPIClient.post(`/orders/${orderId}/cancel/`);
+            if (res.status === 200) {
+				setOrder((prev) =>
+					prev.map((order) => (order.id === orderId ? { ...order, status: "Canceled" } : order)),
+                );
+                return res.status; 
+			} 
+		} catch (error) {
+			console.log(error);
+		}
+    }
+
+
+    return { canOrder, createOrder, canOrderService, loading, orders, cancelOrder}; 
 };
 
 export default useOrder;

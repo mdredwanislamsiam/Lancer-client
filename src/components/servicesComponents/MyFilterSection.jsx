@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { BsFilterSquareFill } from "react-icons/bs";
-import Filters from "./Filters";
+import React, { useState } from 'react';
+import Filters from './Filters';
+import { BsFilterSquareFill } from 'react-icons/bs';
 
-
-const FilteringSection = ({
+const MyFilterSection = ({
 	priceRange,
 	handlePriceChange,
 	categories,
@@ -12,12 +11,11 @@ const FilteringSection = ({
 	handleSearchQuery,
 	searchQuery,
 	sortOrder,
-	handleSorting, 
+	handleSorting,
 }) => {
-	
-	const [open, setOpen] = useState(false); 
 
-	if (!categories) return;
+    const [open, setOpen] = useState(false); 
+    if (!categories) return;
 	return (
 		<div>
 			{/* Search bar */}
@@ -42,19 +40,19 @@ const FilteringSection = ({
 				</div>
 			</div>
 			{/* filtering */}
-			<div className="fixed inset-y-0 left-0 z-40 top-64 group">
-				<div className="absolute left-0 top-0 h-fit w-16"></div>
+			<div className="fixed inset-y-0 right-0 z-40 top-64 group">
+				<div className="absolute right-0 top-0 h-fit w-16"></div>
 				<aside
-					className={`menu w-64 h-fit p-4 text-base-content transform transition-transform duration-800 ease-in-out  bg-black/20 rounded-sm ${open ? "translate-x-0" : "-translate-x-full"}
-				lg:group-hover:translate-x-0 lg:-translate-x-full `}>
+					className={`menu w-64 h-fit p-4 text-base-content transform transition-transform duration-800 ease-in-out  bg-black/20 rounded-sm ${open ? "translate-x-0" : "translate-x-full"}
+        lg:group-hover:translate-x-0 lg:translate-x-full `}>
 					<Filters
 						priceRange={priceRange}
 						handlePriceChange={handlePriceChange}
 						selectedCategory={selectedCategory}
 						handleCategoryChange={handleCategoryChange}
-						sortOrder={sortOrder}
+                        sortOrder={sortOrder}
+                        categories={categories}
 						handleSorting={handleSorting}
-						categories={categories}
 						open={open}
 					/>
 				</aside>
@@ -63,4 +61,4 @@ const FilteringSection = ({
 	);
 };
 
-export default FilteringSection;
+export default MyFilterSection;

@@ -1,17 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiBellOn } from "react-icons/ci";
 import useAuthContext from "../hooks/useAuthContext";
 import { Link } from "react-router";
+import useNotification from "../hooks/useNotification";
+import HoverNotificationList from "../components/notification/HoverNotificationList";
 
 const Navbar = () => {
 	const { user, logoutUser } = useAuthContext();
 	// console.log(user);
+	const { notifications, fetchNotifications} = useNotification();
+	const [openNoti, setOpenNoti] = useState(false); 
+	useEffect(() => {
+		fetchNotifications(1); 
+	}, [openNoti])
+
+	const unreadCount = notifications.filter((n) => !n.is_read).length;
+	// const unreadCount = 1
+	console.log(unreadCount); 
 	
 
 	return (
-		<div className="navbar bg-base-100 shadow-sm">
+		<div className="navbar bg-base-100 shadow-sm z-10">
 			<div className="navbar-start">
-				<button className="dropdown" >
+				<button className="dropdown">
 					<div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -82,12 +93,20 @@ const Navbar = () => {
 					<div>
 						{/* Notification Button */}
 
-						<button className="btn btn-ghost btn-circle">
+						<button className="btn btn-ghost btn-circle" onClick={() => setOpenNoti(!openNoti)}>
 							<div className="indicator">
-								<CiBellOn size={30} />
-								<span className="badge badge-xs badge-secondary indicator-item"></span>
+								<CiBellOn size={35} />
+								{unreadCount > 0 && (
+									<span
+										className={`absolute -top-1 -right-1 ${unreadCount > 5 ? "w-6": "w-4"} h-4 bg-error text-white text-xs font-bold rounded-full flex items-center justify-center animate-pulse`}>
+										{unreadCount > 5 ? "5+" : unreadCount}
+									</span>
+								)}
 							</div>
 						</button>
+						<div className={`absolute right-20 ${openNoti ? "" : "hidden"}`}>
+							<HoverNotificationList openNoti={openNoti}/> 
+						</div>
 
 						{/* Profile Avatar */}
 
@@ -104,10 +123,16 @@ const Navbar = () => {
 								tabIndex="-1"
 								className="menu menu-sm dropdown-content bg-base-100 rounded-box z-20 mt-3 w-52 p-2 shadow">
 								<li>
-									<a className="justify-between">
+									<Link to={"dashboard/profile"} className="justify-between">
 										Profile
-										<span className="badge">New</span>
-									</a>
+										{/* <span className="badge">New</span> */}
+									</Link>
+								</li>
+								<li>
+									<Link to={"dashboard"} className="justify-between">
+										Dashboard
+										{/* <span className="badge">New</span> */}
+									</Link>
 								</li>
 								<li>
 									<a>Settings</a>

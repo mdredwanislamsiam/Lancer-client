@@ -2,7 +2,8 @@ import React from 'react';
 import ErrorAlert from '../alerts/ErrorAlert';
 import ServiceCard from './ServiceCard';
 
-const ServiceList = ({error, loading, services}) => {
+const ServiceList = ({ error, loading, services }) => {
+	console.log(services); 
     return (
 		<section className="my-20">
 			{/* Loading Spinner */}

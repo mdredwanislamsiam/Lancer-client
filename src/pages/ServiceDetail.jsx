@@ -10,7 +10,7 @@ const ServiceDetail = () => {
     const [loading, setLoading] = useState(false); 
     const { id } = useParams(); 
 
-    const fetchProduct = async () => {
+    const fetchService = async () => {
         setLoading(true); 
         try {
             const res = await authAPIClient.get(`/services/${id}/`);
@@ -26,7 +26,7 @@ const ServiceDetail = () => {
     }
 
     useEffect(() => {
-        fetchProduct(); 
+        fetchService(); 
     }, [id])
 
     if (loading) {
@@ -54,7 +54,7 @@ const ServiceDetail = () => {
 				<div className=" flex flex-col justify-between">
 					<div>
 						<div className="mb-6">
-							<div className="badge badge-outline mb-2">Category - {service.category.name}</div>
+							<div className="badge badge-outline mb-2">Category - {service.category_detail?.name || "N/A"}</div>
 							<h1 className="text-3xl font-bold">{service.title}</h1>
 						</div>
 

@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router';
 import { FaShop } from 'react-icons/fa6';
 import { AiOutlineLogout } from 'react-icons/ai';
 import useAuthContext from '../../hooks/useAuthContext';
+import { GrServices } from 'react-icons/gr';
 
 const Sidebar = () => {
 	const { user, logoutUser } = useAuthContext();
@@ -22,9 +23,9 @@ const Sidebar = () => {
 	];
     const adminMenuItems = [
 		{ to: "/dashboard", icon: FiBarChart2, label: "Dashboard" },
-		{ to: "/shop", icon: FaShop, label: "Shop" },
-		{ to: "/products", icon: FiPackage, label: "Products" },
-		{ to: "/dashboard/products/add", icon: FiPlusCircle, label: "Add Product" },
+		{ to: "/services", icon: FaShop, label: "All Services" },
+		{ to: "/dashboard/services/my", icon: GrServices, label: "My Services" },
+		{ to: "/dashboard/services/add", icon: FiPlusCircle, label: "Add Service" },
 		{ to: "/categories", icon: FiTag, label: "Categories" },
 		{ to: "/categories/add", icon: FiPlusCircle, label: "Add Category" },
 		{ to: "/dashboard/cart", icon: FiShoppingCart, label: "Cart" },
@@ -58,9 +59,11 @@ const Sidebar = () => {
 					<div className="my-3 flex flex-col justify-center items-center gap-1">
 						<h1 className="text-lg font-semibold">Mr. X</h1>
 						<p className="badge badge-warning badge-lg">seller</p>
-						<button className="py-1 px-5 rounded-full bg-[#8fcff9] border-0 hover:bg-[#6dc1f9] w-fit cursor-pointer">
+						<Link
+							to={"profile"}
+							className="py-1 px-5 rounded-full bg-[#8fcff9] border-0 hover:bg-[#6dc1f9] w-fit cursor-pointer">
 							View Profile
-						</button>
+						</Link>
 					</div>
 				</div>
 

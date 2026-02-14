@@ -15,6 +15,10 @@ import Services from '../pages/Services';
 import Profile from '../pages/Profile';
 import ServiceDetail from '../pages/ServiceDetail';
 import Orders from '../pages/Orders';
+import PaymentSuccess from '../pages/PaymentSuccess';
+import Notifications from '../pages/Notifications';
+import AddServices from '../pages/AddServices';
+import MyServices from '../pages/MyServices';
 
 const AppRoutes = () => {
     return (
@@ -34,7 +38,11 @@ const AppRoutes = () => {
 			<Route path='dashboard' element={<DashboardLayout />} >
 				<Route index element={<Dashboard />} /> 
 				<Route path='profile' element={<Profile/>} /> 
-				<Route path='orders' element={<Orders/>} /> 
+				<Route path='orders' element={<Orders />} /> 
+				<Route path="payment/success" element={<PaymentSuccess />} /> 
+				<Route path='notifications' element={<Notifications />} /> 
+				<Route path='services/add' element={<AddServices/> } /> 
+				<Route path='services/my' element={<MyServices/> } /> 
 				
 			</Route>
 		</Routes>
