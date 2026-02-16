@@ -138,7 +138,7 @@ const OrderCard = ({ order }) => {
 				<div className="flex items-center gap-3 ml-auto">
 					<button className="btn bg-primary rounded-2xl shadow text-white">Contact Seller</button>
 
-					{order.status !== "Delieverd" &&
+					{order.status !== "Delivered" &&
 						order.status !== "Active" &&
 						order.status !== "Paid" &&
 						status !== "Canceled" &&

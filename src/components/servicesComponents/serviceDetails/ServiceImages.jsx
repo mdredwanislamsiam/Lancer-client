@@ -11,7 +11,7 @@ import "swiper/css/thumbs";
 const ServiceImages = ({images = [], serviceName}) => {
     const [thumbsSwiper] = useState(null);
 	const displayImages = (images.length > 0) ? images : [{ images: defaultImg }];
-	console.log(images)
+	// console.log(images)
     
     return (
 		<div className="rounded-lg shadow-2xl  overflow-hidden">

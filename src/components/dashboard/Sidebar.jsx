@@ -6,6 +6,8 @@ import { FaShop } from 'react-icons/fa6';
 import { AiOutlineLogout } from 'react-icons/ai';
 import useAuthContext from '../../hooks/useAuthContext';
 import { GrServices } from 'react-icons/gr';
+import { IoNotificationsCircleOutline } from 'react-icons/io5';
+import { MdCircleNotifications } from 'react-icons/md';
 
 const Sidebar = () => {
 	const { user, logoutUser } = useAuthContext();
@@ -26,9 +28,9 @@ const Sidebar = () => {
 		{ to: "/services", icon: FaShop, label: "All Services" },
 		{ to: "/dashboard/services/my", icon: GrServices, label: "My Services" },
 		{ to: "/dashboard/services/add", icon: FiPlusCircle, label: "Add Service" },
-		{ to: "/categories", icon: FiTag, label: "Categories" },
-		{ to: "/categories/add", icon: FiPlusCircle, label: "Add Category" },
-		{ to: "/dashboard/cart", icon: FiShoppingCart, label: "Cart" },
+		{ to: "/dashboard/notifications", icon: MdCircleNotifications, label: "Notifications" },
+		{ to: "/dashboard/categories", icon: FiTag, label: "Categories" },
+		{ to: "/dashboard/categories/add", icon: FiPlusCircle, label: "Add Category" },
 		{ to: "/dashboard/orders", icon: FiShoppingBag, label: "Orders" },
 		{ to: "/reviews", icon: FiStar, label: "Reviews" },
 		{ to: "/users", icon: FiUsers, label: "Users" },
@@ -51,14 +53,14 @@ const Sidebar = () => {
 				<div className="my-10">
 					<div className="w-40 mx-auto">
 						<img
-							className="rounded-full"
-							src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+							className=" w-40 h-40 rounded-full object-cover"
+							src={user?.image}
 							alt="User avatar"
 						/>
 					</div>
 					<div className="my-3 flex flex-col justify-center items-center gap-1">
-						<h1 className="text-lg font-semibold">Mr. X</h1>
-						<p className="badge badge-warning badge-lg">seller</p>
+						<h1 className="text-xl font-bold">{user?.username}</h1>
+						<p className="badge badge-warning badge-lg">{user?.role}</p>
 						<Link
 							to={"profile"}
 							className="py-1 px-5 rounded-full bg-[#8fcff9] border-0 hover:bg-[#6dc1f9] w-fit cursor-pointer">
@@ -72,7 +74,7 @@ const Sidebar = () => {
 					{menuItems.map((item, index) => (
 						<li key={index}>
 							<Link to={item.to} className="flex items-center">
-								<item.icon className="h-4 w-4" />
+								<item.icon size={20} className="" />
 								<span>{item.label}</span>
 							</Link>
 						</li>

@@ -1,0 +1,45 @@
+import React, { useEffect, useState } from 'react';
+import ReviewCardHome from './ReviewCardHome';
+import apiClient from '../../services/api-client';
+import authAPIClient from '../../services/auth-api-client';
+
+const ReviewsOfClients = () => {
+	const [reviews, setReviews] = useState([]); 
+	const [loading, setLoading] = useState(false); 
+
+
+	const fetctReviews = async () => {
+		setLoading(true); 
+		try {
+			const res = await authAPIClient.get("/reviews"); 
+			console.log(res);
+			setReviews(res.data.reviews);
+
+		}
+		catch (error) {
+			console.log(error); 
+		}
+		finally {
+			setLoading(false); 
+		}
+	}
+	useEffect(() => { fetctReviews() }, []); 
+
+	if (!reviews) return; 
+	return (
+		<div>
+			{loading && (
+				<div className="flex justify-center items-center min-h-screen">
+					<span className="loading loading-spinner loading-xl  text-secondary"></span>
+				</div>
+			)}
+			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
+				{reviews.map((review) => (
+					<ReviewCardHome key={review.id} review={review} />
+				))}
+			</div>
+		</div>
+	);
+};
+
+export default ReviewsOfClients;

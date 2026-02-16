@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router";
 import useAuthContext from "../../hooks/useAuthContext";
 
 const DashboardNavbar = ({ sidebarOpen }) => {
-	const { logoutUser } = useAuthContext(); 
+	const { logoutUser, user } = useAuthContext(); 
 	const navigate = useNavigate();
 	const handleLogout = () => {
 		logoutUser();
@@ -27,7 +27,7 @@ const DashboardNavbar = ({ sidebarOpen }) => {
 					<label tabIndex={0} className="btn btn-ghost btn-circle avatar">
 						<div className="w-10 rounded-full">
 							<img
-								src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+								src={user?.image}
 								alt="User avatar"
 							/>
 						</div>

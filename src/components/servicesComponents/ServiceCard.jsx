@@ -10,9 +10,9 @@ const ServiceCard = ({ service }) => {
 				<div className="card bg-gradient-to-br from-[#e5eef3] to-[#155e85a7] max-w-66 md:w-96 shadow-sm mx-auto h-full">
 					<figure className="">
 						<img
-							src={service.images?.length > 0 ? service.images[0].image : default_img}
+							src={service.images?.length > 0 ? service.images[0].images : default_img}
 							alt="Shoes"
-							className=""
+							className="object-cover"
 						/>
 					</figure>
 					<div className="card-body items-center text-center">

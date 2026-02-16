@@ -6,10 +6,14 @@ const useOrder = () => {
     const [loading, setLoading] = useState(false); 
     const [canOrderService, setCanOrderService] = useState(null);
     
+    
+      
+
     const fetchOrders = async () => {
         setLoading(true); 
         try {
             const res = await authAPIClient.get("/orders/"); 
+            // console.log(res); 
             setOrder(res.data.results); 
         }
         catch (error) {

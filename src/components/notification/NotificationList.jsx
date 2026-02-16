@@ -31,8 +31,8 @@ const NotificationList = ({ notification, openNoti }) => {
 				:	""
 			} ${
 				notification.is_read ?
-					"bg-base-100 border-base-200 opacity-80 hover:opacity-100"
-				:	"bg-base-200 opacity-90 hover:opacity-100 border-primary/20 shadow-sm"
+					"bg-gray-200 border-base-200 opacity-70 transition-all hover:opacity-100"
+				:	"bg-gray-200 opacity-90 hover:opacity-100 border-primary/20 shadow-sm"
 			}`}>
 			<div className="flex gap-4">
 				{/* Icon Container */}
@@ -55,7 +55,7 @@ const NotificationList = ({ notification, openNoti }) => {
 							{getTime()}
 						</span>
 					</div>
-					<p className={`${openNoti ? "text-xs" : "text- xs"} text-black-300 leading-relaxed`}>
+					<p className={`${openNoti ? "text-xs" : "text- xs"} text-left text-black-300 leading-relaxed`}>
 						{notification.message}
 					</p>
 				</div>

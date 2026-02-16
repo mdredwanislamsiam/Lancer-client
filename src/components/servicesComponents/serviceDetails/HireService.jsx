@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import useOrder from '../../../hooks/useOrder';
 import { FaCheck } from 'react-icons/fa6';
 import { FaShoppingCart } from 'react-icons/fa';
+import useAuth from '../../../hooks/useAuth';
 
 const HireService = ({service}) => {
     const [hiring, setHiring] = useState(false); 
 	const [hired, setHired] = useState(false); 
-	const { createOrder, canOrderService, canOrder } = useOrder(); 
+	const { createOrder, canOrderService, canOrder } = useOrder();
+	const { user } = useAuth(); 
 
 	useEffect(() => {
 		canOrder(service.id);
@@ -26,13 +28,14 @@ const HireService = ({service}) => {
 			setHiring(false); 
 		}
 	}
-	console.log(canOrderService); 
+	// console.log(canOrderService); 
+	if (!user) return; 
     return (
 		<div>
 			<button
 				className="btn btn-primary w-full"
 				onClick={onSubmit}
-				disabled={hiring || hired || !canOrderService}>
+				disabled={hiring || hired || !canOrderService || user.role === "Seller"}>
 				{hiring ?
 					<span className="flex items-center">
 						<span className="loading loading-spinner loading-sm mr-2"></span>

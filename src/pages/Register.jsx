@@ -6,15 +6,41 @@ import ErrorAlert from '../components/alerts/ErrorAlert';
 
 const Register = () => {
 	const { registerUser, errorMsg } = useAuthContext(); 
+	const [previewImage, setPreviewImage] = useState([]);
+	const [image, setImage] = useState([]);
 	const [loading, setLoading] = useState(false); 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const navigate = useNavigate(); 
+	const navigate = useNavigate(); 
+	
 
+	const handleImageChange = (e) => {
+		console.log(e); 
+		const files = Array.from(e.target.files);
+		setImage(files);
+		console.log(files); 
+		setPreviewImage(files.map((file) => URL.createObjectURL(file)));
+	}; 
+
+	console.log(previewImage); 
 	const onSubmit = async (data) => {
+		const formData = new FormData();
+		formData.append("username", data.username);
+		formData.append("first_name", data.first_name);
+		formData.append("last_name", data.last_name);
+		formData.append("email", data.email);
+		formData.append("address", data.address);
+		formData.append("phone_number", data.phone_number);
+		formData.append("password", data.password);
+		formData.append("bio", data.bio);
+		formData.append("role", data.role);
+		if (data.image && data.image[0]) {
+			formData.append("image", data.image[0]);
+		}
+		console.log(formData)
 		setLoading(true); 
         delete data.confirm_password; 
         try {
-			const response = await registerUser(data);
+			const response = await registerUser(formData);
 			if (response.success) {
 				navigate("/login", { state: { response: response } });
 			}
@@ -106,7 +132,7 @@ const Register = () => {
 								type="text"
 								placeholder="Address"
 								className="input input-bordered w-full outline-none"
-								{...register("address", {required:"Please enter your address to proceed"})}
+								{...register("address", { required: "Please enter your address to proceed" })}
 							/>
 						</div>
 						{/* Phone_Number */}
@@ -121,10 +147,12 @@ const Register = () => {
 								className="input input-bordered w-full outline-none"
 								{...register("phone_number", {
 									pattern: { value: /^\d{8,11}$/, message: "Phone number must be 8 to 11 digits" },
-									required:"Please enter your address to proceed"
+									required: "Please enter your address to proceed",
 								})}
 							/>
-							{errors.phone_number && <span className="label-text-alt text-error">{errors.phone_number.message}</span>}
+							{errors.phone_number && (
+								<span className="label-text-alt text-error">{errors.phone_number.message}</span>
+							)}
 						</div>
 						{/* Password */}
 						<div className="form-control">
@@ -195,6 +223,27 @@ const Register = () => {
 									Seller
 								</option>
 							</select>
+						</div>
+						{/* Profile Image */}
+						<div>
+							<label htmlFor="bio" className="label">
+								<span className="label-text text-white/80">Profile Image</span>
+							</label>
+							<input
+								id="image"
+								type="file"
+								accept="image/*"
+								className="file-input file-input-bordered w-full"
+								onChange={handleImageChange}
+								{...register("image")}
+							/>
+							{previewImage.length > 0 && (
+								<div className="flex gap-2 mt-2">
+									{previewImage.map((src, index) => (
+										<img key={index} src={src} alt="Preview" className="w-20 h-20 my-2" />
+									))}
+								</div>
+							)}
 						</div>
 						<button
 							type="submit"

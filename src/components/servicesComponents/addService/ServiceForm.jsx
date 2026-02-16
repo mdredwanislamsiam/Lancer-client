@@ -1,17 +1,31 @@
-import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import useCategories from '../../../hooks/useCategories';
 import useService from '../../../hooks/useService';
+import { useNavigate } from 'react-router';
 
 const ServiceForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm(); 
-    const { categories} = useCategories(); 
-    const { addService } = useService(); 
+    const { categories } = useCategories(); 
+	const { addService } = useService(); 
+	const navigate = useNavigate(); 
+
+	const handleAddService = async (data) => {
+		try {
+			const res = await addService(data); 
+			console.log(res); 
+			if (res) {
+				navigate(`images/${res.serviceId}`);
+			}
+		}
+		catch (error) {
+			console.log(error); 
+		}
+	}
 
     return (
 		<div className="w-1/2 mx-auto">
 			<h1 className="text-3xl font-bold my-10 text-center">Service Form</h1>
-			<form onSubmit={handleSubmit(addService)} className="space-y-4">
+			<form onSubmit={handleSubmit(handleAddService)} className="space-y-4">
 				{/* Dropdown for categories */}
 				<div>
 					<label className="block text-sm font-medium">Category</label>
