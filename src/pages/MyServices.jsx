@@ -45,19 +45,21 @@ const MyServices = () => {
     if (!categories || !myServices) return;
     
     return (
-		<div className="container mx-auto py-8 ">
-			<MyFilterSection
-				priceRange={priceRange}
-				handlePriceChange={handlePriceChange}
-				categories={categories}
-				selectedCategory={selectedCategory}
-				handleCategoryChange={setSelectedCategory}
-				searchQuery={searchQuery}
-				handleSearchQuery={setSearchQuery}
-				sortOrder={sortOrder}
-				handleSorting={setSortOrder}
-			/>
-			<MyServiceList services={myServices} loading={loading} onDelete={handleDelete}/>
+		<div className="container mx-auto py-8 flex flex-col justify-between">
+			<div>
+				<MyFilterSection
+					priceRange={priceRange}
+					handlePriceChange={handlePriceChange}
+					categories={categories}
+					selectedCategory={selectedCategory}
+					handleCategoryChange={setSelectedCategory}
+					searchQuery={searchQuery}
+					handleSearchQuery={setSearchQuery}
+					sortOrder={sortOrder}
+					handleSorting={setSortOrder}
+				/>
+				<MyServiceList services={myServices} loading={loading} onDelete={handleDelete} />
+			</div>
 			<ServicePagination totalPages={totalPages} currentPage={currentPage} handlePageChange={setCurrentPage} />
 		</div>
 	);

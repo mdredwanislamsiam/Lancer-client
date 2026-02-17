@@ -39,25 +39,32 @@ const Services = () => {
 		});
 		setCurrentPage(1);
 	};
-
+	if (loading)
+		return (
+			<div className="flex justify-center items-center min-h-screen">
+				<span className="loading loading-spinner loading-xl  text-secondary"></span>
+			</div>
+		);
 	// console.log(services);
 	// console.log(categories);
 	if (!categories || !services) return;
 
 	return (
-		<div className="container mx-auto py-8 ">
-			<FilteringSection
-				priceRange={priceRange}
-				handlePriceChange={handlePriceChange}
-				categories={categories}
-				selectedCategory={selectedCategory}
-				handleCategoryChange={setSelectedCategory}
-				searchQuery={searchQuery}
-				handleSearchQuery={setSearchQuery}
-				sortOrder={sortOrder}
-				handleSorting={setSortOrder}
-			/>
-			<ServiceList services={services} loading={loading} />
+		<div className="container mx-auto py-8 flex flex-col justify-between">
+			<div>
+				<FilteringSection
+					priceRange={priceRange}
+					handlePriceChange={handlePriceChange}
+					categories={categories}
+					selectedCategory={selectedCategory}
+					handleCategoryChange={setSelectedCategory}
+					searchQuery={searchQuery}
+					handleSearchQuery={setSearchQuery}
+					sortOrder={sortOrder}
+					handleSorting={setSortOrder}
+				/>
+				<ServiceList services={services} loading={loading} />
+			</div>
 			<ServicePagination totalPages={totalPages} currentPage={currentPage} handlePageChange={setCurrentPage} />
 		</div>
 	);

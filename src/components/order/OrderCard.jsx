@@ -124,7 +124,7 @@ const OrderCard = ({ order }) => {
 			</div>
 			<div className="py-3 px-10 bg-gradient-to-b from-[#dfd5b284] to-[#ffffff]">
 				<h3 className="font-medium text-lg mb-4 text-center">Order Info</h3>
-				{/* Order Items Table  */}
+
 				<OrderItem item={order} />
 			</div>
 			<div className="flex border-t pt-4 py-2 px-10 items-center w-full">

@@ -4,6 +4,7 @@ import useAuthContext from "../hooks/useAuthContext";
 import { Link } from "react-router";
 import useNotification from "../hooks/useNotification";
 import HoverNotificationList from "../components/notification/HoverNotificationList";
+import defImg from "../assets/images/DefaultImage.jpg"
 
 const Navbar = () => {
 	const { user, logoutUser } = useAuthContext();
@@ -114,8 +115,8 @@ const Navbar = () => {
 							<div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
 								<div className="w-10 rounded-full">
 									<img
-										alt="Tailwind CSS Navbar component"
-										src={user?.image}
+										alt="profile"
+										src={user?.image || defImg}
 									/>
 								</div>
 							</div>

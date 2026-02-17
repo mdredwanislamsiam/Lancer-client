@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import useCategories from "../../../hooks/useCategories";
 import authAPIClient from "../../../services/auth-api-client";
-import { useSearchParams } from "react-router";
 import useService from "../../../hooks/useService";
 import CategoryPart from "./formParts/CategoryPart";
 import TitlePart from "./formParts/TitlePart";
@@ -72,7 +71,7 @@ const UpdateServiceForm = ({ serviceId }) => {
 			const res = await authAPIClient.delete(`/services/${serviceId}/images/${id}/`);
 			setOldImages((prevImages) => prevImages.filter((img) => img.id !== id));
 			alert("Image deleted successfully!");
-			console.log(res);
+			// console.log(res);
 		} catch (error) {
 			console.log(error);
 		}

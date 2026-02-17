@@ -7,13 +7,13 @@ import authAPIClient from '../services/auth-api-client';
 
 const InfoPage = () => {
     const {  id } = useParams(); 
-    console.log(id); 
+    // console.log(id); 
     const [user, setUser] = useState(null); 
 
     const fetchUser = async () => {
         try {
             const res = await authAPIClient.get(`/users/${id}/`);
-            console.log(res); 
+            // console.log(res); 
             setUser(res.data)
         }
         catch (error) {

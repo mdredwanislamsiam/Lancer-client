@@ -3,7 +3,7 @@ import ErrorAlert from '../alerts/ErrorAlert';
 import ServiceCard from './ServiceCard';
 
 const ServiceList = ({ error, loading, services }) => {
-	console.log(services); 
+	// console.log(services); 
     return (
 		<section className="my-20">
 			{/* Loading Spinner */}

@@ -5,15 +5,19 @@ const useOrder = () => {
     const [orders, setOrder] = useState([]); 
     const [loading, setLoading] = useState(false); 
     const [canOrderService, setCanOrderService] = useState(null);
-    
+    const [totalPages, setTotalPages] = useState(0); 
     
       
 
-    const fetchOrders = async () => {
+    const fetchOrders = async (
+        currentPage = 1
+    ) => {
         setLoading(true); 
+        const url = `/orders/?page=${currentPage}`   
         try {
-            const res = await authAPIClient.get("/orders/"); 
+            const res = await authAPIClient.get(url); 
             // console.log(res); 
+            setTotalPages(Math.ceil(res.data.count / 10));
             setOrder(res.data.results); 
         }
         catch (error) {
@@ -23,9 +27,7 @@ const useOrder = () => {
             setLoading(false); 
         }
     }
-    useEffect(() => { 
-        fetchOrders(); 
-     }, []); 
+     
 
     const canOrder = async (service_id) => {
         try {
@@ -66,7 +68,7 @@ const useOrder = () => {
     }
 
 
-    return { canOrder, createOrder, canOrderService, loading, orders, cancelOrder}; 
+    return { canOrder, fetchOrders, createOrder, canOrderService, loading, orders, cancelOrder, totalPages}; 
 };
 
 export default useOrder;

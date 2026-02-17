@@ -25,6 +25,13 @@ import AddCategory from '../pages/AddCategory';
 import Categories from '../pages/Categories';
 import UpdateCategory from '../pages/UpdateCategory';
 import InfoPage from '../pages/InfoPage';
+import Order from '../components/dashboard/Order';
+import Clients from '../components/dashboard/Clients';
+import DeliveryOrders from '../components/dashboard/orderSections/DeliveryOrders';
+import ActiveOrders from '../components/dashboard/orderSections/ActiveOrders';
+import PaidOrders from '../components/dashboard/orderSections/PaidOrders';
+import UnpaidOrders from '../components/dashboard/orderSections/UnpaidOrders';
+import CanceledOrders from '../components/dashboard/orderSections/CanceledOrders';
 
 const AppRoutes = () => {
     return (
@@ -43,7 +50,15 @@ const AppRoutes = () => {
 				<Route path= "infoPage/:id" element={<InfoPage/>} /> 
 			</Route>
 			<Route path="dashboard" element={<DashboardLayout />}>
-				<Route index element={<Dashboard />} />
+				<Route element={<Dashboard />}>
+					<Route index element={<Order/>} /> 
+					<Route path='paidOrders' element={<PaidOrders/>} /> 
+					<Route path='deliveredOrders' element={<DeliveryOrders/>} /> 
+					<Route path='activeOrders' element={<ActiveOrders/>} /> 
+					<Route path='unpaidOrders' element={<UnpaidOrders/>} /> 
+					<Route path='canceledOrders' element={<CanceledOrders/>} /> 
+					<Route path='clients' element={<Clients/>} /> 
+				</Route>
 				<Route path="profile" element={<Profile />} />
 				<Route path="orders" element={<Orders />} />
 				<Route path="payment/success" element={<PaymentSuccess />} />

@@ -54,7 +54,7 @@ const useCategories = () => {
         console.log(data); 
         try {
             const res = await authAPIClient.patch(`/categories/${categoryId}/`, data);
-            console.log(res)
+            // console.log(res)
         }
         catch (error) {
             console.log(error); 
@@ -66,7 +66,7 @@ const useCategories = () => {
     const deleteCategory = async (categoryId) => {
 		try {
 			const res = await authAPIClient.delete(`/categories/${categoryId}/`);
-			console.log(res);
+			// console.log(res);
 		} catch (error) {
 			console.log(error);
 		}

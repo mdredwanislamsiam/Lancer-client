@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 const OrderItem = ({ item }) => {
 	const getTime = () => {
 		const createdTime = new Date(item.created_at);
-		console.log(item); 
+		// console.log(item); 
 		const day = createdTime.getDate();
 		const month = createdTime.toLocaleString("en-US", { month: "long" });
 		const year = createdTime.getFullYear();
@@ -17,7 +17,6 @@ const OrderItem = ({ item }) => {
 		<div>
 			<div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border-gray-100 last:border-0  transition-colors duration-200 gap-5">
 				<Link to={`/services/${item.service.id}`} className="flex items-center gap-4 flex-1">
-					{/* Placeholder for product image if available in the future */}
 					<div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400">
 						<img src={item.service?.images[0]?.image || defaultImg} alt="" className="object-fill" />
 					</div>

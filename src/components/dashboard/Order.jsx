@@ -1,25 +1,34 @@
-import React, { useEffect, useState } from "react";
-import authAPIClient from "../../services/auth-api-client";
+import { useEffect, useState } from "react";
+import useOrder from "../../hooks/useOrder";
+import OrderComponent from "./orderSections/OrderComponent";
+import ServicePagination from "../servicesComponents/ServicePagination";
+import useOtherInfo from "../../hooks/useOtherInfo";
+import useAuth from "../../hooks/useAuth";
+
 
 const Order = () => {
-	const [orders, setOrders] = useState([]);
-	const [loading, setLoading] = useState(false);
+	const { orders, fetchOrders, totalPages } = useOrder(); 
+	const [currentPage, setCurrentPage] = useState(1); 
+	const { user } = useAuth(); 
+	const { allOrders, loading} = useOtherInfo(); 
 
-	useEffect(() => {
-		const fetchOrders = async () => {
-			setLoading(true);
-			try {
-				const response = await authAPIClient.get("/orders/");
-				setOrders(response.data);
-			} catch (error) {
-				console.log(error);
-			} finally {
-				setLoading(false);
-			}
-		};
-		fetchOrders();
-	}, []);
+	useEffect(() => {fetchOrders(currentPage)}, [currentPage])
 
+
+	// console.log(orders); 
+	const getTime = (time) => {
+		const createdTime = new Date(time);
+		// console.log(createdTime);
+		const day = createdTime.getDate();
+		const month = createdTime.getMonth() + 1;
+		const year = createdTime.getFullYear();
+
+		return `${day}-${month}-${year}`;
+	};
+
+	if (!orders || !allOrders) return; 
+	
+	// spinner
 	if (loading)
 		return (
 			<div className="flex justify-center items-center my-20">
@@ -27,36 +36,9 @@ const Order = () => {
 			</div>
 		);
 	return (
-		<div className="mt-6 card bg-base-100 shadow-sm">
-			<div className="card-body">
-				<h3 className="card-title text-lg">Recent Orders</h3>
-				<div className="overflow-x-auto">
-					<table className="table table-zebra">
-						<thead>
-							<tr>
-								<th>Order ID</th>
-								<th>Customer</th>
-								<th>Status</th>
-								<th>Date</th>
-								<th>Amount</th>
-							</tr>
-						</thead>
-						<tbody>
-							{orders.map((order) => (
-								<tr key={order.id}>
-									<td># {order.id}</td>
-									<td>{order.user}</td>
-									<td>
-										<div className={`badge ${order.status === "Canceled" ? "badge-error" : order.status === "Delivered" ? "badge-success" : "bg-blue-500"} text-gray-100`}>{order.status}</div>
-									</td>
-									<td>{order.created_at}</td>
-									<td>{order.total_price}</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
-			</div>
+		<div>
+			<OrderComponent orders={user?.is_staff ? orders : allOrders} loading={loading} getTime={getTime} title={"All Orders"} />
+			{user?.is_staff && <ServicePagination totalPages={totalPages} currentPage={currentPage} handlePageChange={setCurrentPage} />}
 		</div>
 	);
 };

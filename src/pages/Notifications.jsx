@@ -40,20 +40,20 @@ const Notifications = () => {
 			</div>
 		);
     return (
-		<div className="min-h-screen bg-base-100 text-base-content p-4 md:p-8">
+		<div className="min-h-screen bg-base-100 text-base-content p-4 md:p-8 flex flex-col justify-between">
 			<div className="max-w-3xl mx-auto">
 				{/* Header */}
 				<div className="flex justify-between items-center mb-8">
 					<div className="flex items-center gap-3">
 						<div className="relative">
-							<FiBell className="w-8 h-8 text-primary" />
+							<FiBell className="w-8 h-8 text-blue-800" />
 							{unreadCount > 0 && (
 								<span className="absolute -top-1 -right-1 w-4 h-4 bg-error text-white text-xs font-bold rounded-full flex items-center justify-center animate-pulse">
 									{unreadCount}
 								</span>
 							)}
 						</div>
-						<h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+						<h1 className="text-3xl font-bold bg-gradient-to-r from-[#03293d] to-[#559aef] bg-clip-text text-transparent">
 							Notifications
 						</h1>
 					</div>

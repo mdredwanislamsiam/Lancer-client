@@ -8,7 +8,7 @@ const Filters = ({
 	handleSorting,
 	open,
 }) => {
-	console.log(open);
+
     
 	return (
 		<div>

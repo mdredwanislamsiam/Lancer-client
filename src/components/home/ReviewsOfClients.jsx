@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReviewCardHome from './ReviewCardHome';
-import apiClient from '../../services/api-client';
 import authAPIClient from '../../services/auth-api-client';
 
 const ReviewsOfClients = () => {
@@ -12,7 +11,7 @@ const ReviewsOfClients = () => {
 		setLoading(true); 
 		try {
 			const res = await authAPIClient.get("/reviews"); 
-			console.log(res);
+			// console.log(res);
 			setReviews(res.data.reviews);
 
 		}

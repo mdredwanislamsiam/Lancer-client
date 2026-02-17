@@ -6,22 +6,10 @@ import ErrorAlert from '../components/alerts/ErrorAlert';
 
 const Register = () => {
 	const { registerUser, errorMsg } = useAuthContext(); 
-	const [previewImage, setPreviewImage] = useState([]);
-	const [image, setImage] = useState([]);
 	const [loading, setLoading] = useState(false); 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 	const navigate = useNavigate(); 
 	
-
-	const handleImageChange = (e) => {
-		console.log(e); 
-		const files = Array.from(e.target.files);
-		setImage(files);
-		console.log(files); 
-		setPreviewImage(files.map((file) => URL.createObjectURL(file)));
-	}; 
-
-	console.log(previewImage); 
 	const onSubmit = async (data) => {
 		const formData = new FormData();
 		formData.append("username", data.username);
@@ -34,7 +22,7 @@ const Register = () => {
 		formData.append("bio", data.bio);
 		formData.append("role", data.role);
 		if (data.image && data.image[0]) {
-			formData.append("image", data.image[0]);
+			formData.append("image",  data.image[0]);
 		}
 		console.log(formData)
 		setLoading(true); 
@@ -234,16 +222,9 @@ const Register = () => {
 								type="file"
 								accept="image/*"
 								className="file-input file-input-bordered w-full"
-								onChange={handleImageChange}
 								{...register("image")}
 							/>
-							{previewImage.length > 0 && (
-								<div className="flex gap-2 mt-2">
-									{previewImage.map((src, index) => (
-										<img key={index} src={src} alt="Preview" className="w-20 h-20 my-2" />
-									))}
-								</div>
-							)}
+					
 						</div>
 						<button
 							type="submit"
