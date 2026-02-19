@@ -23,7 +23,7 @@ const ForgotPasswordConfirm = () => {
 		setErrorMsg("");
 		setLoading(true);
         delete data.confirm_password;
-        console.log(data); 
+        // console.log(data); 
 		try {
 			await apiClient.post("/auth/users/reset_password_confirm/", {uid, token, new_password: data.new_password });
 			navigate("/login", {

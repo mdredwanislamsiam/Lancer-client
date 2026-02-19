@@ -18,7 +18,7 @@ const HireService = ({service}) => {
 		setHiring(true); 
 		try {
 			const order = await createOrder(service.id); 
-			console.log("Order: ", order); 
+			// console.log("Order: ", order); 
 			setHired(true); 
 		}
 		catch (error) {

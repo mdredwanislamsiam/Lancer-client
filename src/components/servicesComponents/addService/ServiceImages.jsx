@@ -43,7 +43,7 @@ const ServiceImages = () => {
 				if (res.status === 201) {
 					navigate('/dashboard'); 
 				}
-				console.log(res); 
+				// console.log(res); 
 			}
 			alert("Images uploaded successfully!");
 		} catch (error) {

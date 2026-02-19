@@ -24,7 +24,7 @@ const Register = () => {
 		if (data.image && data.image[0]) {
 			formData.append("image",  data.image[0]);
 		}
-		console.log(formData)
+		// console.log(formData)
 		setLoading(true); 
         delete data.confirm_password; 
         try {

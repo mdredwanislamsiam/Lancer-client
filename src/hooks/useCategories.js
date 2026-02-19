@@ -54,7 +54,7 @@ const useCategories = () => {
     
 
     const updateCategory = async (categoryId, data) => {
-        console.log(data); 
+        // console.log(data); 
         try {
             const res = await authAPIClient.patch(`/categories/${categoryId}/`, data);
             console.log(res.status)

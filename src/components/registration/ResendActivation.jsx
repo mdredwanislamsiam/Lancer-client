@@ -21,7 +21,7 @@ const ResendActivation = () => {
 		setLoading(true);
 		try {
             const res = await apiClient.post("/auth/users/resend_activation/", data);
-            console.log(res);
+            // console.log(res);
 			navigate("/login", {
 				state: { message: "An Activation email was sent to your email.Please activate to login" },
 			});

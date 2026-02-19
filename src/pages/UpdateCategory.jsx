@@ -27,7 +27,7 @@ const UpdateCategory = () => {
 			}, [sMsg]);
 
     const handleUpdateCategory = async (data) => {
-        console.log(data); 
+        // console.log(data); 
         try {
 			const res = await updateCategory(categoryId, data);
 			if (res) {

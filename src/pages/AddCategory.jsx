@@ -24,7 +24,7 @@ const AddCategory = () => {
 		}, [sMsg]);
 
     const handleAddService = async (data) => {
-        console.log(data)
+        // console.log(data)
 		try {
 			const res = await addCategory(data);
 			if (res) {

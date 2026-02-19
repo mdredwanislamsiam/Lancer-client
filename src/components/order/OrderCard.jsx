@@ -78,7 +78,7 @@ const OrderCard = ({ order }) => {
 				amount: order.total_price,
 				orderId: order.id,
 			});
-			console.log(response);
+			// console.log(response);
 			if (response.data.payment_url) {
 				setLoading(false);
 				window.location.href = response.data.payment_url;

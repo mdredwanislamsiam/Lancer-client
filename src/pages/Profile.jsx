@@ -43,9 +43,9 @@ const Profile = () => {
 		if (data.image && data.image[0]) {
 			formData.append("image", data.image[0]);
 		}
-		console.log([...formData.entries()]);
+		// console.log([...formData.entries()]);
 
-        console.log(formData);
+        // console.log(formData);
         try {
             const res = await updateUserProfile(formData);
 			setSuccessMsg(res.message); 

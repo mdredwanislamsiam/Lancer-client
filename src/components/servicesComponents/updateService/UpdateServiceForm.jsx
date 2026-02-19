@@ -99,7 +99,7 @@ const UpdateServiceForm = ({ serviceId }) => {
 	};
 
 	const handleUpdateService = async (formData) => {
-		console.log(formData);
+		// console.log(formData);
 		try {
 			const cleanData = {
 				title: formData.title,

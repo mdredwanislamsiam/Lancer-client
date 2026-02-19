@@ -57,7 +57,7 @@ const useService = () => {
 
 
 	const addService = async (data) => {
-		console.log(data)
+		// console.log(data)
 		try {
 			const res = await authAPIClient.post("/services/", data);
 			// console.log(res);
