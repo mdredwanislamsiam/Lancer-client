@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ErrorAlert from '../components/alerts/ErrorAlert';
 import useAuthContext from '../hooks/useAuthContext';
 import { useForm } from 'react-hook-form';

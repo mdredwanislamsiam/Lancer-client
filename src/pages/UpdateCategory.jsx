@@ -10,10 +10,11 @@ const UpdateCategory = () => {
     const { register, handleSubmit, formState: { errors } } = useForm(); 
     const { categoryId } = useParams(); 
     const { fetchCategory, category, updateCategory } = useCategoriesContext(); 
+	const [sMsg, setSMsg] = useState(""); 
 
     useEffect(() => { fetchCategory(categoryId) }, [categoryId]); 
 
-	const [sMsg, setSMsg] = useState(""); 
+	
 	
 		useEffect(() => {
 				if (sMsg) {

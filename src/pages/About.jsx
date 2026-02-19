@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaRocket, FaShieldAlt, FaBolt, FaUsers, FaUserTie, FaGlobe, FaChartLine, FaCheckCircle } from 'react-icons/fa';
 import { Link } from 'react-router';
 

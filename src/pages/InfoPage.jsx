@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import defImg from "../assets/images/DefaultImage.jpg";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaUser, FaFacebook, FaTwitter, FaLinkedin, FaGithub, FaInstagram } from 'react-icons/fa';
 import InfoItem from '../components/infoPage/InfoItem';
