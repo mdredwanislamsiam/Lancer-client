@@ -53,7 +53,7 @@ const About = () => {
 	];
 
     return (
-		<div className="bg-base-100 text-base-content min-h-screen">
+		<div className="bg-linear-to-t from-[#c0e3f9] text-base-content min-h-screen">
 			{/* Hero Section */}
 			<section className="relative overflow-hidden py-24 lg:py-32 px-6">
 				<div className="max-w-7xl mx-auto text-center relative z-10">
@@ -211,14 +211,12 @@ const About = () => {
 						</p>
 						<Link to={"/register"}>
 							<button className="btn px-6 py-3 lg:px-10 lg:py-5 font-bold text-white rounded-full bg-gradient-to-r from-[#32435a] to-[#678b9d] hover:from-[#072e4c] hover:to-[#4a7ca3] shadow-lg shadow-[#32435a]/40 transform transition-transform duration-300 hover:scale-105 ring-1 ring-[#678b9d]/50 hover:ring-[#072e4c]/70 text-sm lg:text-lg w-fit border-0">
-                                Get Started Now
+								Get Started Now
 							</button>
 						</Link>
 					</div>
 				</div>
 			</section>
-
-		
 		</div>
 	);
 };

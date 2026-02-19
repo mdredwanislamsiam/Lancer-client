@@ -57,7 +57,7 @@ const Navbar = () => {
 					</ul>
 				</button>
 				<Link to={"/"}>
-					<button className="font-extrabold cursor-pointer text-xl my-auto ml-0 lg:ml-10 mb-1 hover:scale-105 transition-all duration-300 uppercase font-newfont3  headTitle">
+					<button className="font-extrabold  cursor-pointer text-xl my-auto ml-0 lg:ml-10  hover:scale-105 transition-all duration-300 uppercase font-newfont3  headTitle">
 						Lancer
 					</button>
 				</Link>

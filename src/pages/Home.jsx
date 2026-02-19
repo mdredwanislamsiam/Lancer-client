@@ -13,28 +13,28 @@ const Home = () => {
 			<h1 className="text-2xl lg:text-5xl my-5 lg:my-20 mt-20 lg:mt-40 font-bold text-[#1f4864] drop-shadow-sm text-center drop-shadow-[#194562] mb-10">
 				Trending Categories
 			</h1>
-			<div className="container mx-auto my-5 lg:my-20 mt-10 lg:mt-40">
+			<div className="max-w-7xl mx-auto my-5 lg:my-20 mt-10 lg:mt-40">
 				<CategoryCards />
 			</div>
 			<h1 className="text-2xl lg:text-5xl my-5 lg:my-20 mt-20 lg:mt-40 font-bold text-[#1f4864] text-center drop-shadow-sm drop-shadow-[#194562] mb-10">
 				Popular Services
 			</h1>
-			<div className="container mx-auto my-5 lg:my-20">
+			<div className="max-w-7xl mx-auto my-5 lg:my-20">
 				<PopularServices />
 			</div>
 			<h1 className="text-2xl lg:text-5xl my-5 lg:my-20 mt-20 lg:mt-40 font-bold text-[#1f4864] text-center drop-shadow-sm drop-shadow-[#194562] mb-10">
 				Our Promises
 			</h1>
-			<div className="container mx-auto my-5 lg:my-20">
+			<div className="max-w-7xl mx-auto my-5 lg:my-20">
 				<Milestones />
 			</div>
-			<div className="container mx-auto my-5 lg:my-20">
+			<div className="max-w-7xl mx-auto my-5 lg:my-20">
 				<MoneyBack />
 			</div>
 			<h1 className="text-2xl lg:text-5xl my-5 lg:my-20 mt-20 lg:mt-40 font-bold text-[#1f4864] text-center drop-shadow-sm drop-shadow-[#194562] mb-10">
 				Service Reviews
 			</h1>
-			<div className="container mx-auto py-20">
+			<div className="max-w-7xl mx-auto py-20">
 				<ReviewsOfClients />
 			</div>
 		</div>

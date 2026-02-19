@@ -1,10 +1,13 @@
-import React from 'react';
-import default_img from "../../assets/images/DefaultImage.jpg"
-import { Link } from 'react-router';
+import React from "react";
+import default_img from "../../assets/images/DefaultImage.jpg";
+import { Link } from "react-router";
+import { BiUser } from "react-icons/bi";
+import useAuthContext from "../../hooks/useAuthContext";
 
 const ServiceCard = ({ service }) => {
+	const { user } = useAuthContext(); 
 	if (!service) return null;
-    return (
+	return (
 		<div>
 			<div className="card bg-linear-to-b from-[#011e53e3] to-[#dfd6b958] hover:to-[#f5e3d2]  max-w-40 transition-all duration-700  lg:max-w-66 md:w-96 shadow-sm mx-auto h-full">
 				<figure className="">
@@ -16,8 +19,25 @@ const ServiceCard = ({ service }) => {
 				</figure>
 				<div className="card-body items-center text-center">
 					<h2 className="card-title text-sm lg:text-lg">{service.title}</h2>
-					<p className="text-lg lg:text-xl font-semibold text-[#3282B8]">${service.price}</p>
+					<div className="flex">
+						<label htmlFor="" className="label font-semibold text-center px-5 text-xs lg:text-sm">
+							<BiUser className="w-5 h-5" />
+							<span>Seller</span>
+						</label>
+						<Link
+							to={user ? `/infoPage/${service.seller.id}` : `/login`}
+							className="flex justify-center items-center gap-3 rounded-xl hover:scale-102 transition-all duration-300  hover:shadow-lg text-xs lg:text-sm px-3 py-1 w-fit">
+							<img
+								src={service.seller.image ? service.seller.image : default_img}
+								alt="seller profile image"
+								className="w-5 h-5 lg:w-8 lg:h-8 rounded-full drop-shadow-xl"
+							/>
+							<h1 className="font-semibold text-xs lg:text-sm">{service.seller.username}</h1>
+						</Link>
+					</div>
+					<p className="text-lg lg:text-xl font-bold text-shadow-lg text-[#145f91]">${service.price}</p>
 					<p className="italic text-gray-700 text-xs lg:text-sm">{service.description}</p>
+
 					<div className="card-actions mt-3">
 						<div className="card-actions mt-3">
 							<Link to={`/services/${service.id}`} className="">

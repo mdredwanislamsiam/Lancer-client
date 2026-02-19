@@ -13,9 +13,9 @@ const InfoPage = () => {
 
     const fetchUser = async () => {
         try {
-            const res = await authAPIClient.get(`/users/${id}/`);
-            // console.log(res); 
-            setUser(res.data)
+            const res = await authAPIClient.get(`/users/${id}`);
+            console.log(res); 
+            setUser(res?.data?.user)
         }
         catch (error) {
             console.log(error)

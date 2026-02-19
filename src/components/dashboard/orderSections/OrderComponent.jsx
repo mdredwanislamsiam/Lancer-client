@@ -1,4 +1,3 @@
-import React from 'react';
 import defImg from "../../../assets/images/DefaultImage.jpg";
 import { Link } from 'react-router';
 import LoadingSpinner from '../../common/LoadingSpinner';
@@ -6,6 +5,23 @@ import LoadingSpinner from '../../common/LoadingSpinner';
 
 
 const OrderComponent = ({ orders, loading, getTime, title }) => {
+
+
+	const STATUS = {
+		NOT_PAID: "Not paid",
+		PAID: "Paid",
+		ACTIVE: "Active",
+		CANCELED: "Canceled",
+		DELIVERED: "Delivered",
+	};
+
+	const statusBadges = {
+		[STATUS.NOT_PAID]: "bg-gray-700 text-gray-100", 
+		[STATUS.PAID]: "bg-green-800 text-gray-100", 
+		[STATUS.ACTIVE]: "bg-blue-800 text-gray-100", 
+		[STATUS.CANCELED]: "bg-red-800 text-gray-100", 
+		[STATUS.DELIVERED]: "bg-orange-600 text-gray-800",
+	};
 	// spinner
 	if (loading) return <LoadingSpinner />;
 	return (
@@ -56,11 +72,7 @@ const OrderComponent = ({ orders, loading, getTime, title }) => {
 											</td>
 											<td>
 												<div
-													className={`badge ${
-														order.status === "Canceled" ? "badge-error"
-														: order.status === "Delivered" ? "badge-success"
-														: "bg-blue-500"
-													} text-gray-100 w-fit h-fit`}>
+													className={`badge ${statusBadges[order.status]} w-fit border-0 h-fit`}>
 													{order.status}
 												</div>
 											</td>

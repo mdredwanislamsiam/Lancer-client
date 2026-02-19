@@ -9,11 +9,11 @@ const CategoryCards = () => {
 	const { categories} = useCategoriesContext(); 
 	const [categoryServices, setCategoryServices] = useState([])
 	
-	const handleSetFiveCategories = () => {
-		if (!categories || categories.length === 0) return; 
-		setFiveCategories(categories.slice(0, 5)); 
-	}
 
+	useEffect(() => {
+		if (!categories || categories.length === 0) return;
+		setFiveCategories(categories.slice(0, 5)); 
+	}, [categories])
 
 	const fetchFiveServices = async (id) => {
 		try {
@@ -26,7 +26,7 @@ const CategoryCards = () => {
 	}
 
 	useEffect(() => { 
-		handleSetFiveCategories(); 
+		if (fiveCategories.length === 0) return; 
 		const fetchServicesForFive = async () => {
 			try {
 				const servicesData = await Promise.all(fiveCategories.map((cat) => fetchFiveServices(cat.id)));
@@ -37,7 +37,7 @@ const CategoryCards = () => {
 			}
 		};
 		fetchServicesForFive();
-	}, [categories])
+	}, [fiveCategories])
 
 
     return (
