@@ -182,15 +182,18 @@ const Register = () => {
 						</div>
 						{/* Bio */}
 						<div className="form-control">
-							<label htmlFor="bio" className="label">
-								<span className="label-text text-white/80">Bio</span>
+							<label htmlFor="" className="label text-xs lg:text-sm">
+								Bio
 							</label>
-							<input
-								id="bio"
-								type="text"
-								placeholder="Bio"
-								className="input input-bordered w-full outline-none"
-								{...register("bio")}
+							<textarea
+								className="textarea textarea-bordered outline-none bg-base-200 w-full text-xs lg:text-sm min-h-[120px] resize-y"
+								placeholder="Tell clients a bit about yourself…"
+								{...register("bio", {
+									maxLength: {
+										value: 1000,
+										message: "Bio must be under 1000 characters!",
+									},
+								})}
 							/>
 							{errors.bio && <span className="label-text-alt text-error">{errors.bio.message}</span>}
 						</div>
@@ -224,7 +227,6 @@ const Register = () => {
 								className="file-input file-input-bordered w-full"
 								{...register("image")}
 							/>
-					
 						</div>
 						<button
 							type="submit"
