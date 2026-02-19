@@ -60,9 +60,9 @@ const useService = () => {
 		console.log(data)
 		try {
 			const res = await authAPIClient.post("/services/", data);
-			console.log(res);
+			// console.log(res);
 			if (res.status === 201) {
-				return {serviceId : res.data.id}
+				return { serviceId: res.data.id };
 			}
 		} catch (error) {
 			console.log(error);
@@ -83,8 +83,10 @@ const useService = () => {
 
 	const updateService = async (serviceId, data) => {
 		try {
-			await authAPIClient.patch(`/services/${serviceId}/`, data);
-			// console.log(res);
+			const res = await authAPIClient.patch(`/services/${serviceId}/`, data);
+			if (res.status === 200) {
+				return true;
+			}
 		} catch (error) {
 			console.log(error);
 		}

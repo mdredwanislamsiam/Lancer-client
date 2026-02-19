@@ -1,9 +1,8 @@
-import React from 'react';
-import useOtherInfo from '../../../hooks/useOtherInfo';
 import OrderComponent from './OrderComponent';
+import useOtherInfoContext from '../../../hooks/useOtherInfoContext';
 
 const ActiveOrders = () => {
-    const { activeOrders, loading, getTime } = useOtherInfo(); 
+    const { activeOrders, loading, getTime } = useOtherInfoContext(); 
 
     return (
         <div>

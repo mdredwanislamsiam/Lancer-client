@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import useCategories from "../../../hooks/useCategories";
 import authAPIClient from "../../../services/auth-api-client";
-import useService from "../../../hooks/useService";
 import CategoryPart from "./formParts/CategoryPart";
 import TitlePart from "./formParts/TitlePart";
 import DescriptionPart from "./formParts/DescriptionPart";
 import PricePart from "./formParts/PricePart";
 import ServiceRequirements from "./formParts/ServiceRequirements";
 import TimePart from "./formParts/TimePart";
+import useServiceContext from "../../../hooks/useServiceContext";
+import useCategoriesContext from "../../../hooks/useCategoriesContext";
+import SuccessAlert from "../../alerts/SuccessAlert";
 
 const UpdateServiceForm = ({ serviceId }) => {
 	const {
@@ -19,9 +20,21 @@ const UpdateServiceForm = ({ serviceId }) => {
 	const [oldImages, setOldImages] = useState([]);
 	const [images, setImages] = useState([]);
 	const [previewImages, setPreviewImages] = useState([]);
-	const { categories } = useCategories();
+	const { categories } = useCategoriesContext();
 	const [loading, setLoading] = useState(false);
-	const { updateService, fetchService, service } = useService();
+	const { updateService, fetchService, service } = useServiceContext();
+
+	const [sMsg, setSMsg] = useState("");
+
+	useEffect(() => {
+		if (sMsg) {
+			const timer = setTimeout(() => {
+				setSMsg(null);
+			}, 3000);
+
+			return () => clearTimeout(timer);
+		}
+	}, [sMsg]);
 
 	useEffect(() => {
 		fetchService(serviceId);
@@ -100,7 +113,10 @@ const UpdateServiceForm = ({ serviceId }) => {
 			};
 
 			const patchData = Object.fromEntries(Object.entries(cleanData).filter(([_, value]) => value != null));
-			await updateService(serviceId, patchData);
+			const res = await updateService(serviceId, patchData);
+			if (res) {
+				setSMsg("Service Updated Successfully! ");
+			}
 			alert("Updated Service successfully!");
 		} catch (error) {
 			console.log(error);
@@ -114,9 +130,13 @@ const UpdateServiceForm = ({ serviceId }) => {
 			for (const image of images) {
 				const formData = new FormData();
 				formData.append("images", image);
-				await authAPIClient.post(`/services/${serviceId}/images/`, formData);
+				const res = await authAPIClient.post(`/services/${serviceId}/images/`, formData);
+				getImages(); 
+				setPreviewImages([]); 
+				if (res.status === 201) {
+					setSMsg("Image Uploaded Successfully!")
+				}
 			}
-			alert("Images uploaded successfully!");
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -128,6 +148,7 @@ const UpdateServiceForm = ({ serviceId }) => {
 
 	return (
 		<div>
+			{sMsg && <SuccessAlert err={sMsg} />}
 			<div className="max-w-5xl mx-auto">
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 					{/* Images */}

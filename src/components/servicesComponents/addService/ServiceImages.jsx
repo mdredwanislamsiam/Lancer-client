@@ -1,6 +1,7 @@
-import React, {  useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import authAPIClient from '../../../services/auth-api-client';
-import { useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
+import SuccessAlert from '../../alerts/SuccessAlert';
 
 const ServiceImages = () => {
     const [previewImages, setPreviewImages] = useState([]);
@@ -8,12 +9,27 @@ const ServiceImages = () => {
     const [loading, setLoading] = useState(false); 
     const { serviceId } = useParams(); 
 	const navigate = useNavigate(); 
+	const [ msg, setMsg ] = useState(''); 
+
+	const location = useLocation(); 
+
+	useEffect(() => {
+		if (location.state?.sMsg) {
+			setMsg(location.state?.sMsg); 
+			const timer = setTimeout(() => {
+				setMsg(null);
+			}, 3000);
+
+			return () => clearTimeout(timer);
+		}
+	}, [location.state]);
 
     const handleImageChange = (e) => {
 		const files = Array.from(e.target.files);
 		setImages(files);
 		setPreviewImages(files.map((file) => URL.createObjectURL(file)));
 	}; 
+
 
     
 	const handleImageUpload = async () => {
@@ -39,6 +55,7 @@ const ServiceImages = () => {
 
     return (
 		<div>
+			{msg && <SuccessAlert err={msg} />}
 			<h3 className=" text-md lg:text-lg font-medium mb-2">Upload Product Images</h3>
 			<input
 				type="file"

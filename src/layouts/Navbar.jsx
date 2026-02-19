@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { CiBellOn } from "react-icons/ci";
 import useAuthContext from "../hooks/useAuthContext";
 import { Link } from "react-router";
-import useNotification from "../hooks/useNotification";
 import HoverNotificationList from "../components/notification/HoverNotificationList";
 import defImg from "../assets/images/DefaultImage.jpg";
+import useNotificationContext from "../hooks/useNotificationContext";
 
 const Navbar = () => {
 	const { user, logoutUser } = useAuthContext();
 	// console.log(user);
-	const { notifications, fetchNotifications } = useNotification();
+	const { notifications, fetchNotifications } = useNotificationContext();
 	const [openNoti, setOpenNoti] = useState(false);
 	useEffect(() => {
 		fetchNotifications(1);

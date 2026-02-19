@@ -4,6 +4,7 @@ import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaUser, FaFacebook, FaTwitter, FaL
 import InfoItem from '../components/infoPage/InfoItem';
 import { useParams } from 'react-router';
 import authAPIClient from '../services/auth-api-client';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const InfoPage = () => {
     const {  id } = useParams(); 
@@ -25,7 +26,7 @@ const InfoPage = () => {
         fetchUser(); 
     }, [id])
 
-    if (!user) return; 
+    if (!user) return <LoadingSpinner />
 
     return (
 		<div className="min-h-screen  bg-linear-to-t from-[#c0e3f9] text-white flex items-center justify-center p-4 relative overflow-hidden">

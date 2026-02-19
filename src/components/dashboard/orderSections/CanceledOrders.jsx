@@ -1,9 +1,8 @@
-import React from 'react';
-import useOtherInfo from '../../../hooks/useOtherInfo';
 import OrderComponent from './OrderComponent';
+import useOtherInfoContext from '../../../hooks/useOtherInfoContext';
 
 const CanceledOrders = () => {
-    const { canceledOrders, loading, getTime } = useOtherInfo();
+    const { canceledOrders, loading, getTime } = useOtherInfoContext();
     return (
         <div>
             <OrderComponent orders={canceledOrders} getTime={getTime} loading={loading} title={"Canceled Orders"}/> 

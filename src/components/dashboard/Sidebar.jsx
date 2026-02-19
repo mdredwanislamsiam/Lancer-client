@@ -4,10 +4,9 @@ import { Link, useNavigate } from 'react-router';
 
 import { FaShop } from 'react-icons/fa6';
 import { AiOutlineLogout } from 'react-icons/ai';
-import useAuthContext from '../../hooks/useAuthContext';
 import { GrServices } from 'react-icons/gr';
-import { IoNotificationsCircleOutline } from 'react-icons/io5';
 import { MdCircleNotifications } from 'react-icons/md';
+import useAuthContext from '../../hooks/useAuthContext';
 
 const Sidebar = () => {
 	const { user, logoutUser } = useAuthContext();

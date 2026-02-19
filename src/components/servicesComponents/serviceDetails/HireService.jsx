@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import useOrder from '../../../hooks/useOrder';
 import { FaCheck } from 'react-icons/fa6';
 import { FaShoppingCart } from 'react-icons/fa';
-import useAuth from '../../../hooks/useAuth';
+import useAuthContext from '../../../hooks/useAuthContext';
+import useOrderContext from '../../../hooks/useOrderContext';
 
 const HireService = ({service}) => {
     const [hiring, setHiring] = useState(false); 
 	const [hired, setHired] = useState(false); 
-	const { createOrder, canOrderService, canOrder } = useOrder();
-	const { user } = useAuth(); 
+	const { createOrder, canOrderService, canOrder } = useOrderContext();
+	const { user } = useAuthContext(); 
 
 	useEffect(() => {
 		canOrder(service.id);

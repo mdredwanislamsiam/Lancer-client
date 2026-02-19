@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import useNotification from '../../hooks/useNotification';
+import { useEffect } from 'react';
 import NotificationList from './NotificationList';
 import { FiBell } from 'react-icons/fi';
 import { Link } from 'react-router';
+import useNotificationContext from '../../hooks/useNotificationContext';
 
 const HoverNotificationList = ({openNoti}) => {
-    const { fetchNotifications, notifications, markNotification } = useNotification(); 
+    const { fetchNotifications, notifications, markNotification } = useNotificationContext(); 
 
     useEffect(() => {
         fetchNotifications(1); 

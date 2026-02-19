@@ -1,9 +1,9 @@
-import useOtherInfo from '../../../hooks/useOtherInfo';
+import useOtherInfoContext from '../../../hooks/useOtherInfoContext';
 import OrderComponent from './OrderComponent';
 
 
 const PaidOrders = () => {
-  const { paidOrders, loading, getTime } = useOtherInfo();
+  const { paidOrders, loading, getTime } = useOtherInfoContext();
   
     
     return (

@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { FiBell, FiCheck, FiInfo, FiAlertCircle, FiMessageSquare, FiPackage, FiClock } from 'react-icons/fi';
-import useNotification from '../hooks/useNotification';
+import { useEffect, useState } from 'react';
+import { FiBell, FiCheck, FiInfo, FiAlertCircle, FiMessageSquare, FiPackage } from 'react-icons/fi';
 import NotificationList from '../components/notification/NotificationList';
 import NotificationPagination from '../components/notification/NotificationPagination';
-import useAuth from '../hooks/useAuth';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import useNotificationContext from '../hooks/useNotificationContext';
 
 const Notifications = () => {
     const [currentPage, setCurrentPage] = useState(1); 
-    const { user } = useAuth(); 
-    const {notifications, markNotification, totalPages, loading, fetchNotifications} = useNotification(); 
+    const {notifications, markNotification, totalPages, loading, fetchNotifications} = useNotificationContext(); 
     const unreadCount = notifications.filter(n => !n.is_read).length;
 
     useEffect(() => {

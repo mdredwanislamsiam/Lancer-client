@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import useAuth from '../../../hooks/useAuth';
+import useAuthContext from '../../../hooks/useAuthContext';
 
 const ProfileForm = ({ register, errors, isEditing}) => {
 	const [image, setImage] = useState(null);  
-	const { user } = useAuth(); 
+	const { user } = useAuthContext(); 
 
 	
 	const handleImageChange = (e) => {

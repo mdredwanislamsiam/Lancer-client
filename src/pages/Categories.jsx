@@ -1,10 +1,9 @@
-import React from "react";
-import useCategories from "../hooks/useCategories";
 import CategoryCard from "../components/categories/CategoryCard";
 import LoadingSpinner from "../components/common/LoadingSpinner";
+import useCategoriesContext from "../hooks/useCategoriesContext";
 
 const Categories = () => {
-	const { categories, setCategories, loading} = useCategories();
+	const { categories, setCategories, loading} = useCategoriesContext();
 
 
     

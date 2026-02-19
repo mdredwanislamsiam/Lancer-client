@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import useService from '../hooks/useService';
-import useCategories from '../hooks/useCategories';
+import { useEffect, useState } from 'react';
 import ServicePagination from '../components/servicesComponents/ServicePagination';
 import MyFilterSection from '../components/servicesComponents/MyFilterSection';
 import MyServiceList from '../components/servicesComponents/MyServiceList';
+import useServiceContext from '../hooks/useServiceContext';
+import useCategoriesContext from '../hooks/useCategoriesContext';
 
 const MyServices = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -12,8 +12,8 @@ const MyServices = () => {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [debouncedSearch, setDebouncedSearch] = useState(searchQuery);
 	const [sortOrder, setSortOrder] = useState("");
-	const { myServices, loading, totalPages, fetchMyServices, setMyServices } = useService();
-	const { categories } = useCategories();
+	const { myServices, loading, totalPages, fetchMyServices, setMyServices } = useServiceContext();
+	const { categories } = useCategoriesContext();
 
 	useEffect(() => {
 		fetchMyServices(currentPage, priceRange, selectedCategory, debouncedSearch, sortOrder);

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import authAPIClient from '../services/auth-api-client';
-import useAuthContext from './useAuthContext';
 
 const useNotification = () => {
-    const { user } = useAuthContext(); 
+
     const [notifications, setNotifications] = useState([]); 
     const [loading, setLoading] = useState(false); 
     const [totalPages, setTotalPages] = useState(0); 

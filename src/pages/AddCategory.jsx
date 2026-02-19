@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import useCategories from '../hooks/useCategories';
 import SuccessAlert from '../components/alerts/SuccessAlert';
+import useCategoriesContext from '../hooks/useCategoriesContext';
 
 
 const AddCategory = () => {
@@ -10,7 +10,7 @@ const AddCategory = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
-	const { addCategory } = useCategories();
+	const { addCategory } = useCategoriesContext();
 	const [sMsg, setSMsg] = useState(""); 
 
 	useEffect(() => {

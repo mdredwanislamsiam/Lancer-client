@@ -1,23 +1,22 @@
 import { useState } from "react";
-import useAuthContext from "../../hooks/useAuthContext";
 import authAPIClient from "../../services/auth-api-client";
 import OrderItem from "./OrderItem";
 import { FiAlertCircle } from "react-icons/fi";
-import { BiCheckCircle, BiDollar, BiHash, BiMessage, BiXCircle } from "react-icons/bi";
+import { BiCheckCircle, BiMessage, BiXCircle } from "react-icons/bi";
 import { CiLock } from "react-icons/ci";
-import useOrder from "../../hooks/useOrder";
-import { GrContact } from "react-icons/gr";
 import { MdPayment } from "react-icons/md";
-import { GiCancel, GiPriceTag, GiSandsOfTime } from "react-icons/gi";
-import { FcCancel } from "react-icons/fc";
+import { GiCancel, GiSandsOfTime } from "react-icons/gi";
 import { BsWallet } from "react-icons/bs";
 import { CgHashtag } from "react-icons/cg";
+import useAuthContext from "../../hooks/useAuthContext";
+import useOrderContext from "../../hooks/useOrderContext";
+
 
 const OrderCard = ({ order }) => {
-	const { user } = useAuthContext();
+	const { user } = useAuthContext(); 
 	const [status, setStatus] = useState(order.status);
 	const [loading, setLoading] = useState(false);
-	const { cancelOrder } = useOrder(); 
+	const { cancelOrder } = useOrderContext(); 
 
 	const size = window.innerWidth < 640 ? 15 : 25;
 	const bigSize = window.innerWidth < 640 ? 30 : 40;

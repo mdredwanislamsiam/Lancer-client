@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import useOrder from '../hooks/useOrder';
+import  { useEffect, useState } from 'react';
 import OrderCard from '../components/order/OrderCard';
 import ServicePagination from '../components/servicesComponents/ServicePagination';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import useOrderContext from '../hooks/useOrderContext';
 
 const Orders = () => {
 	const [currentPage, setCurrentPage] = useState(1)
-    const { orders, loading, totalPages, fetchOrders} = useOrder(); 
+    const { orders, loading, totalPages, fetchOrders} = useOrderContext(); 
 
 	useEffect(() => {
 		fetchOrders(currentPage);

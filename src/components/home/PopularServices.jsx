@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import ServiceCard from '../servicesComponents/ServiceCard';
-import useService from '../../hooks/useService';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectCoverflow, Navigation, Pagination } from 'swiper/modules';
 import { Link } from 'react-router';
 import LoadingSpinner from '../common/LoadingSpinner';
+import useServiceContext from '../../hooks/useServiceContext';
 
 const PopularServices = () => {
-	const { services, fetchServices, loading} = useService();
+	const { services, fetchServices, loading} = useServiceContext();
 	useEffect(() => {
 		fetchServices();
 	}, [])

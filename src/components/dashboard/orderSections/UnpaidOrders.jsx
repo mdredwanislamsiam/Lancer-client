@@ -1,9 +1,8 @@
-import React from 'react';
-import useOtherInfo from '../../../hooks/useOtherInfo';
 import OrderComponent from './OrderComponent';
+import useOtherInfoContext from '../../../hooks/useOtherInfoContext';
 
 const UnpaidOrders = () => {
-    const { unpaidOrders, loading, getTime } = useOtherInfo(); 
+    const { unpaidOrders, loading, getTime } = useOtherInfoContext(); 
     
     return (
         <div>

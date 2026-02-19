@@ -1,4 +1,3 @@
-import React from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { Link, useNavigate } from "react-router";
 import useAuthContext from "../../hooks/useAuthContext";

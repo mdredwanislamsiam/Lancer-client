@@ -7,6 +7,8 @@ import { AuthProvider } from './context/AuthContext.jsx'
 import { ServiceProvider } from './context/ServiceContext.jsx'
 import { CategoriesProvider } from './context/CategoriesContext.jsx'
 import { OrderProvider } from './context/OrderContext.jsx'
+import { NotificationProvider } from './context/NotificationContext.jsx';
+import { OtherInfoProvider } from './context/OtherInfoContext.jsx';
 
 createRoot(document.getElementById("root")).render(
 	<StrictMode>
@@ -14,9 +16,13 @@ createRoot(document.getElementById("root")).render(
 			<ServiceProvider>
 				<CategoriesProvider>
 					<OrderProvider>
-						<BrowserRouter>
-							<AppRoutes />
-						</BrowserRouter>
+						<NotificationProvider>
+							<OtherInfoProvider>
+								<BrowserRouter>
+									<AppRoutes />
+								</BrowserRouter>
+							</OtherInfoProvider>
+						</NotificationProvider>
 					</OrderProvider>
 				</CategoriesProvider>
 			</ServiceProvider>

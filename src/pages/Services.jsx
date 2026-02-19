@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import useService from "../hooks/useService";
-import useCategories from "../hooks/useCategories";
+import { useEffect, useState } from "react";
 import ServiceList from "../components/servicesComponents/ServiceList";
 import ServicePagination from "../components/servicesComponents/ServicePagination";
 import FilteringSection from "../components/servicesComponents/FilteringSection";
-import { useOutletContext } from "react-router";
 import LoadingSpinner from "../components/common/LoadingSpinner";
+import useServiceContext from "../hooks/useServiceContext";
+import useCategoriesContext from "../hooks/useCategoriesContext";
 
 const Services = () => {
 	const [currentPage, setCurrentPage] = useState(1);
@@ -14,8 +13,8 @@ const Services = () => {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [debouncedSearch, setDebouncedSearch] = useState(searchQuery);
 	const [sortOrder, setSortOrder] = useState("");
-	const { fetchServices, services, loading, totalPages } = useService();
-	const { categories } = useCategories();
+	const { fetchServices, services, loading, totalPages } = useServiceContext();
+	const { categories } = useCategoriesContext();
 
 	useEffect(() => {
         fetchServices(currentPage, priceRange, selectedCategory, debouncedSearch, sortOrder);

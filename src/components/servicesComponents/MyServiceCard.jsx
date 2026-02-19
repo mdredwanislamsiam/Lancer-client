@@ -1,10 +1,9 @@
-import React from 'react';
 import default_img from "../../assets/images/DefaultImage.jpg";
 import { Link } from 'react-router';
-import useService from '../../hooks/useService';
+import useServiceContext from '../../hooks/useServiceContext';
 
 const MyServiceCard = ({ service, onDelete}) => {
-	const { deleteService } = useService(); 
+	const { deleteService } = useServiceContext(); 
 	const handleDelete = async () => {
 		if (window.confirm("Are you sure you want to delete this service?")) {
 			await deleteService(service.id); 

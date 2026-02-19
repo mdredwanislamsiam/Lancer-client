@@ -1,10 +1,9 @@
-import React from 'react';
-import useCategories from '../../hooks/useCategories';
 import { Link } from 'react-router';
+import useCategoriesContext from '../../hooks/useCategoriesContext';
 
 const CategoryCard = ({ category, onDelete }) => {
     
-    const { deleteCategory } = useCategories();
+    const { deleteCategory } = useCategoriesContext();
     // console.log(category);
 	const handleDelete = async () => {
 		if (window.confirm("Are you sure you want to delete this Category?")) {

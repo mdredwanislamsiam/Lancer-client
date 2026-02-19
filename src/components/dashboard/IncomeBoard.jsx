@@ -1,18 +1,15 @@
-import React from "react";
-import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router";
-import useOtherInfo from "../../hooks/useOtherInfo";
 import { FiUsers } from "react-icons/fi";
 import { FaWallet } from "react-icons/fa";
 import StatCard from "./StatCard";
-import { GrTime } from "react-icons/gr";
-import { TbBasketCancel } from "react-icons/tb";
 import { GiCancel } from "react-icons/gi";
-import { MdOutlinePending, MdOutlinePendingActions } from "react-icons/md";
+import { MdOutlinePendingActions } from "react-icons/md";
+import useAuthContext from "../../hooks/useAuthContext";
+import useOtherInfoContext from "../../hooks/useOtherInfoContext";
 
 const IncomeBoard = ({displayLg}) => {
-	const { user } = useAuth();
-    const { clients, canceledOrders, unpaidOrders } = useOtherInfo();
+	const { user } = useAuthContext(); 
+    const { clients, canceledOrders, unpaidOrders } = useOtherInfoContext();
 	// console.log(clients);
 	
 	const size =

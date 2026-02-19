@@ -1,11 +1,10 @@
-import React from 'react';
-import useOtherInfo from '../../hooks/useOtherInfo';
 import defImg from "../../assets/images/DefaultImage.jpg"
 import { Link } from 'react-router';
 import LoadingSpinner from '../common/LoadingSpinner';
+import useOtherInfoContext from '../../hooks/useOtherInfoContext';
 
 const Clients = () => {
-    const { clients, loading } = useOtherInfo();
+    const { clients, loading } = useOtherInfoContext();
     
 
 	// spinner

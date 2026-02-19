@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import useCategories from '../hooks/useCategories';
 import { useParams } from 'react-router';
 import DescriptionPart from '../components/servicesComponents/updateService/formParts/DescriptionPart';
 import NamePart from '../components/servicesComponents/updateService/formParts/NamePart';
 import SuccessAlert from '../components/alerts/SuccessAlert';
+import useCategoriesContext from '../hooks/useCategoriesContext';
 
 const UpdateCategory = () => {
     const { register, handleSubmit, formState: { errors } } = useForm(); 
     const { categoryId } = useParams(); 
-    const { fetchCategory, category, updateCategory } = useCategories(); 
+    const { fetchCategory, category, updateCategory } = useCategoriesContext(); 
 
     useEffect(() => { fetchCategory(categoryId) }, [categoryId]); 
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import useOtherInfo from '../../hooks/useOtherInfo';
-import useAuth from '../../hooks/useAuth';
+import useAuthContext from '../../hooks/useAuthContext';
+import useOtherInfoContext from '../../hooks/useOtherInfoContext';
 
 const CustomTooltip = ({ active, payload, label }) => {
 	if (active && payload && payload.length) {
@@ -16,8 +16,8 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const IncomeChart = () => {
-    const { fetchIncomeData, loading, incomeData } = useOtherInfo();
-    const { user } = useAuth(); 
+    const { fetchIncomeData, incomeLoading, incomeData } = useOtherInfoContext();
+    const { user } = useAuthContext(); 
 
     const [Data, setData] = useState([]); 
 
@@ -82,7 +82,7 @@ const IncomeChart = () => {
 	];
 
 	// spinner
-	if (loading)
+	if (incomeLoading)
 		return (
 			<div className="flex justify-center items-center my-20 min-h-screen">
 				<span className="loading loading-spinner loading-xl  text-secondary"></span>

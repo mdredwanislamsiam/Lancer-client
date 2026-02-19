@@ -13,6 +13,7 @@ const useOtherInfo = () => {
     const [activeOrders, setAcitveOrders] = useState([]); 
 	const [incomeData, setIncomeData] = useState([]); 
 	const [numOrder, setNumOrder] = useState(0); 
+	const [incomeLoading, setIncomeLoading] = useState(false);
 	
 
 	const fetchOtherInfo = async () => {
@@ -53,7 +54,7 @@ const useOtherInfo = () => {
 
     
 	const fetchIncomeData = async () => {
-		setLoading(true); 
+		setIncomeLoading(true); 
         try {
 			const res = await authAPIClient.get("/income_data"); 
 			// console.log(res); 
@@ -63,11 +64,11 @@ const useOtherInfo = () => {
 			console.log(error); 
 		}
 		finally {
-			setLoading(false); 
+			setIncomeLoading(false); 
 		}
     }
 
-    return {clients, loading,  services, paidOrders, allOrders, getTime, deliveredOrders, activeOrders, fetchIncomeData, incomeData, numOrder, unpaidOrders, canceledOrders};
+    return {clients, loading,  services, paidOrders, allOrders, getTime, deliveredOrders, activeOrders, fetchIncomeData, incomeData, numOrder, unpaidOrders, canceledOrders, incomeLoading};
 };
 
 export default useOtherInfo;

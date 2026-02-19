@@ -1,19 +1,19 @@
 import StatCard from '../components/dashboard/StatCard';
-import { FiPackage, FiShoppingCart, FiStar, FiUser } from 'react-icons/fi';
+import { FiPackage, FiShoppingCart } from 'react-icons/fi';
 import IncomeChart from '../components/dashboard/IncomeChart';
 import { Link, Outlet } from 'react-router';
-import useOtherInfo from '../hooks/useOtherInfo';
 import IncomeBoard from '../components/dashboard/IncomeBoard';
 import { MdOutlinePendingActions, MdPaid } from 'react-icons/md';
-import { GrTicket, GrTime } from 'react-icons/gr';
-import useAuth from '../hooks/useAuth';
+import { GrTime } from 'react-icons/gr';
 import { GiCancel } from 'react-icons/gi';
 import { useEffect, useState } from 'react';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import useAuthContext from '../hooks/useAuthContext';
+import useOtherInfoContext from '../hooks/useOtherInfoContext';
 
 const Dashboard = () => {
-	const { paidOrders, allOrders, numOrder, loading, deliveredOrders, activeOrders,canceledOrders, unpaidOrders } = useOtherInfo(); 
-	const { user } = useAuth();
+	const { paidOrders, allOrders, numOrder, loading, deliveredOrders, activeOrders,canceledOrders, unpaidOrders } = useOtherInfoContext(); 
+	const { user } = useAuthContext(); 
 	// console.log(deliveredOrders)
 	const [displayLg, setDisplayLg] = useState(window.innerWidth >= 1024);
 	useEffect(() => {
