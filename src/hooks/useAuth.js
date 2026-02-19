@@ -5,6 +5,8 @@ import authAPIClient from "../services/auth-api-client";
 const useAuth = () => {
 	const [user, setUser] = useState(null);
 	const [errorMsg, setErrorMsg] = useState("");
+	const [loading, setLoading] = useState(true); 
+
 
 	const getToken = () => {
 		const token = localStorage.getItem("authTokens");
@@ -39,21 +41,34 @@ const useAuth = () => {
 	};
 
 	// Fetch User
-	const fetchUserProfile = async () => {
+	const fetchUserProfile = async (authTokens) => {	
+
 		try {
 			const response = await apiClient.get("/auth/users/me/", {
 				headers: { Authorization: `JWT ${authTokens?.access}` },
 			});
 			setUser(response.data);
 		} catch (error) {
-			console.log("fetchUserProfile Error: ", error.message);
+			console.log("fetchUserProfile Error: ", error.message); 
+			setUser(null); 
 		}
+		finally {
+			setLoading(false); 
+		}
+		
+		
 	};
 	useEffect(() => {
-		if (authTokens) {
-			fetchUserProfile();
-		}
+		const checkAuth = async () => {
+			if (authTokens) {
+				await fetchUserProfile(authTokens);
+			}
+			setLoading(false);
+		};
+
+		checkAuth();
 	}, [authTokens]);
+	
 
 	// Login User
 	const loginUser = async (userData) => {
@@ -62,10 +77,12 @@ const useAuth = () => {
 			const res = await apiClient.post("/auth/jwt/create/", userData);
 			setAuthTokens(res.data);
 			localStorage.setItem("authTokens", JSON.stringify(res.data));
+			await fetchUserProfile(res.data); 
 			return { success: true, message: "Login Successfull!" };
 		} catch (error) {
 			return handleAPIError(error, "Login Failed! Try Again!");
 		}
+		
 	};
 
 	// Logout User
@@ -80,7 +97,8 @@ const useAuth = () => {
 	const updateUserProfile = async (data) => {
 		setErrorMsg("");
 		try {
-			await authAPIClient.put("/auth/users/me/", data);
+			await authAPIClient.patch("/auth/users/me/", data);
+			return { success: true, message: "Profile Updated Successfull!" };
 		} catch (error) {
 			return handleAPIError(error);
 		}
@@ -97,7 +115,7 @@ const useAuth = () => {
 		}
 	};
 
-	return { user, registerUser, authTokens, errorMsg, loginUser, logoutUser, updateUserProfile, changePassword };
+	return { user, registerUser, authTokens, errorMsg, loginUser, logoutUser, updateUserProfile, changePassword, handleAPIError, loading };
 };
 
 export default useAuth;

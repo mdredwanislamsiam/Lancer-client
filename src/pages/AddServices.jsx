@@ -4,7 +4,7 @@ import ServiceForm from '../components/servicesComponents/addService/ServiceForm
 const AddServices = () => {
     
     return (
-        <div>
+        <div className=''>
             <ServiceForm /> 
         </div>
     );

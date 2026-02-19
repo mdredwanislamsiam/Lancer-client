@@ -4,6 +4,7 @@ import OrderComponent from "./orderSections/OrderComponent";
 import ServicePagination from "../servicesComponents/ServicePagination";
 import useOtherInfo from "../../hooks/useOtherInfo";
 import useAuth from "../../hooks/useAuth";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 
 const Order = () => {
@@ -31,9 +32,7 @@ const Order = () => {
 	// spinner
 	if (loading)
 		return (
-			<div className="flex justify-center items-center my-20">
-				<span className="loading loading-spinner loading-xl  text-secondary"></span>
-			</div>
+			<LoadingSpinner /> 
 		);
 	return (
 		<div>

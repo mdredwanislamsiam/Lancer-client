@@ -16,61 +16,67 @@ const Sidebar = () => {
 		logoutUser();
 		navigate("/login");
 	};
-	const customerMenuItems = [
+	const sellerItems = [
 		{ to: "/dashboard", icon: FiBarChart2, label: "Dashboard" },
-		{ to: "/shop", icon: FaShop, label: "Shop" },
-		{ to: "/dashboard/cart", icon: FiShoppingCart, label: "Cart" },
+		{ to: "/services", icon: FaShop, label: "All Services" },
+		{ to: "/dashboard/services/my", icon: GrServices, label: "My Services" },
+		{ to: "/dashboard/services/add", icon: FiPlusCircle, label: "Add Service" },
+		{ to: "/dashboard/categories", icon: FiTag, label: "Categories" },
 		{ to: "/dashboard/orders", icon: FiShoppingBag, label: "Orders" },
-		{ to: "/reviews", icon: FiStar, label: "Reviews" },
+		{ to: "/dashboard/notifications", icon: MdCircleNotifications, label: "Notifications" },
+	];
+	const BuyerItems = [
+		{ to: "/dashboard", icon: FiBarChart2, label: "Dashboard" },
+		{ to: "/services", icon: FaShop, label: "All Services" },
+		{ to: "/dashboard/orders", icon: FiShoppingBag, label: "Orders" },
+		{ to: "/dashboard/notifications", icon: MdCircleNotifications, label: "Notifications" },
 	];
     const adminMenuItems = [
 		{ to: "/dashboard", icon: FiBarChart2, label: "Dashboard" },
 		{ to: "/services", icon: FaShop, label: "All Services" },
 		{ to: "/dashboard/services/my", icon: GrServices, label: "My Services" },
 		{ to: "/dashboard/services/add", icon: FiPlusCircle, label: "Add Service" },
-		{ to: "/dashboard/notifications", icon: MdCircleNotifications, label: "Notifications" },
 		{ to: "/dashboard/categories", icon: FiTag, label: "Categories" },
 		{ to: "/dashboard/categories/add", icon: FiPlusCircle, label: "Add Category" },
 		{ to: "/dashboard/orders", icon: FiShoppingBag, label: "Orders" },
-		{ to: "/reviews", icon: FiStar, label: "Reviews" },
-		{ to: "/users", icon: FiUsers, label: "Users" },
+		{ to: "/dashboard/notifications", icon: MdCircleNotifications, label: "Notifications" },
 	];
 	// console.log(user); 
 	// const menuItems = (user.is_staff ? adminMenuItems : customerMenuItems)
-	const menuItems = adminMenuItems; 
+	const menuItems = (user?.is_staff ? adminMenuItems : user?.role === "Seller" ? sellerItems : BuyerItems); 
 
     return (
-		<div className="drawer-side z-10">
+		<div className="drawer-side font-newfont1  z-10">
 			<label htmlFor="drawer-toggle" aria-label="close sidebar" className="drawer-overlay"></label>
 			<aside className="menu bg-base-200 w-64 min-h-full p-4 text-base-content">
 				{/* header */}
 				<Link to="/" className="flex items-center gap-2 mb-6 px-2 w-fit">
-					<FiShoppingCart className="h-6 w-6" />
-					<h1 className="text-2xl font-bold">Lancer</h1>
+					<FiShoppingCart className="h-6 w-6 stroke-3" />
+					<h1 className="text-xl font-extrabold font-newfont3 uppercase headTitle">Lancer</h1>
 				</Link>
 
 				{/* Profile */}
-				<div className="my-10">
-					<div className="w-40 mx-auto">
+				<div className=" my-2 lg:my-10">
+					<div className="w-20 lg:w-40 mx-auto">
 						<img
-							className=" w-40 h-40 rounded-full object-cover"
+							className=" w-20 h-20 lg:w-40 lg:h-40 rounded-full object-cover"
 							src={user?.image}
 							alt="User avatar"
 						/>
 					</div>
 					<div className="my-3 flex flex-col justify-center items-center gap-1">
-						<h1 className="text-xl font-bold">{user?.username}</h1>
-						<p className="badge badge-warning badge-lg">{user?.role}</p>
+						<h1 className="text-md lg:text-xl font-bold">{user?.username}</h1>
+						<p className="badge badge-warning badge-sm lg:badge-lg">{user?.role}</p>
 						<Link
 							to={"profile"}
-							className="py-1 px-5 rounded-full bg-[#8fcff9] border-0 hover:bg-[#6dc1f9] w-fit cursor-pointer">
+							className="py-1 btn btn-xs lg:btn-md px-5 rounded-full bg-[#8fcff9] border-0 hover:bg-[#6dc1f9] w-fit cursor-pointer">
 							View Profile
 						</Link>
 					</div>
 				</div>
 
 				{/* Menu */}
-				<ul className="menu menu-md gap-2">
+				<ul className="menu menu-xs lg:menu-md gap-2">
 					{menuItems.map((item, index) => (
 						<li key={index}>
 							<Link to={item.to} className="flex items-center">
@@ -82,9 +88,9 @@ const Sidebar = () => {
 				</ul>
 
 				{/* Logout */}
-				<button className="flex items-center gap-2 w-fit ml-5 mt-auto btn" onClick={handleLogout}>
-					<AiOutlineLogout size={30} />
-					<span className="text-lg font-semibold">Logout</span>
+				<button className="flex items-center gap-2 w-fit ml-5 mt-auto mx-auto btn" onClick={handleLogout}>
+					<AiOutlineLogout size={20} />
+					<span className="text-sm lg:text-lg font-semibold">Logout</span>
 				</button>
 				{/* Sidebar footer */}
 				<div className="mt-auto pt-6 text-xs text-base-content/70">© 2025 PhiMart Admin</div>

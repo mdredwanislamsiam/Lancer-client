@@ -4,6 +4,7 @@ import useNotification from '../hooks/useNotification';
 import NotificationList from '../components/notification/NotificationList';
 import NotificationPagination from '../components/notification/NotificationPagination';
 import useAuth from '../hooks/useAuth';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const Notifications = () => {
     const [currentPage, setCurrentPage] = useState(1); 
@@ -35,32 +36,30 @@ const Notifications = () => {
     };
     if (loading)
 		return (
-			<div className="flex justify-center items-center min-h-screen">
-				<span className="loading loading-spinner loading-xl  text-secondary"></span>
-			</div>
+			<LoadingSpinner /> 
 		);
     return (
-		<div className="min-h-screen bg-base-100 text-base-content p-4 md:p-8 flex flex-col justify-between">
+		<div className="min-h-screen text-base-content p-4 md:p-8 flex flex-col justify-between">
 			<div className="max-w-3xl mx-auto">
 				{/* Header */}
-				<div className="flex justify-between items-center mb-8">
+				<div className="flex justify-between gap-3 items-center mb-8">
 					<div className="flex items-center gap-3">
 						<div className="relative">
-							<FiBell className="w-8 h-8 text-blue-800" />
+							<FiBell className="w-6 h-6 lg:w-8 lg:h-8 text-blue-800" />
 							{unreadCount > 0 && (
 								<span className="absolute -top-1 -right-1 w-4 h-4 bg-error text-white text-xs font-bold rounded-full flex items-center justify-center animate-pulse">
 									{unreadCount}
 								</span>
 							)}
 						</div>
-						<h1 className="text-3xl font-bold bg-gradient-to-r from-[#03293d] to-[#559aef] bg-clip-text text-transparent">
+						<h1 className="text-xl lg:text-3xl font-bold bg-gradient-to-r from-[#03293d] to-[#559aef] bg-clip-text text-transparent">
 							Notifications
 						</h1>
 					</div>
 					{unreadCount > 0 && (
 						<button
 							onClick={markAllAsRead}
-							className="text-sm font-medium text-primary hover:text-primary-focus flex items-center gap-1 transition-colors">
+							className="text-xs lg:text-sm font-medium text-primary hover:text-primary-focus flex items-center gap-0 lg:gap-1 transition-colors">
 							<FiCheck className="w-4 h-4" />
 							Mark all as read
 						</button>

@@ -1,6 +1,7 @@
 import React from 'react';
 import ErrorAlert from '../alerts/ErrorAlert';
 import ServiceCard from './ServiceCard';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 const ServiceList = ({ error, loading, services }) => {
 	// console.log(services); 
@@ -8,9 +9,7 @@ const ServiceList = ({ error, loading, services }) => {
 		<section className="my-20">
 			{/* Loading Spinner */}
 			{loading && (
-				<div className="flex justify-center items-center min-h-screen">
-					<span className="loading loading-spinner loading-xl  text-secondary"></span>
-				</div>
+				<LoadingSpinner /> 
 			)}
 			{error && <ErrorAlert err={error} />}
 			<div>

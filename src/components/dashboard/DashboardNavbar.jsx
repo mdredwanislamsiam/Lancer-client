@@ -11,7 +11,7 @@ const DashboardNavbar = ({ sidebarOpen }) => {
 		navigate("/login");
 	};
 	return (
-		<div className="navbar bg-base-100 border-b">
+		<div className="navbar bg-linear-to-br font-newfont1 from-[#83a4ce] shadow-sm ">
 			<div className="flex-none lg:hidden mr-5">
 				<label htmlFor="drawer-toggle" className="btn btn-square btn-ghost">
 					{sidebarOpen ?
@@ -20,16 +20,15 @@ const DashboardNavbar = ({ sidebarOpen }) => {
 				</label>
 			</div>
 			<div className="flex-1">
-				<Link to="/dashboard" className="text-lg font-semibold">Dashboard</Link>
+				<Link to="/dashboard" className="text-lg font-semibold">
+					Dashboard
+				</Link>
 			</div>
 			<div className="flex-none">
 				<div className="dropdown dropdown-end">
 					<label tabIndex={0} className="btn btn-ghost btn-circle avatar">
 						<div className="w-10 rounded-full">
-							<img
-								src={user?.image}
-								alt="User avatar"
-							/>
+							<img src={user?.image} alt="User avatar" />
 						</div>
 					</label>
 					<ul
@@ -38,11 +37,7 @@ const DashboardNavbar = ({ sidebarOpen }) => {
 						<li>
 							<Link to="/dashboard/profile/" className="justify-between">
 								Profile
-								<span className="badge">New</span>
 							</Link>
-						</li>
-						<li>
-							<Link>Settings</Link>
 						</li>
 						<li>
 							<button onClick={handleLogout}>Logout</button>

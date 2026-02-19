@@ -32,6 +32,7 @@ import ActiveOrders from '../components/dashboard/orderSections/ActiveOrders';
 import PaidOrders from '../components/dashboard/orderSections/PaidOrders';
 import UnpaidOrders from '../components/dashboard/orderSections/UnpaidOrders';
 import CanceledOrders from '../components/dashboard/orderSections/CanceledOrders';
+import PrivateRoute from './PrivateRoute';
 
 const AppRoutes = () => {
     return (
@@ -47,17 +48,23 @@ const AppRoutes = () => {
 				<Route path="password/reset/confirm/:uid/:token" element={<ForgotPasswordConfirm />} />
 				<Route path="services" element={<Services />} />
 				<Route path="services/:id" element={<ServiceDetail />} />
-				<Route path= "infoPage/:id" element={<InfoPage/>} /> 
+				<Route path="infoPage/:id" element={<InfoPage />} />
 			</Route>
-			<Route path="dashboard" element={<DashboardLayout />}>
+			<Route
+				path="dashboard"
+				element={
+					<PrivateRoute>
+						<DashboardLayout />
+					</PrivateRoute>
+				}>
 				<Route element={<Dashboard />}>
-					<Route index element={<Order/>} /> 
-					<Route path='paidOrders' element={<PaidOrders/>} /> 
-					<Route path='deliveredOrders' element={<DeliveryOrders/>} /> 
-					<Route path='activeOrders' element={<ActiveOrders/>} /> 
-					<Route path='unpaidOrders' element={<UnpaidOrders/>} /> 
-					<Route path='canceledOrders' element={<CanceledOrders/>} /> 
-					<Route path='clients' element={<Clients/>} /> 
+					<Route index element={<Order />} />
+					<Route path="paidOrders" element={<PaidOrders />} />
+					<Route path="deliveredOrders" element={<DeliveryOrders />} />
+					<Route path="activeOrders" element={<ActiveOrders />} />
+					<Route path="unpaidOrders" element={<UnpaidOrders />} />
+					<Route path="canceledOrders" element={<CanceledOrders />} />
+					<Route path="clients" element={<Clients />} />
 				</Route>
 				<Route path="profile" element={<Profile />} />
 				<Route path="orders" element={<Orders />} />
@@ -66,11 +73,10 @@ const AppRoutes = () => {
 				<Route path="services/add" element={<AddServices />} />
 				<Route path="services/my" element={<MyServices />} />
 				<Route path="services/add/images/:serviceId" element={<ServiceImages />} />
-				<Route path="services/update/:serviceId" element={<UpdateServices />} /> 
-				<Route path="categories/update/:categoryId" element={<UpdateCategory />} /> 
-				<Route path="categories/add" element={<AddCategory />} /> 
-				<Route path="categories" element={<Categories />} /> 
-				
+				<Route path="services/update/:serviceId" element={<UpdateServices />} />
+				<Route path="categories/update/:categoryId" element={<UpdateCategory />} />
+				<Route path="categories/add" element={<AddCategory />} />
+				<Route path="categories" element={<Categories />} />
 			</Route>
 		</Routes>
 	);

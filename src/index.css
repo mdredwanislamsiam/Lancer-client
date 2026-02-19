@@ -1,6 +1,33 @@
+@font-face {
+  font-family: newfont1;
+  src: url("../src/assets/fonts/AtkinsonHyperlegibleMono-VariableFont_wght.ttf");
+}
+@font-face {
+  font-family: newfont2;
+  src: url("../src/assets/fonts/DMSans_18pt-SemiBold.ttf");
+}
+@font-face {
+  font-family: newfont3;
+  src: url("../src/assets/fonts/ProstoOne-Regular.ttf");
+}
+
+
 @import "tailwindcss";
+
 @plugin "daisyui" {
   themes: light --default;
+}
+
+.headTitle {
+  background: linear-gradient(to right, #081142, #155795);
+  background-clip: text;
+  color: transparent;
+}
+
+@theme{
+  --font-newfont1 : newfont1, 'sans-serif'; 
+  --font-newfont2 : newfont2, 'sans-serif'; 
+  --font-newfont3 : newfont3, 'sans-serif'; 
 }
 
 /* :root {

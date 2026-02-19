@@ -1,17 +1,16 @@
 import React from 'react';
 import ErrorAlert from '../alerts/ErrorAlert';
 import MyServiceCard from './MyServiceCard';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 const MyServiceList = ({ error, loading, services, onDelete }) => {
-	if (loading) return <p>Loading...</p>;
+	if (loading) return <LoadingSpinner/>;
 	return (
 		<div>
 			<section className="my-20">
 				{/* Loading Spinner */}
 				{loading && (
-					<div className="flex justify-center items-center min-h-screen">
-						<span className="loading loading-spinner loading-xl  text-secondary"></span>
-					</div>
+					<LoadingSpinner /> 
 				)}
 				{error && <ErrorAlert err={error} />}
 				<div>

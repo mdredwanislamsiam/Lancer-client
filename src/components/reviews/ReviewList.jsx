@@ -2,7 +2,7 @@ import React from "react";
 import ReviewCard from "./ReviewCard";
 
 const ReviewList = ({ reviews, setEditReview, editReview, editingId, setEditingId, handleUpdateReview, onDelete}) => {
-	console.log(reviews);
+	// console.log(reviews);
 
 	return (
 		<div>

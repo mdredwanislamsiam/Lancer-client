@@ -46,7 +46,7 @@ const CategoryCards = () => {
 
 
     return (
-		<div style={{ position: "relative" }} className="">
+		<div style={{ position: "relative" }} className=" ">
 			<GlassIcons className="custom-class" colorful categories={fiveCategories} categoryServices={categoryServices} />
 		</div>
 	);

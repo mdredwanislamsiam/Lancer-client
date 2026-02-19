@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import useOrder from '../hooks/useOrder';
 import OrderCard from '../components/order/OrderCard';
 import ServicePagination from '../components/servicesComponents/ServicePagination';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const Orders = () => {
 	const [currentPage, setCurrentPage] = useState(1)
@@ -13,13 +14,11 @@ const Orders = () => {
 
     if (loading)
 		return (
-			<div className="flex justify-center items-center min-h-screen">
-				<span className="loading loading-spinner loading-xl  text-secondary"></span>
-			</div>
+			<LoadingSpinner />
 		);
     return (
 		<div className="container mx-auto py-8 px-4">
-			<h1 className="text-2xl font-bold mb-6">Order Details</h1>
+			<h1 className="uppercase text-center mb-10 font-bold headTitle  lg:text-3xl text-2xl">Orders</h1>
 			{orders.length === 0 ?
 				<div className="text-2xl text-center mt-80 text-gray-500">No Orders</div>
 			:	<div>
@@ -28,7 +27,11 @@ const Orders = () => {
 							<OrderCard key={order.id} order={order} />
 						))}
 					</div>
-					<ServicePagination handlePageChange={setCurrentPage} totalPages={totalPages} currentPage={currentPage} />
+					<ServicePagination
+						handlePageChange={setCurrentPage}
+						totalPages={totalPages}
+						currentPage={currentPage}
+					/>
 				</div>
 			}
 		</div>

@@ -31,34 +31,24 @@ const NotificationList = ({ notification, openNoti }) => {
 				:	""
 			} ${
 				notification.is_read ?
-					"bg-gray-200 border-base-200 opacity-70 transition-all hover:opacity-100"
-				:	"bg-gray-200 opacity-90 hover:opacity-100 border-primary/20 shadow-sm"
+					"bg-[#9bcbee] border-base-200 opacity-70 transition-all hover:opacity-100"
+				:	"bg-[#3d6f92] text-white opacity-90 hover:opacity-100 border-primary/20 shadow-sm"
 			}`}>
-			<div className="flex gap-4">
-				{/* Icon Container */}
-				<div
-					className={`mt-1 w-12 h-12 rounded-xl flex items-center justify-center ${
-						notification.is_read ? "bg-base-200 " : "bg-white shadow-sm"
-					}`}>
-					{/* {getIcon(notification.type)} */}
+			<div className="flex-1 px-4 lg:px-10">
+				<div className="flex justify-between items-start">
+					<h3
+						className={`${openNoti ? " text-xs" : "text-sm lg:text-lg"} font-semibold mb-1 ${!notification.is_read && "text-yellow-400"}`}>
+						{notification.title}
+					</h3>
+					<span className="flex items-center gap-1 text-xs whitespace-nowrap">
+						<FiClock className="w-3 h-3" />
+						{getTime()}
+					</span>
 				</div>
-
-				{/* Content */}
-				<div className="flex-1">
-					<div className="flex justify-between items-start">
-						<h3
-							className={`${openNoti ? "text-sm" : "text-lg"} font-semibold mb-1 ${!notification.is_read && "text-yellow-400"}`}>
-							{notification.title}
-						</h3>
-						<span className="flex items-center gap-1 text-xs whitespace-nowrap">
-							<FiClock className="w-3 h-3" />
-							{getTime()}
-						</span>
-					</div>
-					<p className={`${openNoti ? "text-xs" : "text- xs"} text-left text-black-300 leading-relaxed`}>
-						{notification.message}
-					</p>
-				</div>
+				<p
+					className={`${openNoti ? "text-xs" : " text-xs lg:text-sm"} text-left text-black-300 leading-relaxed`}>
+					{notification.message}
+				</p>
 			</div>
 
 			{/* Unread Indicator */}

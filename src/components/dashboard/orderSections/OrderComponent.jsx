@@ -1,26 +1,22 @@
 import React from 'react';
 import defImg from "../../../assets/images/DefaultImage.jpg";
 import { Link } from 'react-router';
+import LoadingSpinner from '../../common/LoadingSpinner';
 
 
 
 const OrderComponent = ({ orders, loading, getTime, title }) => {
 	// spinner
-	if (loading)
-		return (
-			<div className="flex justify-center items-center my-20 min-h-screen">
-				<span className="loading loading-spinner loading-xl  text-secondary"></span>
-			</div>
-		);
+	if (loading) return <LoadingSpinner />;
 	return (
 		<div>
-			<div className="mt-6 card bg-gradient-to-t to-[#c8e1f9] shadow-sm">
+			<div className="mt-6 card bg-gradient-to-b to-[rgba(111,175,247,0.76)] shadow-sm">
 				<div className="card-body">
-					<h3 className="card-title text-2xl">{title}</h3>
+					<h3 className="card-title text-lg lg:text-2xl">{title}</h3>
 					<div className="overflow-x-auto max-h-100 overflow-y-auto">
 						{!(orders?.length === 0) ?
-							<table className="table ">
-								<thead className="sticky bg-base-100 top-0 z-10">
+							<table className="table text-xs lg:text-sm">
+								<thead className="sticky bg-base-100 top-0  z-10">
 									<tr>
 										<th>Order ID</th>
 										<th>Seller</th>

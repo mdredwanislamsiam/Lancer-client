@@ -7,7 +7,7 @@ const NamePart = ({register, errors, defValue}) => {
 				type="text"
 				defaultValue={defValue}
 				{...register("name", { required: true })}
-				className="input input-bordered w-full outline-none"
+				className="input input-bordered w-full text-xs lg:text-sm outline-none"
 				placeholder="Categoy Name"
 			/>
 			{errors.name && <p className="text-red-500 text-xs">This field is required</p>}

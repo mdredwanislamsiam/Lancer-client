@@ -3,9 +3,15 @@ import useAuthContext from "../../hooks/useAuthContext";
 import authAPIClient from "../../services/auth-api-client";
 import OrderItem from "./OrderItem";
 import { FiAlertCircle } from "react-icons/fi";
-import { BiCheckCircle, BiXCircle } from "react-icons/bi";
+import { BiCheckCircle, BiDollar, BiHash, BiMessage, BiXCircle } from "react-icons/bi";
 import { CiLock } from "react-icons/ci";
 import useOrder from "../../hooks/useOrder";
+import { GrContact } from "react-icons/gr";
+import { MdPayment } from "react-icons/md";
+import { GiCancel, GiPriceTag, GiSandsOfTime } from "react-icons/gi";
+import { FcCancel } from "react-icons/fc";
+import { BsWallet } from "react-icons/bs";
+import { CgHashtag } from "react-icons/cg";
 
 const OrderCard = ({ order }) => {
 	const { user } = useAuthContext();
@@ -13,8 +19,9 @@ const OrderCard = ({ order }) => {
 	const [loading, setLoading] = useState(false);
 	const { cancelOrder } = useOrder(); 
 
+	const size = window.innerWidth < 640 ? 15 : 25;
+	const bigSize = window.innerWidth < 640 ? 30 : 40;
 
-	const size = 20; 
 	const statusConfig = {
 		"Not paid": {
 			color: "bg-red-100 text-red-700 border-red-200",
@@ -84,27 +91,28 @@ const OrderCard = ({ order }) => {
 		}
 	};
 
-
+	
 	
 
 
 
 	if (!order) return; 
 	return (
-		<div className="bg-white rounded-lg shadow-lg mb-8 overflow-hidden">
-			<div className="bg-gradient-to-t to-[#3a61a4d4] from-[#dfd5b284] p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+		<div className="bg-white rounded-lg shadow-lg mb-8 hover:shadow-2xl hover:shadow-[#286aa1] overflow-hidden ">
+			<div className="bg-gradient-to-t to-[#2c5190d4] from-[#add1fc84] hover:from-[#fcd8ad2f] p-3 lg:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 				<div className="flex justify-between items-baseline gap-2">
-					<div>
-						<h2 className="text-lg font-bold text-[#fbfbfb]">Order </h2>
-					</div>
-					<div>
-						<h2 className="text-md font-semibold text-[#032c42]"> {order.id}</h2>
+					<div className="flex items-center gap-2">
+						<CgHashtag size={bigSize} className="shadow-sm shadow-white w-10 h-fit" />
+						<div>
+							<h2 className="text-sm lg:text-md font-bold text-[#ffffffd3]">ORDER </h2>
+							<h2 className="text-xs lg:text-md font-bold text-[#032c42]"> {order.id}</h2>
+						</div>
 					</div>
 				</div>
 				<div className="flex gap-2 items-center">
 					{user.is_staff ?
 						<select
-							className="px-2 py-1 rounded-full text-gray-700 text-sm font-medium h-fit bg-gray-300 outline-none"
+							className="px-2 py-1 rounded-full text-gray-700 font-medium h-fit text-xs lg:text-sm bg-gray-300 outline-none"
 							value={status}
 							onChange={handleStatusChange}>
 							<option value="Not paid"> Unpaid</option>
@@ -113,7 +121,8 @@ const OrderCard = ({ order }) => {
 							<option value="Delivered"> Delivered</option>
 							<option value="Canceled"> Canceled</option>
 						</select>
-					:	<span className={`px-3 py-1 rounded-full text-sm font-medium h-fit ${statusConfig[status].color}`}>
+					:	<span
+							className={`px-3 py-1 rounded-full text-xs lg:text-sm font-medium h-fit ${statusConfig[status].color}`}>
 							<div className="flex justify-between items-center gap-2">
 								<div>{statusConfig[status].icon}</div>
 								<div>{statusConfig[status].label}</div>
@@ -122,43 +131,61 @@ const OrderCard = ({ order }) => {
 					}
 				</div>
 			</div>
-			<div className="py-3 px-10 bg-gradient-to-b from-[#dfd5b284] to-[#ffffff]">
-				<h3 className="font-medium text-lg mb-4 text-center">Order Info</h3>
-
+			<div className="py-3 px-2 lg:px-10 bg-base-200">
 				<OrderItem item={order} />
 			</div>
-			<div className="flex border-t pt-4 py-2 px-10 items-center w-full">
+			<div className="lg:flex grid lg:justify-between grid-cols-2 border-t-3 my-2 border-gray-300  pt-4 py-2 px-2 lg:px-10 items-center w-full">
 				{/* LEFT SIDE */}
-				<div className="font-bold">
-					<span>Service Price: </span>
-					<span>${parseFloat(order.total_price).toFixed(2)}</span>
+				<div className="">
+					<div className="flex items-center gap-2">
+						<BsWallet size={bigSize} />
+						<div>
+							<p className="text-gray-500 text-xs lg:text-sm font-semibold">Service Price </p>
+							<p className="font-extrabold text-md lg:text-xl">
+								${parseFloat(order.total_price).toFixed(2)}
+							</p>
+						</div>
+					</div>
 				</div>
+				<button className="btn btn-xs lg:btn-md btn-primary rounded-full flex items-center shadow text-white">
+					<BiMessage className="w-4 h-4  lg:w-6 lg:h-6" /> <div>Contact Seller</div>
+				</button>
 
-				{/* RIGHT SIDE */}
-				<div className="flex items-center gap-3 ml-auto">
-					<button className="btn bg-primary rounded-2xl shadow text-white">Contact Seller</button>
+				{order.status === "Not paid" && status !== "Canceled" && !user.is_staff && (
+					<button
+						onClick={handlePayment}
+						className="px-4 py-2 btn btn-xs lg:btn-md bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow transition-colors"
+						disabled={loading}>
+						{loading ?
+							<div className="flex items-center gap-2">
+								<GiSandsOfTime className="w-4 h-4  lg:w-6 lg:h-6" />
+								<span>Processing</span>
+							</div>
+						:	<div className="flex items-center gap-2">
+								<MdPayment className="w-4 h-4  lg:w-6 lg:h-6" />
+								<span>Pay Now</span>
+							</div>
+						}
+					</button>
+				)}
 
-					{order.status !== "Delivered" &&
-						order.status !== "Active" &&
-						order.status !== "Paid" &&
-						status !== "Canceled" &&
-						!user.is_staff && (
-							<button
-								onClick={() => handleCancelOrder(order.id)}
-								className="text-red-700 btn btn-ghost shadow rounded-full">
-								Cancel
-							</button>
-						)}
-
-					{order.status === "Not paid" && status !== "Canceled" && !user.is_staff && (
+				{order.status !== "Delivered" &&
+					order.status !== "Active" &&
+					order.status !== "Paid" &&
+					status !== "Canceled" &&
+					!user.is_staff && (
 						<button
-							onClick={handlePayment}
-							className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-2xl shadow transition-colors"
-							disabled={loading}>
-							{loading ? "Processing..." : "Pay Now"}
+							onClick={() => handleCancelOrder(order.id)}
+							className="text-red-700 btn btn-xs lg:btn-md btn-error shadow rounded-full">
+							<div className="flex items-center gap-2">
+								<GiCancel className="w-4 h-4  lg:w-6 lg:h-6" />
+								<span>cancel</span>
+							</div>
 						</button>
 					)}
-				</div>
+
+				{/* RIGHT SIDE */}
+				{/* <div className="flex flex-col lg:felx-row items-center gap-3 ml-auto"></div> */}
 			</div>
 		</div>
 	);

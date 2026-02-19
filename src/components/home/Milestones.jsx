@@ -7,35 +7,37 @@ const Milestones = () => {
     return (
 		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
 			<div className="flex flex-col rounded-xl p-5 h-full">
-				<div>
+				<div className="mx-auto lg:mx-0">
 					<IoIosPeople size={60} />
 				</div>
 				<div className="">
-					<p>Access a pool of top talent across 700 categories</p>
+					<p className="text-xs lg:text-lg text-center lg:text-left">
+						Access a pool of top talent across 700 categories
+					</p>
 				</div>
 			</div>
 			<div className="flex flex-col rounded-xl p-5 h-full">
-				<div>
+				<div className="mx-auto lg:mx-0">
 					<PiMaskHappyFill size={50} />
 				</div>
 				<div className="">
-					<p>Seller happy and buyer happy</p>
+					<p className="text-xs lg:text-lg text-center lg:text-left">Seller happy and buyer happy</p>
 				</div>
 			</div>
 			<div className="flex flex-col rounded-xl p-5 h-full">
-				<div>
+				<div className="mx-auto lg:mx-0">
 					<AiOutlineThunderbolt size={60} />
 				</div>
 				<div className="">
-					<p>Fast and efficient Lancers</p>
+					<p className="text-xs lg:text-lg text-center lg:text-left">Fast and efficient Lancers</p>
 				</div>
 			</div>
 			<div className="flex flex-col rounded-xl p-5 h-full">
-				<div>
+				<div className="mx-auto lg:mx-0">
 					<AiOutlineSafetyCertificate size={60} />
 				</div>
 				<div className="">
-					<p>Full money security</p>
+					<p className="text-xs lg:text-lg text-center lg:text-left">Full money security</p>
 				</div>
 			</div>
 		</div>

@@ -5,6 +5,8 @@ import ServiceImages from '../components/servicesComponents/serviceDetails/Servi
 import { FaArrowLeft } from 'react-icons/fa6';
 import HireService from '../components/servicesComponents/serviceDetails/HireService';
 import ReviewSection from '../components/reviews/ReviewSection';
+import LoadingSpinner from '../components/common/LoadingSpinner';
+import { HiMiniCurrencyDollar } from 'react-icons/hi2';
 
 const ServiceDetail = () => {
     const [service, setService] = useState(null); 
@@ -32,15 +34,13 @@ const ServiceDetail = () => {
 
     if (loading) {
 		return (
-			<div className="flex justify-center items-center min-h-screen">
-				<span className="loading loading-spinner loading-xl  text-secondary"></span>
-			</div>
+			<LoadingSpinner /> 
 		);
     }
     if (!service) return; 
     return (
-		<div className="max-w-5xl mx-auto px-10 py-8 bg-base-200">
-			<div className="mb-6">
+		<div className="px-10 lg:px-50 mx-auto py-8 bg-linear-to-t from-[#c0e3f9] ">
+			<div className="mb-6 w-fit">
 				<Link
 					to="/services"
 					className="flex items-center text-sm text-base-content/70 hover:text-base-content transition-colors">
@@ -55,19 +55,16 @@ const ServiceDetail = () => {
 				<div className=" flex flex-col justify-between">
 					<div>
 						<div className="mb-6">
-							<div className="badge badge-outline mb-2">
+							<div className="badge badge-sm lg:badge-md badge-outline mb-2 lg:mb-5">
 								Category - {service.category_detail?.name || "N/A"}
 							</div>
-							<h1 className="text-3xl font-bold">{service.title}</h1>
+							<h1 className="text-xl lg:text-3xl font-bold">{service.title}</h1>
+							<h1 className="text:lg lg:text-xl font-semibold text-gray-700">{service.delivery_time}</h1>
 						</div>
-
-						<div className="prose prose-sm mb-6">
-							<p>{service.description}</p>
-						</div>
-
 						<div className="mb-6">
-							<div className="flex items-baseline">
-								<span className="text-3xl font-bold">${service.price}</span>
+							<div className="flex items-center">
+								<HiMiniCurrencyDollar className="w-5 h-5 lg:w-10 lg:h-10" />
+								<span className="text-xl lg:text-3xl font-bold">{service.price}</span>
 							</div>
 						</div>
 					</div>
@@ -75,6 +72,30 @@ const ServiceDetail = () => {
 					<div className="">
 						<HireService service={service} />
 					</div>
+				</div>
+			</div>
+			<div className="mt-8">
+				<h3 className="text-lg lg:text-xl font-semibold text-slate-800 mb-3">Service Description</h3>
+
+				<div
+					className="bg-white border border-slate-200 rounded-xl 
+                  p-5 lg:p-6 
+                  text-slate-700 text-xs  lg:text-sm
+                  leading-relaxed tracking-normal
+                  shadow-sm">
+					{service.description}
+				</div>
+			</div>
+			<div className="mt-8">
+				<h3 className="text-lg lg:text-xl font-semibold text-slate-800 mb-3">Service Requirements</h3>
+
+				<div
+					className="bg-white border border-slate-200 rounded-xl 
+                  p-5 lg:p-6 
+                  text-slate-700 text-xs  lg:text-sm
+                  leading-relaxed tracking-normal
+                  shadow-sm">
+					{service.service_requirements}
 				</div>
 			</div>
 

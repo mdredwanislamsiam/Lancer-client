@@ -42,7 +42,10 @@ const useCategories = () => {
 
     const addCategory = async (data) => {
         try {
-            await authAPIClient.post("/categories/", data); 
+            const res = await authAPIClient.post("/categories/", data); 
+            if (res.status === 201) {
+                return true; 
+            }
         }
         catch (error) {
             console.log(error); 
@@ -54,7 +57,10 @@ const useCategories = () => {
         console.log(data); 
         try {
             const res = await authAPIClient.patch(`/categories/${categoryId}/`, data);
-            // console.log(res)
+            console.log(res.status)
+            if (res.status === 200) {
+				return true;
+			}
         }
         catch (error) {
             console.log(error); 
@@ -65,7 +71,7 @@ const useCategories = () => {
 
     const deleteCategory = async (categoryId) => {
 		try {
-			const res = await authAPIClient.delete(`/categories/${categoryId}/`);
+			await authAPIClient.delete(`/categories/${categoryId}/`);
 			// console.log(res);
 		} catch (error) {
 			console.log(error);

@@ -46,6 +46,9 @@ const MyServices = () => {
     
     return (
 		<div className="container mx-auto py-8 flex flex-col justify-between">
+			<h1 className='uppercase text-center mb-10 font-bold headTitle  lg:text-3xl text-2xl'>
+				my services
+			</h1>
 			<div>
 				<MyFilterSection
 					priceRange={priceRange}

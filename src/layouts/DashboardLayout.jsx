@@ -25,7 +25,7 @@ const DashboardLayout = () => {
 				<DashboardNavbar sidebarOpen={sidebarOpen} />
 
 				{/* Main content */}
-				<main className="p-6">
+				<main className="bg-linear-to-t min-h-screen from-[#c0e3f9] p-6">
 					<Outlet />
 				</main>
 			</div>

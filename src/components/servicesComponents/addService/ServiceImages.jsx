@@ -1,12 +1,13 @@
 import React, {  useState } from 'react';
 import authAPIClient from '../../../services/auth-api-client';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 const ServiceImages = () => {
     const [previewImages, setPreviewImages] = useState([]);
     const [images, setImages] = useState([]);
     const [loading, setLoading] = useState(false); 
     const { serviceId } = useParams(); 
+	const navigate = useNavigate(); 
 
     const handleImageChange = (e) => {
 		const files = Array.from(e.target.files);
@@ -22,7 +23,11 @@ const ServiceImages = () => {
 			for (const image of images) {
 				const formData = new FormData();
 				formData.append("images", image);
-				await authAPIClient.post(`/services/${serviceId}/images/`, formData);
+				const res = await authAPIClient.post(`/services/${serviceId}/images/`, formData);
+				if (res.status === 201) {
+					navigate('/dashboard'); 
+				}
+				console.log(res); 
 			}
 			alert("Images uploaded successfully!");
 		} catch (error) {
@@ -34,12 +39,12 @@ const ServiceImages = () => {
 
     return (
 		<div>
-			<h3 className="text-lg font-medium mb-2">Upload Product Images</h3>
+			<h3 className=" text-md lg:text-lg font-medium mb-2">Upload Product Images</h3>
 			<input
 				type="file"
 				multiple
 				accept="image/*"
-				className="file-input file-input-bordered w-full"
+				className="file-input file-input-bordered text-xs lg:text-sm outline-none  w-full"
 				onChange={handleImageChange}
 			/>
 			{previewImages.length > 0 && (
@@ -49,7 +54,7 @@ const ServiceImages = () => {
 					))}
 				</div>
 			)}
-			<button onClick={handleImageUpload} disabled={loading} className="btn btn-primary w-full mt-2">
+			<button onClick={handleImageUpload} disabled={loading} className="btn  btn-xs lg:btn-md btn-primary w-full mt-2">
 				{loading ? "Uploading images..." : "Upload Images"}
 			</button>
 		</div>

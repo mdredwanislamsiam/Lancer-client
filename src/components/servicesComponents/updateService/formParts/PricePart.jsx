@@ -2,7 +2,7 @@ import React from 'react';
 
 const PricePart = ({register,errors, defValue}) => {
     return (
-		<div className='w-full'>
+		<div className="w-full">
 			<input
 				type="text"
 				defaultValue={defValue}
@@ -13,7 +13,7 @@ const PricePart = ({register,errors, defValue}) => {
 						return !isNaN(parsedValue) || "Please enter a valid number!";
 					},
 				})}
-				className="input input-bordered w-full outline-none"
+				className="input input-bordered w-full text-xs lg:text-sm outline-none"
 				placeholder="Price"
 			/>
 			{errors.price && <p className="text-red-500 text-xs">{errors.price.message}</p>}

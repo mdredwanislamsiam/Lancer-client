@@ -7,10 +7,8 @@ const CustomTooltip = ({ active, payload, label }) => {
 	if (active && payload && payload.length) {
 		return (
 			<div className="bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-2xl border border-gray-100">
-				<p className="text-gray-500 text-sm font-medium mb-1">{label}</p>
-				<p className="text-[#3c6a95] text-xl font-bold">
-					${payload[0].value.toLocaleString()}
-				</p>
+				<p className="text-gray-500 text-xs lg:text-sm font-medium mb-1">{label}</p>
+				<p className="text-[#3c6a95] text-sm lg:text-xl font-bold">${payload[0].value.toLocaleString()}</p>
 			</div>
 		);
 	}
@@ -91,21 +89,29 @@ const IncomeChart = () => {
 			</div>
 		);
 	
+	const fontSize =
+		window.innerWidth < 640 ? 8
+		: window.innerWidth < 1024 ? 12
+		: 14;
+	const marginY=
+		window.innerWidth < 640 ? -40
+		: window.innerWidth < 1024 ? -10
+		: -5;
 
 	return (
 		<div className="w-full bg-white rounded-3xl p-6 shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
 			<div className="flex items-center justify-between mb-8">
 				<div>
-					<h2 className="text-2xl font-bold text-gray-800 tracking-tight">
+					<h2 className="text-lg lg:text-2xl font-bold text-gray-800 tracking-tight">
 						{user?.role === "Seller" ? "Income" : "Cost"} Overview
 					</h2>
-					<p className="text-gray-400 text-sm font-medium mt-1">Yearly performance metrics</p>
+					<p className="text-gray-400 text-xs lg:text-sm font-medium mt-1">Yearly performance metrics</p>
 				</div>
 			</div>
 
-			<div className="h-[180px] w-full overflow-x-auto">
-				<ResponsiveContainer width="100%" height={180}>
-					<AreaChart data={testIncomeData}>
+			<div className=" h-[180px] w-full overflow-x-auto">
+				{Data?.length ? (<ResponsiveContainer width="100%" height={180}>
+					<AreaChart data={Data} margin={{left:marginY}}>
 						<defs>
 							<linearGradient id="colorIncome" x1="0" y1="0" x2="0" y2="1">
 								<stop offset="45%" stopColor="#3c6a95" stopOpacity={0.3} />
@@ -117,13 +123,13 @@ const IncomeChart = () => {
 							dataKey="monthYear"
 							axisLine={false}
 							tickLine={false}
-							tick={{ fill: "#9ca3af", fontSize: 12 }}
-							dy={10}
+							tick={{ fill: "#9ca3af", fontSize: fontSize }}
+							dy={5}
 						/>
 						<YAxis
 							axisLine={false}
 							tickLine={false}
-							tick={{ fill: "#9ca3af", fontSize: 12 }}
+							tick={{ fill: "#9ca3af", fontSize: fontSize }}
 							tickFormatter={(value) => `$${value / 1000}k`}
 						/>
 						<Tooltip
@@ -138,9 +144,12 @@ const IncomeChart = () => {
 							fillOpacity={1}
 							fill="url(#colorIncome)"
 							activeDot={{ r: 6, strokeWidth: 0, fill: "#3c6a95" }}
+							
 						/>
 					</AreaChart>
-				</ResponsiveContainer>
+				</ResponsiveContainer>) : <div className='text-gray-500 text-center font-semibold mt-10'>
+						No Data Yet
+						</div>}
 			</div>
 		</div>
 	);

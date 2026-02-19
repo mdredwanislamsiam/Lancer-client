@@ -19,15 +19,15 @@ const GlassIcons = ({ items, className, categoryServices }) => {
 
 	return (
 		<div
-			className={`grid gap-[2em] md:gap-[5em] grid-cols-2 md:grid-cols-5 mx-auto py-[3em] space-y-5 overflow-visible ${className || ""}`}>
+			className={`grid gap-[2em] md:gap-[5em] grid-cols-2 md:grid-cols-5 mx-auto py-[3em] space-y-5 overflow-visible px-12 lg:px-0 ${className || ""}`}>
 			{categoryServices.map((category, index) => (
 				<button
 					key={index}
 					type="button"
 					aria-label={category.category.name}
-					className={`relative bg-transparent outline-none mx-auto border-none cursor-pointer w-[12em] h-[10em] [perspective:24em] [transform-style:preserve-3d] [-webkit-tap-highlight-color:transparent] shadow-xl rounded-full group `}>
+					className={`relative bg-transparent outline-none mx-auto border-none cursor-pointer w-[7em] h-[6em] lg:w-[12em] lg:h-[10em] [perspective:24em] [transform-style:preserve-3d] [-webkit-tap-highlight-color:transparent] shadow-xl rounded-full group `}>
 					<span
-						className="absolute top-0 left-0 w-full h-full rounded-[1.25em] block transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.83,0,0.17,1)] origin-[100%_100%] rotate-[0deg] [will-change:transform] group-hover:[transform:rotate(0deg)_translate3d(0,-1em,0.5em)] bg-linear-to-br from-[#013050] to-[#59abef85]"
+						className="absolute top-0 left-0 w-full h-full  rounded-[1.25em] block transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.83,0,0.17,1)] origin-[100%_100%] rotate-[0deg] [will-change:transform] group-hover:[transform:rotate(0deg)_translate3d(0,-1em,0.5em)] bg-linear-to-br from-[#013050] to-[#59abef85]"
 						style={{
 							boxShadow: "0.5em -0.5em 0.75em hsla(223, 10%, 10%, 0.15)",
 						}}></span>
@@ -38,7 +38,7 @@ const GlassIcons = ({ items, className, categoryServices }) => {
 							boxShadow: "0 0 0 0.1em hsla(0, 0%, 100%, 0.3) inset",
 						}}>
 						<span
-							className="m-auto w-[1.5em] h-[1.5em] flex items-center justify-center text-xl font-bold"
+							className="m-auto w-[1.5em] h-[1.5em] flex items-center justify-center text-sm lg:text-xl font-bold"
 							aria-hidden="true">
 							{category.category.name}
 						</span>
@@ -47,12 +47,14 @@ const GlassIcons = ({ items, className, categoryServices }) => {
 					<span className="absolute top-full left-0 right-0 text-center whitespace-nowrap leading-[3] text-base opacity-0 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.83,0,0.17,1)] translate-y-0 group-hover:opacity-100 hover:[transform:translateY(20%)]">
 						{category.category.name}
 					</span>
-					<div className="absolute bottom-full left-1/2 transform -translate-x-1/2 text-center opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]">
+					<div className="absolute bottom-full left-1/2  transform -translate-x-1/2 text-center opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]">
 						<div className="origin-bottom translate-y-full transition-transform duration-700 ease-out group-hover:translate-y-0">
-							<div className="bg-white/90 backdrop-blur-md shadow-lg rounded-xl p-4 w-[16em] max-w-xs text-sm leading-relaxed">
+							<div className="bg-linear-to-b from-[#cee7f7] backdrop-blur-md shadow-lg rounded-xl p-4 w-[7em] lg:w-[16em] max-w-xs text-sm leading-relaxed">
 								<ul>
 									{category.services.map((s) => (
-										<li key={s.id} className="bg-amber-200 px-5 py-2 rounded-sm mt-1 shadow-sm">
+										<li
+											key={s.id}
+											className="bg-linear-to-r from-[#013050] to-[#c3b990] font-semibold text-gray-200 px-5 py-2 rounded-sm mt-1 shadow-sm">
 											{s.title}
 										</li>
 									))}

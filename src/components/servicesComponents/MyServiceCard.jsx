@@ -12,7 +12,7 @@ const MyServiceCard = ({ service, onDelete}) => {
 		}
 	};
     return (
-		<div className="card bg-gradient-to-br flex flex-col justify-between items-center from-[#e5eef3] to-[#155e85a7] w-72 shadow-sm mx-auto h-full">
+		<div className="card flex flex-col justify-between items-center bg-linear-to-b from-[#011e53e3] to-[#dfd6b958] hover:to-[#f5e3d2] transition-colors max-w-40 lg:max-w-66 md:w-96 shadow-sm mx-auto h-full">
 			<figure className="">
 				<img
 					src={service.images?.length > 0 ? service.images[0].images : default_img}
@@ -21,14 +21,20 @@ const MyServiceCard = ({ service, onDelete}) => {
 				/>
 			</figure>
 			<div className="flex flex-col justify-between items-center text-center  my-4 gap-1 mx-4">
-				<h2 className="card-title text-center">{service.title}</h2>
-				<p className="text-xl font-semibold text-[#3282B8]">${service.price}</p>
-				<p className="italic text-gray-700">{service.description}</p>
-				<div className="mt-3 flex justify-between gap-2">
+				<h2 className="card-title text-center text-sm lg:text-lg">{service.title}</h2>
+				<p className="text-lg lg:text-xl font-semibold text-[#3282B8]">${service.price}</p>
+				<p className="italic text-gray-700 text-xs lg:text-sm">{service.description}</p>
+				<div className="mt-3 flex flex-col items-center lg:flex-row justify-between gap-2">
 					<Link to={`/dashboard/services/update/${service.id}`}>
-						<button className="btn bg-[#BBE1FA] border-0 hover:bg-[#62afe3] ">Edit Service</button>
+						<button className="px-4 py-2 font-bold text-white rounded-full bg-gradient-to-r from-[#32435a] to-[#678b9d] hover:from-[#072e4c] hover:to-[#4a7ca3] shadow-lg shadow-[#32435a]/40 transform transition-transform duration-300 hover:scale-105 ring-1 ring-[#678b9d]/50 hover:ring-[#072e4c]/70 text-xs lg:text-md">
+							Edit Service
+						</button>
 					</Link>
-					<button onClick={() => handleDelete(service.id)} className="btn bg-[#BBE1FA] border-0 hover:bg-[#62afe3] ">Delete Service</button>
+					<button
+						onClick={() => handleDelete(service.id)}
+						className="px-4 py-2 font-bold text-white rounded-full bg-gradient-to-r from-[#32435a] to-[#678b9d] hover:from-[#072e4c] hover:to-[#4a7ca3] shadow-lg shadow-[#32435a]/40 transform transition-transform duration-300 hover:scale-105 ring-1 ring-[#678b9d]/50 hover:ring-[#072e4c]/70 text-xs lg:text-md">
+						Delete Service
+					</button>
 				</div>
 			</div>
 		</div>

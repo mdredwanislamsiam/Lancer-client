@@ -3,7 +3,8 @@ import OrderComponent from './OrderComponent';
 
 
 const PaidOrders = () => {
-    const { paidOrders, loading, getTime } = useOtherInfo(); 
+  const { paidOrders, loading, getTime } = useOtherInfo();
+  
     
     return (
 		<OrderComponent orders={paidOrders} loading={loading} getTime={getTime} title={"Paid Orders"}/>

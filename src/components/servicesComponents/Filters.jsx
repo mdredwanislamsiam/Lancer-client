@@ -11,8 +11,8 @@ const Filters = ({
 
     
 	return (
-		<div>
-			<div className="bg-gradient-to-br from-[#1B262C] text-white to-[#236589] p-4 rounded-lg shadow my-2">
+		<div className="">
+			<div className="bg-gradient-to-br from-[#1B262C] text-white to-[#236589] p-4 rounded-lg shadow my-2 scale">
 				<label htmlFor="" className="block text-sm font-medium text-white/80 mb-2">
 					Price Range
 				</label>

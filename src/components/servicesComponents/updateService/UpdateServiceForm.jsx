@@ -140,7 +140,7 @@ const UpdateServiceForm = ({ serviceId }) => {
 										key={index}
 										className="cursor-pointer"
 										onClick={() => handleDeleteImage(image.id)}>
-										<img src={image.images} alt="Preview" className="w-30 h-30 my-2" />
+										<img src={image.images} alt="Preview" className="w-15 h-15 lg:w-30 lg:h-30 my-2" />
 									</button>
 								))}
 							</div>
@@ -149,7 +149,7 @@ const UpdateServiceForm = ({ serviceId }) => {
 							type="file"
 							multiple
 							accept="image/*"
-							className="file-input file-input-bordered w-full"
+							className="file-input file-input-bordered w-full text-xs lg:text-sm"
 							onChange={handleImageChange}
 						/>
 						{previewImages.length > 0 && (
@@ -163,15 +163,15 @@ const UpdateServiceForm = ({ serviceId }) => {
 							type="button"
 							onClick={handleImageUpload}
 							disabled={loading}
-							className="btn btn-primary w-full mt-2">
+							className="btn btn-primary btn-xs lg:btn-md w-full mt-2">
 							{loading ? "Uploading images..." : "Upload Images"}
 						</button>
 					</div>
 					<div className="">
 						<form
 							onSubmit={handleSubmit(handleUpdateService)}
-							className="bg-amber-200 p-3 rounded-xl shadow-lg mt-2">
-							<label className="block text-sm font-medium text-center">Category</label>
+							className="bg-linear-to-r from-[#4678a8] to-[#cde9dd] p-3 rounded-xl shadow-lg mt-2">
+							<label className="block text-xs lg:text-sm font-medium text-center">Category</label>
 							<div className="flex justify-between items-center gap-5">
 								<CategoryPart
 									categories={categories}
@@ -179,40 +179,40 @@ const UpdateServiceForm = ({ serviceId }) => {
 									register={register}
 									errors={errors}
 								/>
-								<button className="btn btn-primary" type="submit">
+								<button className="btn btn-primary btn-xs lg:btn-md" type="submit">
 									Save
 								</button>
 							</div>
 						</form>
 						<form
 							onSubmit={handleSubmit(handleUpdateService)}
-							className="bg-amber-200 p-3 rounded-xl shadow-lg mt-2">
-							<label className="block text-sm font-medium text-center">Service Title</label>
+							className="bg-linear-to-r from-[#4678a8] to-[#cde9dd] p-3 rounded-xl shadow-lg mt-2">
+							<label className="block text-xs lg:text-sm font-medium text-center">Service Title</label>
 							<div className="flex justify-between items-center gap-5">
 								<TitlePart defValue={service.title} register={register} errors={errors} />
-								<button className="btn btn-primary" type="submit">
+								<button className="btn btn-primary btn-xs lg:btn-md" type="submit">
 									Save
 								</button>
 							</div>
 						</form>
 						<form
 							onSubmit={handleSubmit(handleUpdateService)}
-							className="bg-amber-200 p-3 rounded-xl shadow-lg mt-2">
-							<label className="block text-sm font-medium text-center">Description</label>
+							className="bg-linear-to-r from-[#4678a8] to-[#cde9dd] p-3 rounded-xl shadow-lg mt-2">
+							<label className="block text-xs lg:text-sm font-medium text-center">Description</label>
 							<div className="flex justify-between items-center gap-5">
 								<DescriptionPart defValue={service.description} register={register} errors={errors} />
-								<button className="btn btn-primary" type="submit">
+								<button className="btn btn-primary btn-xs lg:btn-md" type="submit">
 									Save
 								</button>
 							</div>
 						</form>
 						<form
 							onSubmit={handleSubmit(handleUpdateService)}
-							className="bg-amber-200 p-3 rounded-xl shadow-lg mt-2">
-							<label className="block text-sm font-medium text-center">Price</label>
+							className="bg-linear-to-r from-[#4678a8] to-[#cde9dd] p-3 rounded-xl shadow-lg mt-2">
+							<label className="block text-xs lg:text-sm font-medium text-center">Price</label>
 							<div className="flex justify-between items-center gap-5">
 								<PricePart defValue={service.price} register={register} errors={errors} />
-								<button className="btn btn-primary" type="submit">
+								<button className="btn btn-primary btn-xs lg:btn-md" type="submit">
 									Save
 								</button>
 							</div>
@@ -222,8 +222,8 @@ const UpdateServiceForm = ({ serviceId }) => {
 				<div className=" my-10">
 					<form
 						onSubmit={handleSubmit(handleUpdateService)}
-						className="bg-amber-200 p-3 rounded-xl shadow-lg mt-2">
-						<label className="block text-sm font-medium text-center">Service Requiements</label>
+						className="bg-linear-to-r from-[#4678a8] to-[#cde9dd] p-3 rounded-xl shadow-lg mt-2">
+						<label className="block text-xs lg:text-sm font-medium text-center">Service Requiements</label>
 						<div className="flex justify-between items-center gap-5">
 							<ServiceRequirements
 								categories={categories}
@@ -231,15 +231,15 @@ const UpdateServiceForm = ({ serviceId }) => {
 								register={register}
 								errors={errors}
 							/>
-							<button className="btn btn-primary" type="submit">
+							<button className="btn btn-primary btn-xs lg:btn-md" type="submit">
 								Save
 							</button>
 						</div>
 					</form>
 					<form
 						onSubmit={handleSubmit(handleUpdateService)}
-						className="bg-amber-200 p-3 rounded-xl shadow-lg mt-2">
-						<label className="block text-sm font-medium text-center">Delivery Time</label>
+						className="bg-linear-to-r from-[#4678a8] to-[#cde9dd] p-3 rounded-xl shadow-lg mt-2">
+						<label className="block text-xs lg:text-sm font-medium text-center">Delivery Time</label>
 						<div className="flex justify-between items-center gap-5">
 							<TimePart
 								defWeeks={delivery_Time.delivery_weeks}
@@ -248,7 +248,7 @@ const UpdateServiceForm = ({ serviceId }) => {
 								register={register}
 								errors={errors}
 							/>
-							<button className="btn btn-primary" type="submit">
+							<button className="btn btn-primary btn-xs lg:btn-md" type="submit">
 								Save
 							</button>
 						</div>

@@ -5,6 +5,7 @@ import ServiceList from "../components/servicesComponents/ServiceList";
 import ServicePagination from "../components/servicesComponents/ServicePagination";
 import FilteringSection from "../components/servicesComponents/FilteringSection";
 import { useOutletContext } from "react-router";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 const Services = () => {
 	const [currentPage, setCurrentPage] = useState(1);
@@ -41,17 +42,15 @@ const Services = () => {
 	};
 	if (loading)
 		return (
-			<div className="flex justify-center items-center min-h-screen">
-				<span className="loading loading-spinner loading-xl  text-secondary"></span>
-			</div>
+			<LoadingSpinner /> 
 		);
 	// console.log(services);
 	// console.log(categories);
 	if (!categories || !services) return;
 
 	return (
-		<div className="container mx-auto py-8 flex flex-col justify-between">
-			<div>
+		<div className="lg:px-10 bg-linear-to-t from-[#c0e3f9] mx-auto py-8 flex flex-col justify-between">
+			<div className="">
 				<FilteringSection
 					priceRange={priceRange}
 					handlePriceChange={handlePriceChange}

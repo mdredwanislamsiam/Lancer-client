@@ -94,8 +94,8 @@ const ReviewSection = () => {
 	return (
 		<div className="space-y-8 mt-10 max-w-5xl mx-auto px-4">
 			<div className="flex items-center justify-between">
-				<h2 className="text-2xl font-bold">Customer Reviews</h2>
-				<div className="badge badge-lg">
+				<h2 className="text-xl lg:text-2xl font-bold">Customer Reviews</h2>
+				<div className="badge badge-sm lg:badge-lg">
 					{reviews.length} {reviews.length === 1 ? "Review" : "Reviews"}
 				</div>
 			</div>
@@ -103,7 +103,7 @@ const ReviewSection = () => {
 			{userCanReview && !hasReviewed && (
 				<div className="card bg-base-100 shadow-lg border border-base-200 rounded-xl overflow-hidden">
 					<div className="card-body">
-						<h3 className="card-title text-lg">Write a Review</h3>
+						<h3 className="card-title text-sm lg:text-lg">Write a Review</h3>
 						<ReviewForm onSubmit={onSubmit} />
 					</div>
 				</div>
