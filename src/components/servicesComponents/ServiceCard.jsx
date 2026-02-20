@@ -9,7 +9,7 @@ const ServiceCard = ({ service }) => {
 	if (!service) return null;
 	return (
 		<div>
-			<div className="card bg-linear-to-b from-[#011e53e3] to-[#dfd6b958] hover:to-[#f5e3d2]  max-w-40 transition-all duration-700  lg:max-w-66 md:w-96 shadow-sm mx-auto h-full">
+			<div className="card bg-linear-to-b from-[#011e53e3] to-[#dfd6b958] hover:to-[#f5e3d2]  max-w-60 transition-all duration-700  lg:max-w-66 md:w-96 shadow-sm mx-auto h-full">
 				<figure className="">
 					<img
 						src={service.images?.length > 0 ? service.images[0].images : default_img}
