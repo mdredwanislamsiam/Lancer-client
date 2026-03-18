@@ -11,63 +11,128 @@ import { CgHashtag } from "react-icons/cg";
 import useAuthContext from "../../hooks/useAuthContext";
 import useOrderContext from "../../hooks/useOrderContext";
 
+/* ─── status config ──────────────────────────────────────────── */
+const STATUS_CONFIG = {
+	"Not paid": {
+		bg: "rgba(185,64,64,0.08)",
+		border: "rgba(185,64,64,0.2)",
+		color: "#b94040",
+		dot: "#b94040",
+		label: "Unpaid",
+		Icon: FiAlertCircle,
+	},
+	Paid: {
+		bg: "rgba(48,96,115,0.08)",
+		border: "rgba(48,96,115,0.2)",
+		color: "#306073",
+		dot: "#306073",
+		label: "Paid",
+		Icon: BiCheckCircle,
+	},
+	Delivered: {
+		bg: "rgba(22,163,74,0.08)",
+		border: "rgba(22,163,74,0.2)",
+		color: "#16a34a",
+		dot: "#16a34a",
+		label: "Delivered",
+		Icon: BiCheckCircle,
+	},
+	Canceled: {
+		bg: "rgba(100,100,100,0.07)",
+		border: "rgba(100,100,100,0.18)",
+		color: "#666",
+		dot: "#aaa",
+		label: "Canceled",
+		Icon: BiXCircle,
+	},
+	Active: {
+		bg: "rgba(217,119,6,0.08)",
+		border: "rgba(217,119,6,0.2)",
+		color: "#b45309",
+		dot: "#d97706",
+		label: "Active",
+		Icon: CiLock,
+	},
+};
 
+/* ─── ghost action button ────────────────────────────────────── */
+const GhostBtn = ({ onClick, disabled, loading, icon: Icon, label, variant = "teal", size = "sm" }) => {
+	const palette = {
+		teal: { base: "#306073", hoverBg: "#306073", hoverText: "#fff" },
+		dark: { base: "#111", hoverBg: "#111", hoverText: "#fff" },
+		red: { base: "#b94040", hoverBg: "#b94040", hoverText: "#fff" },
+		pay: { base: "#306073", hoverBg: "#306073", hoverText: "#fff" },
+	};
+	const p = palette[variant];
+	const pad = size === "sm" ? "8px 16px" : "9px 20px";
+	const fs = size === "sm" ? "12px" : "13px";
+	return (
+		<button
+			onClick={onClick}
+			disabled={disabled}
+			style={{
+				display: "inline-flex",
+				alignItems: "center",
+				gap: "6px",
+				padding: pad,
+				fontSize: fs,
+				fontWeight: 600,
+				letterSpacing: "0.03em",
+				borderRadius: "8px",
+				border: "none",
+				cursor: disabled ? "not-allowed" : "pointer",
+				color: p.base,
+				background: `${p.base}10`,
+				outline: `1px solid ${p.base}30`,
+				transition: "all 0.18s ease",
+				opacity: disabled ? 0.5 : 1,
+			}}
+			onMouseEnter={(e) => {
+				if (!disabled) {
+					e.currentTarget.style.background = p.hoverBg;
+					e.currentTarget.style.color = p.hoverText;
+					e.currentTarget.style.outline = `1px solid ${p.hoverBg}`;
+					e.currentTarget.style.boxShadow = `0 4px 14px ${p.hoverBg}40`;
+					e.currentTarget.style.transform = "translateY(-1px)";
+				}
+			}}
+			onMouseLeave={(e) => {
+				e.currentTarget.style.background = `${p.base}10`;
+				e.currentTarget.style.color = p.base;
+				e.currentTarget.style.outline = `1px solid ${p.base}30`;
+				e.currentTarget.style.boxShadow = "none";
+				e.currentTarget.style.transform = "translateY(0)";
+			}}>
+			{Icon && <Icon size={14} />}
+			{loading ? "Processing…" : label}
+		</button>
+	);
+};
+
+/* ─── main component ─────────────────────────────────────────── */
 const OrderCard = ({ order }) => {
-	const { user } = useAuthContext(); 
+	const { user } = useAuthContext();
 	const [status, setStatus] = useState(order.status);
 	const [loading, setLoading] = useState(false);
-	const { cancelOrder } = useOrderContext(); 
+	const { cancelOrder } = useOrderContext();
 
-	const size = window.innerWidth < 640 ? 15 : 25;
-	const bigSize = window.innerWidth < 640 ? 30 : 40;
+	const cfg = STATUS_CONFIG[status] ?? STATUS_CONFIG["Not paid"];
 
-	const statusConfig = {
-		"Not paid": {
-			color: "bg-red-100 text-red-700 border-red-200",
-			icon: <FiAlertCircle size={size} />,
-			label: "Unpaid",
-		},
-		Paid: {
-			color: "bg-blue-100 text-blue-700 border-blue-200",
-			icon: <BiCheckCircle size={size} />,
-			label: "Paid",
-		},
-		Delivered: {
-			color: "bg-emerald-100 text-emerald-700 border-emerald-200",
-			icon: <BiCheckCircle size={size} />,
-			label: "Delivered",
-		},
-		Canceled: {
-			color: "bg-slate-100 text-slate-600 border-slate-200",
-			icon: <BiXCircle size={size} />,
-			label: "Canceled",
-		},
-		Active: {
-			color: "bg-orange-100 text-orange-700 border-orange-200",
-			icon: <CiLock size={size} />,
-			label: "Active",
-		},
+	const handleCancelOrder = async (orderId) => {
+		const res = await cancelOrder(orderId);
+		if (res === 200) setStatus("Canceled");
 	};
 
-	// console.log(order);
-	const handleCancelOrder = async (orderId) => {
-		const status = await cancelOrder(orderId); 
-		if (status === 200) {
-			setStatus("Canceled"); 
-		} 
-	}
-	
-
-	const handleStatusChange = async (event) => {
-		const newStatus = event.target.value;
+	const handleStatusChange = async (e) => {
+		const newStatus = e.target.value;
 		try {
 			const response = await authAPIClient.patch(`/orders/${order.id}/update_status/`, { status: newStatus });
 			if (response.status === 200) {
 				setStatus(newStatus);
 				alert(response.data.status);
 			}
-		} catch (error) {
-			console.log(error);
+		} catch (err) {
+			console.error(err);
 		}
 	};
 
@@ -78,116 +143,278 @@ const OrderCard = ({ order }) => {
 				amount: order.total_price,
 				orderId: order.id,
 			});
-			// console.log(response);
 			if (response.data.payment_url) {
 				setLoading(false);
 				window.location.href = response.data.payment_url;
 			} else {
-				alert("payment failed!");
+				alert("Payment failed!");
+				setLoading(false);
 			}
-		} catch (error) {
-			console.log(error);
+		} catch (err) {
+			console.error(err);
+			setLoading(false);
 		}
 	};
 
-	
-	
+	if (!order) return null;
 
+	const showPay = order.status === "Not paid" && status !== "Canceled" && !user.is_staff;
+	const showCancel =
+		!["Delivered", "Active", "Paid"].includes(order.status) && status !== "Canceled" && !user.is_staff;
 
-
-	if (!order) return; 
 	return (
-		<div className="bg-white rounded-lg shadow-lg mb-8 hover:shadow-2xl hover:shadow-[#286aa1] overflow-hidden ">
-			<div className="bg-gradient-to-t to-[#2c5190d4] from-[#add1fc84] hover:from-[#fcd8ad2f] p-3 lg:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-				<div className="flex justify-between items-baseline gap-2">
-					<div className="flex items-center gap-2">
-						<CgHashtag size={bigSize} className="shadow-sm shadow-white w-10 h-fit" />
-						<div>
-							<h2 className="text-sm lg:text-md font-bold text-[#ffffffd3]">ORDER </h2>
-							<h2 className="text-xs lg:text-md font-bold text-[#032c42]"> {order.id}</h2>
-						</div>
-					</div>
-				</div>
-				<div className="flex gap-2 items-center">
-					{user.is_staff ?
-						<select
-							className="px-2 py-1 rounded-full text-gray-700 font-medium h-fit text-xs lg:text-sm bg-gray-300 outline-none"
-							value={status}
-							onChange={handleStatusChange}>
-							<option value="Not paid"> Unpaid</option>
-							<option value="Paid"> Paid</option>
-							<option value="Active"> Active</option>
-							<option value="Delivered"> Delivered</option>
-							<option value="Canceled"> Canceled</option>
-						</select>
-					:	<span
-							className={`px-3 py-1 rounded-full text-xs lg:text-sm font-medium h-fit ${statusConfig[status].color}`}>
-							<div className="flex justify-between items-center gap-2">
-								<div>{statusConfig[status].icon}</div>
-								<div>{statusConfig[status].label}</div>
-							</div>
-						</span>
-					}
-				</div>
-			</div>
-			<div className="py-3 px-2 lg:px-10 bg-base-200">
-				<OrderItem item={order} />
-			</div>
-			<div className="lg:flex grid lg:justify-between grid-cols-2 border-t-3 my-2 border-gray-300  pt-4 py-2 px-2 lg:px-10 items-center w-full">
-				{/* LEFT SIDE */}
-				<div className="">
-					<div className="flex items-center gap-2">
-						<BsWallet size={bigSize} />
-						<div>
-							<p className="text-gray-500 text-xs lg:text-sm font-semibold">Service Price </p>
-							<p className="font-extrabold text-md lg:text-xl">
-								${parseFloat(order.total_price).toFixed(2)}
-							</p>
-						</div>
-					</div>
-				</div>
-				<button className="btn btn-xs lg:btn-md btn-primary rounded-full flex items-center shadow text-white">
-					<BiMessage className="w-4 h-4  lg:w-6 lg:h-6" /> <div>Contact Seller</div>
-				</button>
+		<>
+			<style>{`
+				.oc-card { transition: box-shadow 0.26s ease, transform 0.26s ease; }
+				.oc-card:hover { box-shadow: 0 16px 48px rgba(48,96,115,0.14) !important; transform: translateY(-2px); }
+				.oc-select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23666'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px !important; }
+				@keyframes ocIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+				.oc-card { animation: ocIn 0.38s ease both; }
+			`}</style>
 
-				{order.status === "Not paid" && status !== "Canceled" && !user.is_staff && (
-					<button
-						onClick={handlePayment}
-						className="px-4 py-2 btn btn-xs lg:btn-md bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow transition-colors"
-						disabled={loading}>
-						{loading ?
-							<div className="flex items-center gap-2">
-								<GiSandsOfTime className="w-4 h-4  lg:w-6 lg:h-6" />
-								<span>Processing</span>
+			<div className="oc-card" style={S.card}>
+				{/* ── Header ── */}
+				<div style={S.header}>
+					{/* accent bar */}
+					<div style={S.headerBar} />
+
+					<div style={S.headerInner}>
+						{/* Order ID */}
+						<div style={S.orderIdBlock}>
+							<div style={S.hashBubble}>
+								<CgHashtag size={16} color="#fff" />
 							</div>
-						:	<div className="flex items-center gap-2">
-								<MdPayment className="w-4 h-4  lg:w-6 lg:h-6" />
-								<span>Pay Now</span>
+							<div>
+								<p style={S.orderLabel}>Order</p>
+								<p style={S.orderId}>#{order.id}</p>
+							</div>
+						</div>
+
+						{/* Status */}
+						{user.is_staff ?
+							<select className="oc-select" value={status} onChange={handleStatusChange} style={S.select}>
+								<option value="Not paid">Unpaid</option>
+								<option value="Paid">Paid</option>
+								<option value="Active">Active</option>
+								<option value="Delivered">Delivered</option>
+								<option value="Canceled">Canceled</option>
+							</select>
+						:	<div
+								style={{
+									...S.statusPill,
+									background: cfg.bg,
+									border: `1px solid ${cfg.border}`,
+									color: cfg.color,
+								}}>
+								<div style={{ ...S.statusDot, background: cfg.dot }} />
+								<cfg.Icon size={13} />
+								<span>{cfg.label}</span>
 							</div>
 						}
-					</button>
-				)}
+					</div>
+				</div>
 
-				{order.status !== "Delivered" &&
-					order.status !== "Active" &&
-					order.status !== "Paid" &&
-					status !== "Canceled" &&
-					!user.is_staff && (
-						<button
-							onClick={() => handleCancelOrder(order.id)}
-							className="text-red-700 btn btn-xs lg:btn-md btn-error shadow rounded-full">
-							<div className="flex items-center gap-2">
-								<GiCancel className="w-4 h-4  lg:w-6 lg:h-6" />
-								<span>cancel</span>
-							</div>
-						</button>
-					)}
+				{/* ── Order Items ── */}
+				<div style={S.itemsSection}>
+					<OrderItem item={order} />
+				</div>
 
-				{/* RIGHT SIDE */}
-				{/* <div className="flex flex-col lg:felx-row items-center gap-3 ml-auto"></div> */}
+				{/* ── Footer ── */}
+				<div style={S.footer}>
+					{/* Price */}
+					<div style={S.priceBlock}>
+						<div style={S.walletIcon}>
+							<BsWallet size={16} color="#306073" />
+						</div>
+						<div>
+							<p style={S.priceLabel}>Total</p>
+							<p style={S.priceValue}>${parseFloat(order.total_price).toFixed(2)}</p>
+						</div>
+					</div>
+
+					{/* Actions */}
+					<div style={S.actions}>
+						<GhostBtn icon={BiMessage} label="Contact Seller" variant="teal" />
+
+						{showPay && (
+							<GhostBtn
+								onClick={handlePayment}
+								disabled={loading}
+								loading={loading}
+								icon={loading ? GiSandsOfTime : MdPayment}
+								label="Pay Now"
+								variant="pay"
+							/>
+						)}
+
+						{showCancel && (
+							<GhostBtn
+								onClick={() => handleCancelOrder(order.id)}
+								icon={GiCancel}
+								label="Cancel"
+								variant="red"
+							/>
+						)}
+					</div>
+				</div>
 			</div>
-		</div>
+		</>
 	);
+};
+
+/* ─── styles ─────────────────────────────────────────────────── */
+const S = {
+	card: {
+		background: "#ffffff",
+		borderRadius: "18px",
+		border: "1px solid rgba(48,96,115,0.1)",
+		boxShadow: "0 2px 12px rgba(48,96,115,0.06)",
+		overflow: "hidden",
+		marginBottom: "16px",
+	},
+
+	/* header */
+	header: {
+		position: "relative",
+		background: "#111111",
+		overflow: "hidden",
+	},
+	headerBar: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		right: 0,
+		height: "3px",
+		background: "linear-gradient(90deg, #306073 0%, #4a8fa6 55%, #82c4d4 100%)",
+	},
+	headerInner: {
+		position: "relative",
+		zIndex: 1,
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+		padding: "18px 22px",
+		/* subtle teal glow top-right */
+		backgroundImage: "radial-gradient(circle at 90% 0%, rgba(48,96,115,0.45) 0%, transparent 60%)",
+	},
+	orderIdBlock: {
+		display: "flex",
+		alignItems: "center",
+		gap: "12px",
+	},
+	hashBubble: {
+		width: "36px",
+		height: "36px",
+		borderRadius: "10px",
+		background: "#306073",
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
+		flexShrink: 0,
+	},
+	orderLabel: {
+		fontSize: "10px",
+		fontWeight: 600,
+		letterSpacing: "0.1em",
+		textTransform: "uppercase",
+		color: "rgba(255,255,255,0.4)",
+		margin: 0,
+	},
+	orderId: {
+		fontSize: "15px",
+		fontWeight: 700,
+		color: "#ffffff",
+		letterSpacing: "-0.01em",
+		margin: "2px 0 0",
+	},
+
+	/* status */
+	statusPill: {
+		display: "inline-flex",
+		alignItems: "center",
+		gap: "6px",
+		padding: "6px 14px",
+		borderRadius: "99px",
+		fontSize: "12px",
+		fontWeight: 600,
+		letterSpacing: "0.03em",
+	},
+	statusDot: {
+		width: "6px",
+		height: "6px",
+		borderRadius: "50%",
+		flexShrink: 0,
+	},
+
+	/* staff select */
+	select: {
+		padding: "7px 28px 7px 12px",
+		fontSize: "12px",
+		fontWeight: 600,
+		color: "#111",
+		background: "#fff",
+		border: "1px solid rgba(48,96,115,0.25)",
+		borderRadius: "8px",
+		outline: "none",
+		cursor: "pointer",
+	},
+
+	/* items */
+	itemsSection: {
+		padding: "16px 22px",
+		background: "#fafafa",
+		borderTop: "1px solid rgba(48,96,115,0.06)",
+		borderBottom: "1px solid rgba(48,96,115,0.06)",
+	},
+
+	/* footer */
+	footer: {
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "space-between",
+		flexWrap: "wrap",
+		gap: "12px",
+		padding: "14px 22px",
+		background: "#ffffff",
+	},
+	priceBlock: {
+		display: "flex",
+		alignItems: "center",
+		gap: "10px",
+	},
+	walletIcon: {
+		width: "36px",
+		height: "36px",
+		borderRadius: "10px",
+		background: "rgba(48,96,115,0.08)",
+		border: "1px solid rgba(48,96,115,0.15)",
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
+		flexShrink: 0,
+	},
+	priceLabel: {
+		fontSize: "10px",
+		fontWeight: 600,
+		letterSpacing: "0.08em",
+		textTransform: "uppercase",
+		color: "#999",
+		margin: 0,
+	},
+	priceValue: {
+		fontSize: "20px",
+		fontWeight: 700,
+		color: "#111",
+		letterSpacing: "-0.02em",
+		margin: "2px 0 0",
+		lineHeight: 1,
+	},
+	actions: {
+		display: "flex",
+		alignItems: "center",
+		gap: "8px",
+		flexWrap: "wrap",
+	},
 };
 
 export default OrderCard;

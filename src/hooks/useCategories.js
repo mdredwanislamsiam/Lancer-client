@@ -44,7 +44,9 @@ const useCategories = () => {
         try {
             const res = await authAPIClient.post("/categories/", data); 
             if (res.status === 201) {
+                await fetchCategories();
                 return true; 
+                
             }
         }
         catch (error) {
@@ -72,7 +74,8 @@ const useCategories = () => {
     const deleteCategory = async (categoryId) => {
 		try {
 			await authAPIClient.delete(`/categories/${categoryId}/`);
-			// console.log(res);
+            // console.log(res);
+            
 		} catch (error) {
 			console.log(error);
 		}

@@ -6,7 +6,7 @@ import { useParams } from 'react-router';
 const UpdateServices = () => {
     const { serviceId } = useParams();  
     return (
-		<div>
+		<div className='mb-40'>
 			<h1 className="text-xl lg:text-3xl font-bold headTitle text-center my-10">Update Service</h1>
 			<UpdateServiceForm serviceId={serviceId} />
 		</div>

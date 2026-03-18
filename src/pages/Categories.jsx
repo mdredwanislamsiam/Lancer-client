@@ -17,7 +17,7 @@ const Categories = () => {
 			<h1 className=" text-xl lg:text-3xl font-bold text-center headTitle my-10">All Categories</h1>
 			{loading && <LoadingSpinner />}
 
-			<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+			<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 px-5 lg:px-10 py-10">
 				{categories.map((category) => (
 					<div key={category.id}>
 						<CategoryCard category={category} onDelete={handleDelete} />

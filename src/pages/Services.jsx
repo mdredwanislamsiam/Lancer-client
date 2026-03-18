@@ -20,6 +20,14 @@ const Services = () => {
         fetchServices(currentPage, priceRange, selectedCategory, debouncedSearch, sortOrder);
 	}, [currentPage, priceRange, selectedCategory, debouncedSearch, sortOrder]);
 
+	const onReset = () => {
+		setCurrentPage(1); 
+		setPriceRange([0, 10000]); 
+		setSelectedCategory("");
+		setSearchQuery(""); 
+		setDebouncedSearch(""); 
+		setSortOrder(""); 
+	}
 	
    
 	useEffect(() => {
@@ -49,18 +57,36 @@ const Services = () => {
 
 	return (
 		<div className="lg:px-10 bg-linear-to-t from-[#c0e3f9] mx-auto py-8 flex flex-col justify-between">
-			<div className="">
-				<FilteringSection
-					priceRange={priceRange}
-					handlePriceChange={handlePriceChange}
-					categories={categories}
-					selectedCategory={selectedCategory}
-					handleCategoryChange={setSelectedCategory}
-					searchQuery={searchQuery}
-					handleSearchQuery={setSearchQuery}
-					sortOrder={sortOrder}
-					handleSorting={setSortOrder}
-				/>
+			<div className="container mx-auto px-5">
+				<div className=" grid grid-cols-1 gap-5 md:gap-0 md:grid-cols-2 ">
+					<div className="flex items-center gap-2.5 min-w-0 shadow-sm w-fit px-5 py-5 md:py-0 rounded-2xl">
+						<span className="w-px h-5 bg-[#15495e] flex-shrink-0" />
+						<div className="min-w-0">
+							<h1 className="text-sm font-bold text-[#0d0d0d] tracking-tight leading-none">
+								All Services
+							</h1>
+							{!loading && (
+								<p className="text-[11px] text-[#888] mt-0.5 truncate">
+									{services.length > 0 ?
+										`${services.length} result${services.length !== 1 ? "s" : ""}${debouncedSearch ? ` for "${debouncedSearch}"` : ""}`
+									:	"No results"}
+								</p>
+							)}
+						</div>
+					</div>
+					<FilteringSection
+						priceRange={priceRange}
+						handlePriceChange={handlePriceChange}
+						categories={categories}
+						selectedCategory={selectedCategory}
+						handleCategoryChange={setSelectedCategory}
+						searchQuery={searchQuery}
+						handleSearchQuery={setSearchQuery}
+						sortOrder={sortOrder}
+						handleSorting={setSortOrder}
+						onReset={onReset}
+					/>
+				</div>
 				<ServiceList services={services} loading={loading} />
 			</div>
 			<ServicePagination totalPages={totalPages} currentPage={currentPage} handlePageChange={setCurrentPage} />

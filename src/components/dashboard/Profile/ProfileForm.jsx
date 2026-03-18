@@ -1,6 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import useAuthContext from '../../../hooks/useAuthContext';
 
+
+const Field = ({ label, error, locked, children }) => (
+	<div className="space-y-1.5">
+		<div className="flex items-center justify-between">
+			<label className="text-[10px] font-bold tracking-widest uppercase text-[#888]">{label}</label>
+			{locked && (
+				<span className="flex items-center gap-1 text-[9px] font-semibold tracking-wider uppercase text-[#aaa]">
+					<svg
+						viewBox="0 0 12 12"
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="1.8"
+						className="w-2.5 h-2.5">
+						<rect x="2" y="5" width="8" height="6" rx="1" />
+						<path d="M4 5V3.5a2 2 0 0 1 4 0V5" />
+					</svg>
+					Read only
+				</span>
+			)}
+		</div>
+		{children}
+		{error && (
+			<p className="flex items-center gap-1.5 text-[11px] text-[#b84040] font-medium">
+				<svg
+					viewBox="0 0 12 12"
+					fill="none"
+					stroke="currentColor"
+					strokeWidth="2"
+					className="w-3 h-3 flex-shrink-0">
+					<circle cx="6" cy="6" r="5" />
+					<path d="M6 4v2.5M6 8v.5" />
+				</svg>
+				{error}
+			</p>
+		)}
+	</div>
+);
+
 const ProfileForm = ({ register, errors, isEditing}) => {
 	const [image, setImage] = useState(null);  
 	const { user } = useAuthContext(); 
@@ -12,6 +50,13 @@ const ProfileForm = ({ register, errors, isEditing}) => {
 		setImage(URL.createObjectURL(file)); 
 	}
 
+	const inputCls = (disabled) =>
+		`w-full px-3.5 py-2.5 text-sm border transition-colors duration-150 outline-none bg-white ${
+			disabled ?
+				"border-[#ebebeb] text-[#aaa] bg-[#fafafa] cursor-not-allowed"
+			:	"border-[#e0e0e0] text-[#0d0d0d] focus:border-[#306073]"
+		}`;
+
 	useEffect(() => {
 		setImage(user?.image);
 	}, [user]); 
@@ -20,11 +65,15 @@ const ProfileForm = ({ register, errors, isEditing}) => {
 		<div className="space-y-4">
 			{/* Profile Image */}
 			<div className="">
-				<img src={image} alt="" className="w-30 h-30 lg:w-40 lg:h-40 shadow-xl mb-5 mx-auto rounded-full object-cover" />
+				<img
+					src={image}
+					alt=""
+					className="w-30 h-30 lg:w-40 lg:h-40 shadow-xl mb-5 mx-auto rounded-full object-cover"
+				/>
 				<input
 					type="file"
 					accept="image/*"
-					disabled = {!isEditing}
+					disabled={!isEditing}
 					className="file-input file-input-bordered w-full text-xs lg:text-sm"
 					{...register("image")}
 					onChange={(e) => {
@@ -33,91 +82,74 @@ const ProfileForm = ({ register, errors, isEditing}) => {
 				/>
 			</div>
 
-			{/* first_name */}
-			<div className="form-control">
-				<label htmlFor="" className="label text-xs lg:text-sm">
-					First Name
-				</label>
-				<input
-					type="text"
-					className="input input-bordered bg-base-200 text-xs lg:text-sm w-full outline-none"
-					disabled={!isEditing}
-					{...register("first_name", { required: "First name is required" })}
-				/>
-				{errors.first_name && <p className="text-red-500">{errors.first_name.message}</p>}
+			<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+				<Field label="First Name" error={errors.first_name?.message}>
+					<input
+						type="text"
+						className={inputCls(!isEditing)}
+						disabled={!isEditing}
+						{...register("first_name", { required: "First name is required" })}
+					/>
+				</Field>
+
+				<Field label="Last Name">
+					<input
+						type="text"
+						className={inputCls(!isEditing)}
+						disabled={!isEditing}
+						{...register("last_name")}
+					/>
+				</Field>
 			</div>
-			{/* last_name */}
-			<div className="form-control">
-				<label htmlFor="" className="label text-xs lg:text-sm">
-					Last Name
-				</label>
-				<input
-					type="text"
-					className="input input-bordered bg-base-200 text-xs lg:text-sm w-full outline-none"
-					disabled={!isEditing}
-					{...register("last_name")}
-				/>
-			</div>
-			{/* Email */}
-			<div className="form-control">
-				<label htmlFor="email" className="label text-xs lg:text-sm ">
-					Email Address
-				</label>
+
+			{/* ── email (read-only) ── */}
+			<Field label="Email Address" error={errors.email?.message} locked>
 				<input
 					type="email"
-					className="input input-bordered bg-base-200 text-xs lg:text-sm w-full outline-none"
+					className={inputCls(true)}
 					readOnly
-					{...register("email", { required: "Eamil is required" })}
+					{...register("email", { required: "Email is required" })}
 				/>
-				{errors.email && <p className="text-red-500">{errors.email.message}</p>}
+			</Field>
+
+			{/* ── address + phone row ── */}
+			<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+				<Field label="Address">
+					<input
+						type="text"
+						className={inputCls(!isEditing)}
+						disabled={!isEditing}
+						{...register("address")}
+					/>
+				</Field>
+
+				<Field label="Phone Number" error={errors.phone_number?.message}>
+					<input
+						type="text"
+						className={inputCls(!isEditing)}
+						disabled={!isEditing}
+						{...register("phone_number", {
+							pattern: {
+								value: /^\d{8,11}$/,
+								message: "Must be 8–11 digits",
+							},
+						})}
+					/>
+				</Field>
 			</div>
-			{/* Address */}
-			<div className="form-control">
-				<label htmlFor="" className="label text-xs lg:text-sm">
-					Address
-				</label>
-				<input
-					type="text"
-					className="input input-bordered bg-base-200 w-full text-xs lg:text-sm outline-none"
-					disabled={!isEditing}
-					{...register("address")}
-				/>
-			</div>
-			{/* Phone Number */}
-			<div className="form-control">
-				<label htmlFor="" className="label text-xs lg:text-sm">
-					Phone Number
-				</label>
-				<input
-					type="text"
-					className="input input-bordered bg-base-200 w-full text-xs lg:text-sm outline-none"
-					disabled={!isEditing}
-					{...register("phone_number", {
-						pattern: { value: /^\d{8,11}$/, message: "Phone number must be 8 to 11 digits" },
-					})}
-				/>
-				{errors.phone_number && (
-					<span className="label-text-alt text-error">{errors.phone_number.message}</span>
-				)}
-			</div>
-			{/* Bio */}
-			<div className="form-control">
-				<label htmlFor="" className="label text-xs lg:text-sm">
-					Bio
-				</label>
+
+			{/* ── bio ── */}
+			<Field label="Bio" error={errors.bio?.message}>
 				<textarea
-					className="textarea textarea-bordered outline-none bg-base-200 w-full text-xs lg:text-sm min-h-[120px] resize-y"
+					className={`${inputCls(!isEditing)} min-h-[120px] resize-y`}
 					disabled={!isEditing}
-					placeholder="Tell clients a bit about yourself…"
+					placeholder={isEditing ? "Tell clients a bit about yourself…" : ""}
 					{...register("bio", {
-						maxLength: {
-							value: 1000,
-							message: "Bio must be under 1000 characters!",
-						},
+						maxLength: { value: 1000, message: "Bio must be under 1000 characters" },
 					})}
 				/>
-				{errors.bio && <span className="label-text-alt text-error">{errors.bio.message}</span>}
-			</div>
+				{isEditing && <p className="text-[10px] text-[#aaa] text-right -mt-1">Max 1000 characters</p>}
+			</Field>
 		</div>
 	);
 };
