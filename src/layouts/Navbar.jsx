@@ -11,6 +11,7 @@ const NAV_LINKS = [
 	{ to: "services", label: "Services" },
 	{ to: "dashboard", label: "Dashboard" },
 	{ to: "about", label: "About" },
+	{ to: "contact", label: "Contact" },
 ];
 
 /* ─── animated underline nav link ───────────────────────────────── */
@@ -99,11 +100,15 @@ const Navbar = () => {
 
 					{/* ── Desktop nav links ── */}
 					<ul className="hidden lg:flex items-center text-white gap-10">
-						{NAV_LINKS.map((l) => (
-							<li key={l.to}>
-								<NavLink to={l.to} label={l.label} />
-							</li>
-						))}
+						{NAV_LINKS.map((l) => {
+							if (l.label === "Dashboard" && !user) return null;
+
+							return (
+								<li key={l.to}>
+									<NavLink to={l.to} label={l.label} />
+								</li>
+							);
+						})}
 					</ul>
 
 					{/* ── Right side ── */}
@@ -259,7 +264,7 @@ const Navbar = () => {
 							</>
 						:	<div className="flex items-center gap-2">
 								<Link to="/login">
-									<button className="px-4 py-2 text-xs font-semibold tracking-wide text-[#0d0d0d] border border-[#d0d0d0] hover:border-[#306073] hover:text-[#306073] transition-all duration-200">
+									<button className="px-4 py-2 text-xs font-semibold tracking-wide text-[#c5c5c5] border border-[#d0d0d0] hover:border-[#306073] hover:text-[#306073] transition-all duration-200">
 										Log in
 									</button>
 								</Link>

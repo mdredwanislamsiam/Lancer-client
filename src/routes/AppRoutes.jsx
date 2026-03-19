@@ -33,6 +33,7 @@ import PaidOrders from '../components/dashboard/orderSections/PaidOrders';
 import UnpaidOrders from '../components/dashboard/orderSections/UnpaidOrders';
 import CanceledOrders from '../components/dashboard/orderSections/CanceledOrders';
 import PrivateRoute from './PrivateRoute';
+import ContactUs from '../pages/ContactUs';
 
 const AppRoutes = () => {
     return (
@@ -40,6 +41,7 @@ const AppRoutes = () => {
 			<Route element={<MainLayout />}>
 				<Route path="/" element={<Home />} />
 				<Route path="about" element={<About />} />
+				<Route path='contact' element={<ContactUs/>} />
 				<Route path="login" element={<Login />} />
 				<Route path="activate/:uid/:token" element={<ActivateAccount />} />
 				<Route path="register" element={<Register />} />

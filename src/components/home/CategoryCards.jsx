@@ -209,23 +209,6 @@ const CategoryCards = () => {
 					))
 				}
 			</div>
-
-			{/* bottom CTA */}
-			<div className="flex justify-center mt-12">
-				<Link to="/categories">
-					<button className="group flex items-center gap-3 border border-[#0d0d0d] px-8 py-3 text-sm font-semibold tracking-widest uppercase text-[#0d0d0d] hover:bg-[#0d0d0d] hover:text-white transition-all duration-300">
-						Browse All Categories
-						<svg
-							viewBox="0 0 16 16"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200">
-							<path d="M3 8h10M9 4l4 4-4 4" />
-						</svg>
-					</button>
-				</Link>
-			</div>
 		</div>
 	);
 };
