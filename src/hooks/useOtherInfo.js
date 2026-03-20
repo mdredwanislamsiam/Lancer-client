@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import authAPIClient from '../services/auth-api-client';
+import useAuthContext from './useAuthContext';
+
 
 const useOtherInfo = () => {
+	const { user } = useAuthContext(); 
     const [services, setServices] = useState([]); 
 	const [paidOrders, setPaidOrders] = useState([]); 
 	const [unpaidOrders, setUnpaidOrders] = useState([]); 
@@ -39,7 +42,7 @@ const useOtherInfo = () => {
 			setLoading(false); 
 		}
 	}
-    useEffect(() => { fetchOtherInfo() }, []); 
+    useEffect(() => { user && fetchOtherInfo() }, [ user ]); 
     
     const getTime = (time) => {
 		const createdTime = new Date(time);
