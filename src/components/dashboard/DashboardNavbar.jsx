@@ -26,13 +26,13 @@ const DashboardNavbar = ({ sidebarOpen }) => {
 			<div className="flex-none">
 				<div className="dropdown dropdown-end ">
 					<label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-						<div className="w-10 rounded-full">
+						<div className="w-10 rounded-full border-white/40 border">
 							<img src={user?.image} alt="User avatar" />
 						</div>
 					</label>
 					<ul
 						tabIndex={0}
-						className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-[#1c2025] text-white/80  gap-2 rounded-box w-52">
+						className="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-[#1c2025] text-white/80  gap-2 rounded-box w-52">
 						<li>
 							<Link
 								to="/dashboard/profile/"

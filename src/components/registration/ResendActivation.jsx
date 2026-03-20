@@ -73,16 +73,49 @@ const ResendActivation = () => {
 				.ra-check { animation:checkPop .5s ease both; }
 				@keyframes raPulse { 0%,100%{opacity:0.5;transform:scale(1)} 50%{opacity:1;transform:scale(1.06)} }
 				.ra-pulse { animation:raPulse 2s ease-in-out infinite; }
+				@keyframes fillBar { from{width:0%} to{width:100%} }
+
+				/* ── Responsive ── */
+				@media (max-width: 768px) {
+					.ra-left { display: none !important; }
+					.ra-card {
+						max-width: 460px !important;
+						border-radius: 16px !important;
+					}
+					.ra-right {
+						padding: 32px 28px !important;
+					}
+					.ra-mobile-brand { display: flex !important; }
+				}
+
+				@media (max-width: 480px) {
+					.ra-page {
+						padding: 0 !important;
+						align-items: flex-start !important;
+					}
+					.ra-card {
+						border-radius: 0 !important;
+						border: none !important;
+						box-shadow: none !important;
+						min-height: 100vh !important;
+					}
+					.ra-right {
+						padding: 24px 18px 32px !important;
+						justify-content: flex-start !important;
+					}
+				}
+
+				.ra-mobile-brand { display: none; }
 			`}</style>
 
-			<div className="ra" style={S.page}>
+			<div className="ra ra-page" style={S.page}>
 				{/* orbs */}
 				<div className="ra-orb" style={S.orb1} />
 				<div style={S.orb2} />
 
 				<div className="ra-card" style={S.card}>
 					{/* ── Left panel ── */}
-					<div style={S.left}>
+					<div className="ra-left" style={S.left}>
 						{/* Logo */}
 						<div style={S.brandRow}>
 							<div style={S.logoBubble}>
@@ -121,7 +154,15 @@ const ResendActivation = () => {
 					</div>
 
 					{/* ── Right panel ── */}
-					<div style={S.right}>
+					<div className="ra-right" style={S.right}>
+						{/* Mobile-only brand header */}
+						<div className="ra-mobile-brand" style={S.mobileBrand}>
+							<div style={S.logoBubble}>
+								<FiShoppingCart size={16} color="#fff" />
+							</div>
+							<span style={S.brandName}>Lancer</span>
+						</div>
+
 						<Link to="/login" className="ra-back" style={{ marginBottom: "28px", alignSelf: "flex-start" }}>
 							<FiArrowLeft size={13} /> Back to sign in
 						</Link>
@@ -207,11 +248,6 @@ const ResendActivation = () => {
 					</div>
 				</div>
 			</div>
-
-			<style>{`
-				@keyframes fillBar { from{width:0%} to{width:100%} }
-				.ra-fill { animation:fillBar 2.2s linear forwards; }
-			`}</style>
 		</>
 	);
 };
@@ -278,6 +314,7 @@ const S = {
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "center",
+		flexShrink: 0,
 	},
 	brandName: {
 		fontSize: "18px",
@@ -333,6 +370,15 @@ const S = {
 	},
 	stepText: { fontSize: "13px", color: "rgba(255,255,255,0.75)", fontWeight: 500 },
 	leftFooter: { fontSize: "11px", color: "rgba(255,255,255,0.3)", marginTop: "auto", paddingTop: "24px" },
+
+	/* mobile brand strip */
+	mobileBrand: {
+		alignItems: "center",
+		gap: "10px",
+		marginBottom: "24px",
+		paddingBottom: "20px",
+		borderBottom: "1px solid rgba(255,255,255,0.07)",
+	},
 
 	/* right */
 	right: {

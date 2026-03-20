@@ -80,23 +80,62 @@ const Login = () => {
 				.ln-card { animation: lnUp 0.5s ease both; }
 				@keyframes lnOrb { 0%,100%{transform:scale(1) translate(0,0)} 50%{transform:scale(1.08) translate(10px,-10px)} }
 				.ln-orb { animation: lnOrb 8s ease-in-out infinite; }
+				@keyframes spin { to { transform: rotate(360deg); } }
+
+				/* ── Responsive ── */
+
+				/* Tablet: stack panels vertically, left panel becomes a compact header */
+				@media (max-width: 768px) {
+					.ln-card {
+						flex-direction: column !important;
+						max-width: 480px !important;
+					}
+					.ln-left-panel {
+						width: 100% !important;
+						padding: 24px 28px !important;
+						flex-direction: row !important;
+						align-items: center !important;
+						gap: 16px !important;
+					}
+					.ln-left-content { display: none !important; }
+					.ln-left-footer { display: none !important; }
+					.ln-brand-row { margin-bottom: 0 !important; }
+					.ln-right-panel {
+						padding: 28px 28px 32px !important;
+					}
+				}
+
+				/* Mobile: tighter padding, full-width card */
+				@media (max-width: 480px) {
+					.ln-page { padding: 0 !important; align-items: stretch !important; }
+					.ln-card {
+						max-width: 100% !important;
+						border-radius: 0 !important;
+						min-height: 100vh !important;
+						border: none !important;
+						box-shadow: none !important;
+					}
+					.ln-left-panel { padding: 20px 20px !important; }
+					.ln-right-panel { padding: 24px 20px 32px !important; flex: 1 !important; }
+					.ln-links-row { flex-direction: column !important; gap: 10px !important; align-items: flex-start !important; }
+				}
 			`}</style>
 
-			<div className="ln-root" style={S.page}>
+			<div className="ln-root ln-page" style={S.page}>
 				{/* Background orbs */}
 				<div className="ln-orb" style={S.orb1} />
 				<div style={S.orb2} />
 
 				<div className="ln-card" style={S.card}>
 					{/* Left panel */}
-					<div style={S.leftPanel}>
-						<div style={S.brandRow}>
+					<div className="ln-left-panel" style={S.leftPanel}>
+						<div className="ln-brand-row" style={S.brandRow}>
 							<div style={S.logoBubble}>
 								<FiShoppingCart size={18} color="#fff" />
 							</div>
 							<span style={S.brandName}>Lancer</span>
 						</div>
-						<div style={S.leftContent}>
+						<div className="ln-left-content" style={S.leftContent}>
 							<h1 style={S.leftHeading}>Welcome back</h1>
 							<p style={S.leftSub}>Sign in to manage your services, orders and clients.</p>
 							<div style={S.featureList}>
@@ -108,11 +147,13 @@ const Login = () => {
 								))}
 							</div>
 						</div>
-						<p style={S.leftFooter}>© 2025 Lancer · All rights reserved</p>
+						<p className="ln-left-footer" style={S.leftFooter}>
+							© 2025 Lancer · All rights reserved
+						</p>
 					</div>
 
 					{/* Right panel */}
-					<div style={S.rightPanel}>
+					<div className="ln-right-panel" style={S.rightPanel}>
 						<div style={S.formHeader}>
 							<h2 style={S.formTitle}>Sign in</h2>
 							<p style={S.formSub}>Enter your credentials to continue</p>
@@ -207,7 +248,7 @@ const Login = () => {
 						</form>
 
 						{/* Links */}
-						<div style={S.linksRow}>
+						<div className="ln-links-row" style={S.linksRow}>
 							<Link to="/reset_password" className="ln-link">
 								Forgot password?
 							</Link>
@@ -225,8 +266,6 @@ const Login = () => {
 					</div>
 				</div>
 			</div>
-
-			<style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
 		</>
 	);
 };

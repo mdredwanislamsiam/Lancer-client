@@ -43,28 +43,16 @@ const ActivateAccount = () => {
 				.ac-card { animation:acUp .5s ease both; }
 				@keyframes acOrb { 0%,100%{transform:scale(1) translate(0,0)} 50%{transform:scale(1.08) translate(10px,-10px)} }
 				.ac-orb { animation:acOrb 8s ease-in-out infinite; }
-
-				/* spinner */
 				@keyframes spin { to{transform:rotate(360deg)} }
 				.ac-spinner { animation:spin 1s linear infinite; }
-
-				/* check pop */
 				@keyframes checkPop { 0%{transform:scale(0);opacity:0} 60%{transform:scale(1.18)} 100%{transform:scale(1);opacity:1} }
 				.ac-check { animation:checkPop .55s .1s ease both; }
-
-				/* error shake */
 				@keyframes errShake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }
 				.ac-err { animation:errShake .45s .1s ease both; }
-
-				/* pulse ring */
 				@keyframes acPulse { 0%,100%{opacity:.45;transform:scale(1)} 50%{opacity:.9;transform:scale(1.06)} }
 				.ac-ring { animation:acPulse 2s ease-in-out infinite; }
-
-				/* redirect bar */
 				@keyframes fillBar { from{width:0%} to{width:100%} }
 				.ac-fill { animation:fillBar 2.8s linear forwards; }
-
-				/* dots loading */
 				@keyframes dot { 0%,80%,100%{transform:scale(0);opacity:0} 40%{transform:scale(1);opacity:1} }
 				.ac-dot1 { animation:dot 1.2s .0s ease-in-out infinite; }
 				.ac-dot2 { animation:dot 1.2s .2s ease-in-out infinite; }
@@ -87,16 +75,49 @@ const ActivateAccount = () => {
 					transition:all .2s; font-family:'DM Sans',sans-serif;
 				}
 				.ac-btn-ghost:hover { color:#82c4d4; border-color:rgba(48,96,115,.4); }
+
+				/* ── Responsive ── */
+				@media (max-width: 768px) {
+					.ac-left { display: none !important; }
+					.ac-card {
+						max-width: 460px !important;
+						border-radius: 16px !important;
+					}
+					.ac-right {
+						padding: 32px 28px !important;
+					}
+					.ac-mobile-brand { display: flex !important; }
+				}
+
+				@media (max-width: 480px) {
+					.ac-page {
+						padding: 0 !important;
+						align-items: flex-start !important;
+					}
+					.ac-card {
+						border-radius: 0 !important;
+						border: none !important;
+						box-shadow: none !important;
+						min-height: 100vh !important;
+					}
+					.ac-right {
+						padding: 24px 18px 32px !important;
+						align-items: flex-start !important;
+						justify-content: flex-start !important;
+					}
+				}
+
+				.ac-mobile-brand { display: none; }
 			`}</style>
 
-			<div className="ac" style={S.page}>
+			<div className="ac ac-page" style={S.page}>
 				{/* orbs */}
 				<div className="ac-orb" style={S.orb1} />
 				<div style={S.orb2} />
 
 				<div className="ac-card" style={S.card}>
 					{/* ── Left panel ── */}
-					<div style={S.left}>
+					<div className="ac-left" style={S.left}>
 						<div style={S.brandRow}>
 							<div style={S.logoBubble}>
 								<FiShoppingCart size={18} color="#fff" />
@@ -214,7 +235,15 @@ const ActivateAccount = () => {
 					</div>
 
 					{/* ── Right panel ── */}
-					<div style={S.right}>
+					<div className="ac-right" style={S.right}>
+						{/* Mobile-only brand header */}
+						<div className="ac-mobile-brand" style={S.mobileBrand}>
+							<div style={S.logoBubble}>
+								<FiShoppingCart size={16} color="#fff" />
+							</div>
+							<span style={S.brandName}>Lancer</span>
+						</div>
+
 						{/* loading */}
 						{status === STATUS.LOADING && (
 							<div style={S.stateBlock}>
@@ -285,7 +314,7 @@ const ActivateAccount = () => {
 										<line x1="9" y1="9" x2="15" y2="15" />
 									</svg>
 								</div>
-								<h2 style={{ ...S.stateTitle }}>Activation failed</h2>
+								<h2 style={S.stateTitle}>Activation failed</h2>
 								<p style={S.stateSub}>
 									This link may have expired or already been used. Request a new activation email and
 									try again.
@@ -369,6 +398,7 @@ const S = {
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "center",
+		flexShrink: 0,
 	},
 	brandName: {
 		fontSize: "18px",
@@ -428,11 +458,22 @@ const S = {
 	stepText: { fontSize: "13px", fontWeight: 500, transition: "color 0.3s" },
 	leftFooter: { fontSize: "11px", color: "rgba(255,255,255,0.3)", marginTop: "auto", paddingTop: "24px" },
 
+	/* mobile brand strip */
+	mobileBrand: {
+		alignItems: "center",
+		gap: "10px",
+		marginBottom: "28px",
+		paddingBottom: "20px",
+		borderBottom: "1px solid rgba(255,255,255,0.07)",
+		width: "100%",
+	},
+
 	/* right */
 	right: {
 		flex: 1,
 		background: "#111a1f",
 		display: "flex",
+		flexDirection: "column",
 		alignItems: "center",
 		justifyContent: "center",
 		padding: "40px 36px",

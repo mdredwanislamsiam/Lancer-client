@@ -75,56 +75,97 @@ const ForgotPassword = () => {
 				.fp-pulse { animation:fpPulse 2s ease-in-out infinite; }
 				@keyframes fillBar { from{width:0%} to{width:100%} }
 				.fp-fill { animation:fillBar 2.2s linear forwards; }
+
+				/* ── Responsive ── */
+
+				/* Tablet: stack panels, left collapses to brand bar */
+				@media (max-width: 768px) {
+					.fp-card {
+						flex-direction: column !important;
+						max-width: 480px !important;
+					}
+					.fp-left {
+						width: 100% !important;
+						padding: 22px 28px !important;
+						flex-direction: row !important;
+						align-items: center !important;
+						gap: 16px !important;
+					}
+					.fp-left-body { display: none !important; }
+					.fp-left-footer { display: none !important; }
+					.fp-brand-row { margin-bottom: 0 !important; }
+					.fp-right {
+						padding: 28px 28px 32px !important;
+					}
+				}
+
+				/* Mobile: full-screen card */
+				@media (max-width: 480px) {
+					.fp-page { padding: 0 !important; align-items: stretch !important; }
+					.fp-card {
+						max-width: 100% !important;
+						border-radius: 0 !important;
+						min-height: 100vh !important;
+						border: none !important;
+						box-shadow: none !important;
+					}
+					.fp-left { padding: 18px 20px !important; }
+					.fp-right { padding: 24px 20px 32px !important; flex: 1 !important; }
+				}
 			`}</style>
 
-			<div className="fp" style={S.page}>
+			<div className="fp fp-page" style={S.page}>
 				{/* orbs */}
 				<div className="fp-orb" style={S.orb1} />
 				<div style={S.orb2} />
 
 				<div className="fp-card" style={S.card}>
 					{/* ── Left panel ── */}
-					<div style={S.left}>
-						<div style={S.brandRow}>
+					<div className="fp-left" style={S.left}>
+						<div className="fp-brand-row" style={S.brandRow}>
 							<div style={S.logoBubble}>
 								<FiShoppingCart size={18} color="#fff" />
 							</div>
 							<span style={S.brandName}>Lancer</span>
 						</div>
 
-						{/* Lock illustration */}
-						<div style={S.illustrationWrap}>
-							<div style={S.illustrationCircle}>
-								<div className="fp-pulse" style={S.illustrationRing} />
-								<FiLock size={38} color="rgba(255,255,255,0.9)" />
+						<div className="fp-left-body">
+							{/* Lock illustration */}
+							<div style={S.illustrationWrap}>
+								<div style={S.illustrationCircle}>
+									<div className="fp-pulse" style={S.illustrationRing} />
+									<FiLock size={38} color="rgba(255,255,255,0.9)" />
+								</div>
+							</div>
+
+							<div style={{ flex: 1 }}>
+								<h1 style={S.leftH}>Reset your password</h1>
+								<p style={S.leftSub}>
+									Forgot your password? No problem — we'll send a secure reset link straight to your
+									inbox.
+								</p>
+								<div style={S.stepList}>
+									{[
+										"Enter your registered email",
+										"Click the reset link in the email",
+										"Set a new password & sign in",
+									].map((step, i) => (
+										<div key={i} style={S.stepItem}>
+											<div style={S.stepNum}>{i + 1}</div>
+											<span style={S.stepText}>{step}</span>
+										</div>
+									))}
+								</div>
 							</div>
 						</div>
 
-						<div style={{ flex: 1 }}>
-							<h1 style={S.leftH}>Reset your password</h1>
-							<p style={S.leftSub}>
-								Forgot your password? No problem — we'll send a secure reset link straight to your
-								inbox.
-							</p>
-							<div style={S.stepList}>
-								{[
-									"Enter your registered email",
-									"Click the reset link in the email",
-									"Set a new password & sign in",
-								].map((step, i) => (
-									<div key={i} style={S.stepItem}>
-										<div style={S.stepNum}>{i + 1}</div>
-										<span style={S.stepText}>{step}</span>
-									</div>
-								))}
-							</div>
-						</div>
-
-						<p style={S.leftFooter}>© 2025 Lancer · All rights reserved</p>
+						<p className="fp-left-footer" style={S.leftFooter}>
+							© 2025 Lancer · All rights reserved
+						</p>
 					</div>
 
 					{/* ── Right panel ── */}
-					<div style={S.right}>
+					<div className="fp-right" style={S.right}>
 						<Link to="/login" className="fp-back" style={{ marginBottom: "28px", alignSelf: "flex-start" }}>
 							<FiArrowLeft size={13} /> Back to sign in
 						</Link>

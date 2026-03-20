@@ -6,7 +6,7 @@ const DescriptionPart = ({register,errors,defValue}) => {
 			<textarea
 				defaultValue={defValue}
 				{...register("description", { required: true })}
-				className="textarea textarea-bordered w-full text-xs lg:text-sm outline-none"
+				className="textarea textarea-bordered w-full text-xs lg:text-sm outline-none bg-[#f2f4f6]"
 				placeholder="Description"></textarea>
 			{errors.description && <p className="text-red-500 text-xs">This field is required</p>}
 		</div>

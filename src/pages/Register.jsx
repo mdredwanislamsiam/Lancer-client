@@ -140,16 +140,57 @@ const Register = () => {
 				::-webkit-scrollbar { width:5px; }
 				::-webkit-scrollbar-track { background:transparent; }
 				::-webkit-scrollbar-thumb { background:rgba(48,96,115,0.4); border-radius:99px; }
+
+				/* ── Responsive ── */
+
+				/* Tablet: hide left panel, keep card shape */
+				@media (max-width: 768px) {
+					.rg-left { display: none !important; }
+					.rg-card {
+						max-width: 480px !important;
+						border-radius: 16px !important;
+						max-height: none !important;
+					}
+					.rg-right {
+						padding: 28px 24px 28px !important;
+					}
+					/* Show compact brand header inside form area */
+					.rg-mobile-brand { display: flex !important; }
+				}
+
+				/* Mobile: full width, minimal padding */
+				@media (max-width: 480px) {
+					.rg-page {
+						padding: 0 !important;
+						align-items: flex-start !important;
+					}
+					.rg-card {
+						border-radius: 0 !important;
+						border: none !important;
+						box-shadow: none !important;
+						min-height: 100vh !important;
+						max-height: none !important;
+					}
+					.rg-right {
+						padding: 24px 18px 32px !important;
+					}
+					.rg-two-col {
+						grid-template-columns: 1fr !important;
+					}
+				}
+
+				/* Always hide mobile brand on desktop */
+				.rg-mobile-brand { display: none; }
 			`}</style>
 
-			<div className="rg" style={S.page}>
+			<div className="rg rg-page" style={S.page}>
 				{/* orbs */}
 				<div className="rg-orb" style={S.orb1} />
 				<div style={S.orb2} />
 
 				<div className="rg-card" style={S.card}>
 					{/* ── Left panel ── */}
-					<div style={S.left}>
+					<div className="rg-left" style={S.left}>
 						<div style={S.brandRow}>
 							<div style={S.logoBubble}>
 								<FiShoppingCart size={18} color="#fff" />
@@ -186,7 +227,15 @@ const Register = () => {
 					</div>
 
 					{/* ── Right panel (scrollable form) ── */}
-					<div style={S.right}>
+					<div className="rg-right" style={S.right}>
+						{/* Mobile-only brand header */}
+						<div className="rg-mobile-brand" style={S.mobileBrand}>
+							<div style={S.logoBubble}>
+								<FiShoppingCart size={16} color="#fff" />
+							</div>
+							<span style={S.brandName}>Lancer</span>
+						</div>
+
 						<div style={S.formHeader}>
 							<h2 style={S.formTitle}>Create account</h2>
 							<p style={S.formSub}>Fill in the details below to get started</p>
@@ -196,7 +245,7 @@ const Register = () => {
 
 						<form onSubmit={handleSubmit(onSubmit)} style={S.form}>
 							{/* Row: first + last */}
-							<div style={S.twoCol}>
+							<div className="rg-two-col" style={S.twoCol}>
 								<Field label="First Name" icon={FiUser} error={errors.first_name?.message}>
 									<input
 										type="text"
@@ -236,7 +285,7 @@ const Register = () => {
 							</Field>
 
 							{/* Row: phone + address */}
-							<div style={S.twoCol}>
+							<div className="rg-two-col" style={S.twoCol}>
 								<Field label="Phone" icon={FiPhone} error={errors.phone_number?.message}>
 									<input
 										type="text"
@@ -375,6 +424,15 @@ const Register = () => {
 										if (file) setPreview(URL.createObjectURL(file));
 									}}
 								/>
+								{/* Mobile avatar preview (shown when left panel is hidden) */}
+								{preview && (
+									<div style={S.mobileAvatarPreview}>
+										<img src={preview} alt="preview" style={S.avatarPreview} />
+										<span style={{ ...S.avatarLabel, color: "rgba(255,255,255,0.35)" }}>
+											Profile preview
+										</span>
+									</div>
+								)}
 							</div>
 
 							{/* Submit */}
@@ -478,6 +536,7 @@ const S = {
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "center",
+		flexShrink: 0,
 	},
 	brandName: {
 		fontSize: "18px",
@@ -515,6 +574,23 @@ const S = {
 	},
 	avatarLabel: { fontSize: "11px", color: "rgba(255,255,255,0.4)", letterSpacing: "0.05em" },
 	leftFooter: { fontSize: "11px", color: "rgba(255,255,255,0.3)", marginTop: "auto", paddingTop: "24px" },
+
+	/* mobile brand strip */
+	mobileBrand: {
+		alignItems: "center",
+		gap: "10px",
+		marginBottom: "24px",
+		paddingBottom: "20px",
+		borderBottom: "1px solid rgba(255,255,255,0.07)",
+	},
+
+	/* mobile avatar preview (inside right panel) */
+	mobileAvatarPreview: {
+		display: "flex",
+		alignItems: "center",
+		gap: "12px",
+		marginTop: "8px",
+	},
 
 	/* right */
 	right: {

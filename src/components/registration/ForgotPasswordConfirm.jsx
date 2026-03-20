@@ -72,13 +72,7 @@ const ForgotPasswordConfirm = () => {
 				new_password: data.new_password,
 			});
 			setDone(true);
-			setTimeout(
-				() =>
-					navigate("/login", {
-						state: { message: "Password reset successful!" },
-					}),
-				2500,
-			);
+			setTimeout(() => navigate("/login", { state: { message: "Password reset successful!" } }), 2500);
 		} catch (error) {
 			console.error(error);
 			setErrorMsg("Something went wrong. The link may have expired.");
@@ -129,86 +123,128 @@ const ForgotPasswordConfirm = () => {
 				@keyframes fillBar { from{width:0%} to{width:100%} }
 				.fpc-fill { animation:fillBar 2.5s linear forwards; }
 				.fpc-strength-bar { height:100%;border-radius:99px;transition:width .35s ease,background .35s ease; }
+
+				/* ── Responsive ── */
+
+				/* Tablet: stack panels, left collapses to brand bar */
+				@media (max-width: 768px) {
+					.fpc-card {
+						flex-direction: column !important;
+						max-width: 480px !important;
+					}
+					.fpc-left {
+						width: 100% !important;
+						padding: 22px 28px !important;
+						flex-direction: row !important;
+						align-items: center !important;
+						gap: 16px !important;
+					}
+					.fpc-left-body { display: none !important; }
+					.fpc-left-footer { display: none !important; }
+					.fpc-brand-row { margin-bottom: 0 !important; }
+					.fpc-right {
+						padding: 28px 28px 32px !important;
+					}
+				}
+
+				/* Mobile: full-screen card */
+				@media (max-width: 480px) {
+					.fpc-page { padding: 0 !important; align-items: stretch !important; }
+					.fpc-card {
+						max-width: 100% !important;
+						border-radius: 0 !important;
+						min-height: 100vh !important;
+						border: none !important;
+						box-shadow: none !important;
+					}
+					.fpc-left { padding: 18px 20px !important; }
+					.fpc-right { padding: 24px 20px 32px !important; flex: 1 !important; }
+				}
 			`}</style>
 
-			<div className="fpc" style={S.page}>
+			<div className="fpc fpc-page" style={S.page}>
 				<div className="fpc-orb" style={S.orb1} />
 				<div style={S.orb2} />
 
 				<div className="fpc-card" style={S.card}>
 					{/* ── Left panel ── */}
-					<div style={S.left}>
-						<div style={S.brandRow}>
+					<div className="fpc-left" style={S.left}>
+						<div className="fpc-brand-row" style={S.brandRow}>
 							<div style={S.logoBubble}>
 								<FiShoppingCart size={18} color="#fff" />
 							</div>
 							<span style={S.brandName}>Lancer</span>
 						</div>
 
-						{/* Lock illustration */}
-						<div style={S.illustrationWrap}>
-							<div
-								style={{
-									...S.illustrationCircle,
-									background: done ? "rgba(22,163,74,0.18)" : "rgba(255,255,255,0.12)",
-								}}>
-								<div className="fpc-ring" style={S.illustrationRing} />
-								{done ?
-									<svg
-										className="fpc-check"
-										width="40"
-										height="40"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="rgba(255,255,255,0.92)"
-										strokeWidth="2.2"
-										strokeLinecap="round">
-										<polyline points="20 6 9 17 4 12" />
-									</svg>
-								:	<FiLock size={38} color="rgba(255,255,255,0.9)" />}
+						<div className="fpc-left-body">
+							{/* Lock illustration */}
+							<div style={S.illustrationWrap}>
+								<div
+									style={{
+										...S.illustrationCircle,
+										background: done ? "rgba(22,163,74,0.18)" : "rgba(255,255,255,0.12)",
+									}}>
+									<div className="fpc-ring" style={S.illustrationRing} />
+									{done ?
+										<svg
+											className="fpc-check"
+											width="40"
+											height="40"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="rgba(255,255,255,0.92)"
+											strokeWidth="2.2"
+											strokeLinecap="round">
+											<polyline points="20 6 9 17 4 12" />
+										</svg>
+									:	<FiLock size={38} color="rgba(255,255,255,0.9)" />}
+								</div>
 							</div>
+
+							<h1 style={S.leftH}>{done ? "All done!" : "Set new password"}</h1>
+							<p style={S.leftSub}>
+								{done ?
+									"Your password has been updated. You'll be signed in shortly."
+								:	"Choose a strong password with at least 8 characters, a number, and a symbol."}
+							</p>
+
+							{/* Password tips */}
+							{!done && (
+								<div style={S.tipList}>
+									{[
+										{ rule: "At least 8 characters", ok: watchedPw.length >= 8 },
+										{ rule: "One uppercase letter", ok: /[A-Z]/.test(watchedPw) },
+										{ rule: "One number", ok: /[0-9]/.test(watchedPw) },
+										{ rule: "One special character", ok: /[^A-Za-z0-9]/.test(watchedPw) },
+									].map((tip, i) => (
+										<div key={i} style={S.tipItem}>
+											<div
+												style={{
+													...S.tipDot,
+													background:
+														tip.ok ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.2)",
+												}}
+											/>
+											<span
+												style={{
+													...S.tipText,
+													color: tip.ok ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.45)",
+												}}>
+												{tip.rule}
+											</span>
+										</div>
+									))}
+								</div>
+							)}
 						</div>
 
-						<h1 style={S.leftH}>{done ? "All done!" : "Set new password"}</h1>
-						<p style={S.leftSub}>
-							{done ?
-								"Your password has been updated. You'll be signed in shortly."
-							:	"Choose a strong password with at least 8 characters, a number, and a symbol."}
+						<p className="fpc-left-footer" style={S.leftFooter}>
+							© 2025 Lancer · All rights reserved
 						</p>
-
-						{/* Password tips */}
-						{!done && (
-							<div style={S.tipList}>
-								{[
-									{ rule: "At least 8 characters", ok: watchedPw.length >= 8 },
-									{ rule: "One uppercase letter", ok: /[A-Z]/.test(watchedPw) },
-									{ rule: "One number", ok: /[0-9]/.test(watchedPw) },
-									{ rule: "One special character", ok: /[^A-Za-z0-9]/.test(watchedPw) },
-								].map((tip, i) => (
-									<div key={i} style={S.tipItem}>
-										<div
-											style={{
-												...S.tipDot,
-												background: tip.ok ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.2)",
-											}}
-										/>
-										<span
-											style={{
-												...S.tipText,
-												color: tip.ok ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.45)",
-											}}>
-											{tip.rule}
-										</span>
-									</div>
-								))}
-							</div>
-						)}
-
-						<p style={S.leftFooter}>© 2025 Lancer · All rights reserved</p>
 					</div>
 
 					{/* ── Right panel ── */}
-					<div style={S.right}>
+					<div className="fpc-right" style={S.right}>
 						<Link
 							to="/login"
 							className="fpc-back"
