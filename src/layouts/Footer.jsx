@@ -425,7 +425,7 @@ const Footer = () => {
 				}
 			`}</style>
 
-			<footer ref={footerRef} className="ft-root" >
+			<footer ref={footerRef} className="ft-root">
 				<canvas ref={canvasRef} className="ft-canvas" />
 
 				{/* Ripples */}
@@ -489,7 +489,7 @@ const Footer = () => {
 				{/* ── MARQUEE BAND ── */}
 				<div className="ft-mid">
 					<div className="ft-marquee-track">
-						{[...Array(2)].flatMap(() =>
+						{[...Array(2)].flatMap((_, groupIndex) =>
 							[
 								"Risk-Free Hiring",
 								"Vetted Professionals",
@@ -498,7 +498,7 @@ const Footer = () => {
 								"Fast Delivery",
 								"Secure Payments",
 							].map((t, i) => (
-								<span key={i} className="ft-marquee-item">
+								<span key={`${groupIndex}-${i}`} className="ft-marquee-item">
 									<span className="ft-marquee-dot" />
 									{t}
 								</span>
